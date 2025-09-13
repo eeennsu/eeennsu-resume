@@ -4,6 +4,8 @@ import { useEffect, useState, type FC } from 'react';
 
 import apiGetLatestTag from '@features/github/apis/getLatestTag';
 
+const DEFAULT_VERSION = 'v.2.2.4';
+
 const Footer: FC = () => {
   const [version, setVersion] = useState<string>('');
 
@@ -12,10 +14,10 @@ const Footer: FC = () => {
       try {
         const latestTag = await apiGetLatestTag();
 
-        setVersion(latestTag ?? 'v.2.2.4');
+        setVersion(latestTag || DEFAULT_VERSION);
       } catch (error) {
         console.error(error);
-        setVersion('v.2.2.4');
+        setVersion(DEFAULT_VERSION);
       }
     };
 

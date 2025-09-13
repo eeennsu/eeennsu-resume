@@ -2,6 +2,7 @@
 import Badge from '@shared/components/Badge';
 import Markdown from '@shared/components/Markdown';
 import { getEstimatedDuration } from '@shared/libs/date';
+import { cn } from '@shared/shadcn-ui/utils';
 import { ICompanyExperience } from '@shared/types/subjects';
 import { FC } from 'react';
 
@@ -31,9 +32,11 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
             {done.details && (
               <ul className='ml-4 list-outside list-disc text-sm'>
                 {done.details.map((detail, index) => {
+                  const isPreviousString = index > 0 && typeof done.details[index - 1] === 'string';
+
                   if (typeof detail === 'string') {
                     return (
-                      <li key={index} className='ml-6 text-gray-800'>
+                      <li key={index} className='mb-1 ml-6 text-gray-800'>
                         <Markdown>{detail}</Markdown>
                       </li>
                     );
@@ -42,7 +45,10 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
                   return (
                     <li
                       key={detail.problem}
-                      className='mb-5 flex list-none flex-col gap-0.5 font-medium last:mb-0'
+                      className={cn(
+                        'mb-4 flex list-none flex-col gap-0.5 font-medium last:mb-0',
+                        isPreviousString && 'mt-4',
+                      )}
                     >
                       <Markdown className='marker-problem flex gap-0.5 text-orange-600'>
                         {detail.problem}
