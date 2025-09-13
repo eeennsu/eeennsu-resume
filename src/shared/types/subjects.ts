@@ -1,4 +1,4 @@
-import { IconType } from '@features/profile/ui/Item';
+export type ProfileIconType = 'email' | 'github' | 'velog' | 'self-blog';
 
 export interface ICompanyExperience {
   companyName: string;
@@ -44,7 +44,7 @@ export interface IEducation {
 export interface IProfile {
   name: string;
   birthDay: string;
-  descriptions: Array<{ type: IconType; value: string }>;
+  descriptions: Array<{ type: ProfileIconType; value: string }>;
 }
 
 export interface ISkill {

@@ -1,6 +1,5 @@
 import { SITE_URL } from '@shared/consts/commons';
 import '@shared/css/globals.css';
-import { notoSansKr } from '@shared/font/fonts';
 import type { Metadata } from 'next';
 
 import Footer from '@widgets/Footer';
@@ -60,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className={`${notoSansKr.className} antialiased`}>
+      <body className='font-noto-sans_KR md:font-nanum-gothic antialiased'>
         <div className='flex min-h-screen flex-col bg-white'>
           <div className='mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>{children}</div>
           <Footer />

@@ -36,14 +36,14 @@ const LastUpdate: FC = () => {
   const dayDiff = commitDate ? dayjs().startOf('day').diff(commitDate.startOf('day'), 'day') : null;
 
   return (
-    <div className='mt-8 flex h-fit flex-col items-end rounded-md px-4 py-2 text-sm md:mt-14'>
-      <div className='flex w-full flex-row items-center md:flex-col'>
+    <div className='flex h-fit flex-col items-center rounded-md text-base md:mt-14 md:items-end md:px-4 md:py-2 md:text-sm'>
+      <p className='text-sm text-gray-800 md:text-right md:text-xs'>마지막 업데이트</p>
+      <div className='flex w-full flex-col items-center'>
         {formattedDate && (
           <span className='font-semibold tracking-tight'>
             {formattedDate} (D {dayDiff! > 0 ? `+ ${dayDiff}` : '- Day'})
           </span>
         )}
-        <p className='text-xs text-gray-800 md:text-right'>마지막 업데이트</p>
       </div>
     </div>
   );

@@ -1,17 +1,17 @@
-import { Github, Mail, NotebookPen } from 'lucide-react';
+import { ProfileIconType } from '@shared/types/subjects';
+import { Github, Mail, Notebook, NotebookPen } from 'lucide-react';
 import Link from 'next/link';
 import type { FC, ReactNode } from 'react';
 
-export type IconType = 'email' | 'github' | 'blog';
-
-const Icon = {
-  email: <Mail size={22} />,
-  github: <Github size={22} />,
-  blog: <NotebookPen size={22} />,
+const Icon: Record<ProfileIconType, ReactNode> = {
+  'email': <Mail size={22} />,
+  'github': <Github size={22} />,
+  'velog': <Notebook size={22} />,
+  'self-blog': <NotebookPen size={22} />,
 };
 
 interface Props {
-  icon: keyof typeof Icon;
+  icon: ProfileIconType;
   href: string;
   value: ReactNode;
 }

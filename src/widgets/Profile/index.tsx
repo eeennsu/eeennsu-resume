@@ -1,3 +1,5 @@
+import { MY_PROFILE } from '@shared/consts/commons';
+import { getKoreanAge } from '@shared/libs/date';
 import { IProfile } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { type FC } from 'react';
@@ -10,12 +12,12 @@ const ProfileWidget: FC = () => {
   const profile = loadSubjects<IProfile>('profile.yaml');
 
   return (
-    <section className='w-full pt-6 md:py-10'>
+    <section className='w-full pt-6 md:pt-10'>
       <ProfileHeader />
 
-      <div className='flex flex-col gap-8 px-6 md:mx-auto md:max-w-6xl md:flex-row md:justify-between md:px-12'>
-        <div className='flex flex-col items-center gap-6 md:flex-row md:items-start'>
-          <figure className='relative w-40 shrink-0 md:w-48'>
+      <div className='flex flex-col gap-10 px-6 md:mx-auto md:max-w-6xl md:flex-row md:items-start md:justify-between md:px-12'>
+        <div className='flex flex-col items-center gap-6 md:flex-row'>
+          <figure className='relative w-40 shrink-0 md:w-52'>
             <img
               src='images/profile.jpg'
               alt='profile'
@@ -23,13 +25,18 @@ const ProfileWidget: FC = () => {
             />
           </figure>
 
-          <div className='flex flex-col items-center gap-5 md:items-start'>
+          <div className='flex flex-col items-center gap-10 md:ml-6 md:items-start'>
             <div className='text-center md:text-left'>
-              <h1 className='font-serif text-3xl font-semibold text-gray-900'>{profile?.name}</h1>
-              <p className='mt-1 text-gray-500'>{profile?.birthDay}</p>
+              <h1 className='font text-3xl font-semibold text-gray-900 md:text-4xl'>
+                {profile?.name}
+              </h1>
+              <p className='mt-1 text-lg font-semibold text-gray-500 md:mt-5'>
+                {profile?.birthDay}
+                <span className='ml-2 text-base'>(만{getKoreanAge(MY_PROFILE.BIRTHDAY)} 세)</span>
+              </p>
             </div>
 
-            <div className='flex flex-col gap-2 text-sm text-gray-700 md:text-base'>
+            <div className='space-y-3 gap-x-10 gap-y-4 text-sm text-gray-700 md:grid md:grid-cols-2 md:space-y-0 md:text-base'>
               {profile?.descriptions.map((description, index) => (
                 <ProfileItem
                   key={index}

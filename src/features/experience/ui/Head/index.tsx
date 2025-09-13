@@ -1,5 +1,6 @@
 import { getCompanyServiceDuration } from '@shared/libs/date';
 import { ICompanyExperience } from '@shared/types/subjects';
+import dayjs from 'dayjs';
 import { CircleHelp } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -11,14 +12,14 @@ type Props = {
 
 const ExperienceHead: FC<Props> = ({ experience }) => {
   return (
-    <div className='flex flex-col gap-2 md:flex-row md:justify-between md:gap-0'>
+    <div className='flex flex-col justify-end gap-2 md:flex-row md:justify-between md:gap-0'>
       <div className='flex h-fit items-center gap-2'>
-        <h3 className='rounded-sm bg-gray-900 p-2 text-sm font-semibold text-white md:px-3 md:py-1.5 md:text-2xl'>
+        <h3 className='rounded-sm bg-gray-900 px-3 py-2 text-sm font-semibold text-white md:px-3 md:py-1.5 md:text-2xl'>
           {experience.companyName}
         </h3>
         {experience.endDate && experience.note && (
           <NoteModal description={experience.note.description}>
-            <CircleHelp className='text-gray-600' size={24} />
+            <CircleHelp className='size-5 text-gray-600 md:size-6' />
           </NoteModal>
         )}
       </div>
@@ -27,11 +28,14 @@ const ExperienceHead: FC<Props> = ({ experience }) => {
         <p className='font-bold'>
           {experience.startDate} ~ {experience?.endDate || '현재'}
         </p>
-        {experience.endDate && (
-          <span className='inline-flex items-center gap-1 text-xs text-gray-500'>
-            (총 {getCompanyServiceDuration(experience.startDate, experience.endDate)} 근무)
-          </span>
-        )}
+
+        <span className='inline-flex items-center gap-1 text-xs text-gray-500'>
+          {experience.endDate ? (
+            <>(총 {getCompanyServiceDuration(experience.startDate, experience.endDate)} 근무)</>
+          ) : (
+            <>{dayjs().diff(dayjs(experience.startDate), 'days')}일 째 근무 중</>
+          )}
+        </span>
       </div>
     </div>
   );

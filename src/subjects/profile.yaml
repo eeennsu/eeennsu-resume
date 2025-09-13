@@ -5,7 +5,7 @@ descriptions:
     value: xxx9901@naver.com
   - type: github
     value: https://github.com/eeennsu
-  - type: blog
+  - type: velog
     value: https://velog.io/@diso592/posts
-  - type: blog
+  - type: self-blog
     value: https://eunstory.eunsu.kr
