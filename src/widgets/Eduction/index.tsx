@@ -23,7 +23,9 @@ const EducationWidget: FC = () => {
           </h3>
         </div>
         <ul className='ml-4 list-outside list-disc'>
-          {education?.activities.map((activity, index) => <li key={index}>{activity}</li>)}
+          {education.activities.map((activity, index) => (
+            <li key={index}>{activity}</li>
+          ))}
         </ul>
       </div>
     </section>
