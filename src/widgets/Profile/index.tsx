@@ -1,12 +1,14 @@
+import { IProfile } from '@shared/types/subjects';
+import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { type FC } from 'react';
 
 import ProfileHeader from '@features/portfolio/ui/Header';
 import ProfileItem from '@features/profile/ui/Item';
 import LastUpdate from '@features/profile/ui/LastUpdate';
 
-import { PROFILE } from '@entities/profile/consts';
-
 const ProfileWidget: FC = () => {
+  const profile = loadSubjects<IProfile>('profile.yaml');
+
   return (
     <section className='w-full pt-6 md:py-10'>
       <ProfileHeader />
@@ -23,12 +25,12 @@ const ProfileWidget: FC = () => {
 
           <div className='flex flex-col items-center gap-5 md:items-start'>
             <div className='text-center md:text-left'>
-              <h1 className='font-serif text-3xl font-semibold text-gray-900'>{PROFILE.name}</h1>
-              <p className='mt-1 text-gray-500'>{PROFILE.birthDay}</p>
+              <h1 className='font-serif text-3xl font-semibold text-gray-900'>{profile?.name}</h1>
+              <p className='mt-1 text-gray-500'>{profile?.birthDay}</p>
             </div>
 
             <div className='flex flex-col gap-2 text-sm text-gray-700 md:text-base'>
-              {PROFILE.descriptions.map((description, index) => (
+              {profile?.descriptions.map((description, index) => (
                 <ProfileItem
                   key={index}
                   icon={description.type}

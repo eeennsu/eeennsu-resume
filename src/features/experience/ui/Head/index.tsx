@@ -1,8 +1,7 @@
 import { getCompanyServiceDuration } from '@shared/libs/date';
+import { ICompanyExperience } from '@shared/types/subjects';
 import { CircleHelp } from 'lucide-react';
 import type { FC } from 'react';
-
-import { ICompanyExperience } from '@entities/experience/types';
 
 import NoteModal from '../NoteModal';
 

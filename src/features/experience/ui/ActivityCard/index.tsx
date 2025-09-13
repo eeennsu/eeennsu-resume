@@ -2,9 +2,8 @@
 import Badge from '@shared/components/Badge';
 import Markdown from '@shared/components/Markdown';
 import { getEstimatedDuration } from '@shared/libs/date';
+import { ICompanyExperience } from '@shared/types/subjects';
 import { FC } from 'react';
-
-import { ICompanyExperience } from '@entities/experience/types';
 
 type Props = ICompanyExperience['activities'][number];
 
@@ -25,7 +24,7 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
         </div>
       </div>
       <ol className='ml-4 flex list-inside list-decimal flex-col gap-10 md:gap-7'>
-        {doneList.map((done, index) => (
+        {doneList?.map((done, index) => (
           <li key={`${done.subject}-${index}`} className='custom-decimal-list'>
             <span className='text-base font-semibold text-slate-800'>{done.subject}</span>
 

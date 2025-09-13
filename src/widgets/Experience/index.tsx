@@ -1,18 +1,20 @@
 import SectionTitle from '@shared/components/SectionTitle';
 import TextDivider from '@shared/components/TextDivider';
+import { ICompanyExperience } from '@shared/types/subjects';
+import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import type { FC } from 'react';
 
 import ActivityCard from '@features/experience/ui/ActivityCard';
 import ExperienceHead from '@features/experience/ui/Head';
 
-import { EXPERIENCES } from '@entities/experience/consts';
-
 const ExperienceWidget: FC = () => {
+  const experiences = loadSubjects<ICompanyExperience[]>('experience.yaml') || [];
+
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-2'>
       <SectionTitle>Experience</SectionTitle>
       <div className='flex grow flex-col'>
-        {EXPERIENCES.map((experience, index, arr) => (
+        {experiences.map((experience, index, arr) => (
           <div key={experience.companyName}>
             <div className='flex flex-col gap-5'>
               <ExperienceHead experience={experience} />
