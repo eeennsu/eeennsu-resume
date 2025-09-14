@@ -5,7 +5,7 @@ import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import type { FC } from 'react';
 
 const IntroduceWidget: FC = () => {
-  const raw = loadSubjects<string[]>('introduce.yaml') || [];
+  const raw = loadSubjects<string[]>('introduce.yml') || [];
 
   const age = getKoreanAge(MY_PROFILE.BIRTHDAY);
   const career = getWorkAnniversary(MY_PROFILE.CAREER_START_DATE);

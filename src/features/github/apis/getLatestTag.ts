@@ -7,7 +7,7 @@ const apiGetLatestTag = async () => {
     per_page: 1,
   });
 
-  return response.data.at(0)?.name ?? '';
+  return response?.data?.at(0)?.name ?? '';
 };
 
 export default apiGetLatestTag;

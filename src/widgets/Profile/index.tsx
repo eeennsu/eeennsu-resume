@@ -9,7 +9,7 @@ import ProfileItem from '@features/profile/ui/Item';
 import LastUpdate from '@features/profile/ui/LastUpdate';
 
 const ProfileWidget: FC = () => {
-  const profile = loadSubjects<IProfile>('profile.yaml');
+  const profile = loadSubjects<IProfile>('profile.yml');
 
   return (
     <section className='w-full pt-6 md:pt-10'>

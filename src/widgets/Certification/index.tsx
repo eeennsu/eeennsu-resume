@@ -4,7 +4,7 @@ import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import type { FC } from 'react';
 
 const CertificationsWidget: FC = () => {
-  const certifications = loadSubjects<ICertification[]>('certification.yaml') || [];
+  const certifications = loadSubjects<ICertification[]>('certification.yml') || [];
 
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-2'>
