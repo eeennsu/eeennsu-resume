@@ -14,7 +14,7 @@ const SkillsWidget: FC = () => {
       <div className='flex w-full flex-col gap-2'>
         <div className='flex flex-col'>
           {skills.map((skill, index) => (
-            <SkillCard key={index} name={skill.category} detailList={skill.items} />
+            <SkillCard key={index} name={skill?.category} detailList={skill?.items} />
           ))}
         </div>
       </div>
