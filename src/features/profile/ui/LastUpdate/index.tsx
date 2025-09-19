@@ -32,12 +32,12 @@ const LastUpdate: FC = () => {
     fetchBranchData();
   }, []);
 
-  const formattedDate = commitDate ? commitDate.format('YYYY-MM-DD') : null;
+  const formattedDate = commitDate ? commitDate.format('YYYY.MM.DD') : null;
   const dayDiff = commitDate ? dayjs().startOf('day').diff(commitDate.startOf('day'), 'day') : null;
 
   return (
     <div className='flex h-fit flex-col items-center rounded-md text-base md:mt-14 md:items-end md:px-4 md:py-2 md:text-sm'>
-      <p className='text-sm text-gray-800 md:text-right md:text-xs'>마지막 업데이트</p>
+      <p className='text-muted-foreground text-sm md:text-right md:text-xs'>마지막 업데이트</p>
       <div className='flex w-full flex-col items-center'>
         {formattedDate && (
           <span className='font-semibold tracking-tight'>

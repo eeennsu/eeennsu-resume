@@ -5,7 +5,7 @@ export const notoSansKr = Noto_Sans_KR({
   display: 'fallback',
   subsets: ['latin'],
   style: 'normal',
-  variable: '--noto-sans_KR',
+  variable: '--font-noto-sans',
   fallback: ['system-ui'],
 });
 
@@ -14,6 +14,6 @@ export const nanumGothic = Nanum_Gothic({
   display: 'fallback',
   subsets: ['latin'],
   style: 'normal',
-  variable: '--nanum-gothic',
+  variable: '--font-nanum-gothic',
   fallback: ['system-ui'],
 });

@@ -12,7 +12,7 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
   return (
     <div className='flex flex-col gap-3.5 border-b border-gray-400 pb-10 last:border-none last:pb-0'>
       <div className='flex flex-col gap-1 md:flex-row md:justify-between md:gap-4'>
-        <h4 className='text-lg font-bold md:text-xl'>{title}</h4>
+        <h4 className='text-lg font-bold md:text-[22px]'>{title}</h4>
         <div className='flex items-center justify-end gap-3 md:justify-start'>
           <p className='text-sm text-gray-600'>
             {startDate} ~ {endDate || '현재'}
@@ -24,10 +24,10 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
           )}
         </div>
       </div>
-      <ol className='ml-4 flex list-inside list-decimal flex-col gap-10 md:gap-7'>
+      <ol className='ml-4 flex list-inside list-decimal flex-col gap-10 md:gap-11'>
         {doneList?.map((done, index) => (
           <li key={`${done.subject}-${index}`} className='custom-decimal-list'>
-            <span className='text-base font-semibold text-slate-800'>{done.subject}</span>
+            <span className='text-lg font-semibold text-slate-800'>{done.subject}</span>
 
             {done.details && (
               <ul className='ml-4 list-outside list-disc text-sm'>
@@ -36,7 +36,7 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
 
                   if (typeof detail === 'string') {
                     return (
-                      <li key={index} className='mb-1 ml-6 text-gray-800'>
+                      <li key={index} className='mb-1 ml-6 font-normal'>
                         <Markdown>{detail}</Markdown>
                       </li>
                     );

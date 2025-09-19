@@ -8,7 +8,7 @@
 }
 
 @theme inline {
-  --font-noto-sans_KR: 'Noto Sans KR', sans-serif;
+  --font-noto-sans: 'Noto Sans KR', sans-serif;
   --font-nanum-gothic: 'Nanum Gothic', sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
