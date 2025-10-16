@@ -60,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className='font-noto-sans_KR md:font-nanum-gothic antialiased'>
-        <div className='flex min-h-screen flex-col bg-white'>
+        <div className='flex min-h-screen flex-col'>
           <div className='mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>{children}</div>
           <Footer />
         </div>

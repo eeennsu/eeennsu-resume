@@ -27,10 +27,10 @@ const ProfileWidget: FC = () => {
 
           <div className='flex flex-col items-center gap-10 md:ml-6 md:items-start'>
             <div className='text-center md:text-left'>
-              <h1 className='font text-3xl font-semibold text-gray-900 md:text-4xl'>
+              <h1 className='font font-serif text-3xl font-semibold text-gray-900 md:text-4xl'>
                 {profile?.name}
               </h1>
-              <p className='mt-1 text-lg font-semibold text-gray-500 md:mt-5'>
+              <p className='mt-1 text-lg font-semibold text-gray-800'>
                 {profile?.birthDay}
                 <span className='ml-2 text-base'>(만{getKoreanAge(MY_PROFILE.BIRTHDAY)} 세)</span>
               </p>
