@@ -10,7 +10,7 @@ import SkillsWidget from '@widgets/Skill';
 
 const HomePage: FC = async () => {
   return (
-    <main className='flex flex-col gap-8 md:gap-16'>
+    <main className='flex flex-col gap-10 md:gap-16'>
       <ProfileWidget />
       <IntroduceWidget />
       <ExperienceWidget />

@@ -7,7 +7,7 @@ const CertificationsWidget: FC = () => {
   const certifications = loadSubjects<ICertification[]>('certification.yml') || [];
 
   return (
-    <section className='flex w-full max-md:flex-col max-md:gap-2'>
+    <section className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>Certifications</SectionTitle>
 
       <div className='flex flex-col gap-7'>

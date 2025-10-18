@@ -7,7 +7,7 @@ const EducationWidget: FC = () => {
   const education = loadSubjects<IEducation>('education.yml');
 
   return (
-    <section className='flex w-full max-md:flex-col max-md:gap-2'>
+    <section className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>Education</SectionTitle>
       <div className='flex flex-col gap-4'>
         <div className='flex flex-col-reverse gap-0.5 md:flex-col'>

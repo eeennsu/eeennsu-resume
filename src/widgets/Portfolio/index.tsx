@@ -9,7 +9,7 @@ const PortfolioWidget: FC = () => {
   const portfolios = loadSubjects<IPortfolio[]>('portfolio.yml') || [];
 
   return (
-    <section className='flex w-full max-md:flex-col max-md:gap-2'>
+    <section className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>Portfolio</SectionTitle>
 
       <div className='grid w-full md:grid-cols-2'>

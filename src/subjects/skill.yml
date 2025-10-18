@@ -16,17 +16,18 @@
     - Recoil
     - Shadcn
     - Express
-- category: Databases & DevOps
+- category: ETC
   items:
-    - Docker
-    - GitHub Actions
-    - EC2
-    - S3
-    - Vercel
     - Prisma
     - Drizzle
     - Neon
     - Supabase
+    - Vercel
+    - Docker
+    - GitHub Actions
+    - EC2
+    - S3
+
 - category: Tools
   items:
     - Git & GitHub
