@@ -10,11 +10,11 @@ type Props = ICompanyExperience['activities'][number];
 
 const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration, doneList }) => {
   return (
-    <div className='flex flex-col gap-3.5 border-b border-gray-400 pb-10 last:border-none last:pb-0'>
+    <div className='group relative flex flex-col gap-4 overflow-hidden rounded-md border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-[0_2px_10px_rgba(0,0,0,0.06)]'>
       <div className='flex flex-col gap-1 md:flex-row md:justify-between md:gap-4'>
-        <h4 className='text-lg font-bold md:text-[22px]'>{title}</h4>
+        <h4 className='text-lg font-bold md:text-2xl'>{title}</h4>
         <div className='flex items-center justify-end gap-3 md:justify-start'>
-          <p className='text-sm text-gray-600'>
+          <p className='text-base text-gray-600'>
             {startDate} ~ {endDate || '현재'}
           </p>
           {endDate && (
@@ -24,13 +24,16 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
           )}
         </div>
       </div>
-      <ol className='ml-4 flex list-inside list-decimal flex-col gap-10 md:gap-11'>
+      <ol className='ml-4 flex list-inside list-decimal flex-col'>
         {doneList?.map((done, index) => (
-          <li key={`${done.subject}-${index}`} className='custom-decimal-list'>
+          <li
+            key={`${done.subject}-${index}`}
+            className='border-b border-gray-300 bg-white px-3 py-6 text-gray-800 transition-colors first:rounded-t-md last:border-b-0 hover:bg-gray-100'
+          >
             <span className='text-lg font-semibold text-slate-800'>{done.subject}</span>
 
             {done.details && (
-              <ul className='ml-4 list-outside list-disc text-sm'>
+              <ul className='ml-4 list-outside list-disc text-base'>
                 {done.details.map((detail, index) => {
                   const isPreviousString = index > 0 && typeof done.details[index - 1] === 'string';
 
@@ -50,7 +53,7 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
                         isPreviousString && 'mt-4',
                       )}
                     >
-                      <Markdown className='marker-problem flex gap-0.5 text-orange-600'>
+                      <Markdown className='marker-problem flex gap-0.5 text-orange-400'>
                         {detail.problem}
                       </Markdown>
                       <Markdown className='marker-solution flex gap-0.5 font-medium text-green-600'>

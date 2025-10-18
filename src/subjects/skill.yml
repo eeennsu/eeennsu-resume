@@ -2,7 +2,7 @@
   items:
     - JavaScript (ES6+)
     - TypeScript
-    - HTML / CSS
+    - HTML5 / CSS3
     - Java
     - C#
 - category: Libraries & Frameworks
@@ -13,21 +13,20 @@
     - Emotion
     - Tanstack Query
     - Zustand
-    - Shadcn
     - Recoil
-    - Prisma
+    - Shadcn
     - Express
 - category: Databases & DevOps
   items:
-    - Neon
-    - Prisma
-    - Supabase (postgresql)
-    - Drizzle
+    - Docker
     - GitHub Actions
-    - AWS S3
-    - MongoDB
+    - EC2
+    - S3
     - Vercel
-    - Netlify
+    - Prisma
+    - Drizzle
+    - Neon
+    - Supabase
 - category: Tools
   items:
     - Git & GitHub
