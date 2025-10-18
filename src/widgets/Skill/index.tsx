@@ -9,7 +9,7 @@ const SkillsWidget: FC = () => {
   const skills = loadSubjects<ISkill[]>('skill.yml') || [];
 
   return (
-    <section className='flex w-full max-md:flex-col max-md:gap-2'>
+    <section className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>Skills</SectionTitle>
       <div className='flex w-full flex-col gap-2'>
         <div className='flex flex-col'>

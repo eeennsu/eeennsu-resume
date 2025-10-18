@@ -11,7 +11,7 @@ const ExperienceWidget: FC = () => {
   const experiences = loadSubjects<ICompanyExperience[]>('experience.yml') || [];
 
   return (
-    <section className='flex w-full max-md:flex-col max-md:gap-2'>
+    <section className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>Experience</SectionTitle>
       <div className='flex grow flex-col'>
         {experiences.map((experience, index, arr) => (

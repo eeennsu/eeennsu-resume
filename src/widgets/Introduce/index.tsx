@@ -14,7 +14,7 @@ const IntroduceWidget: FC = () => {
     raw.map(intro => intro.replace('{{age}}', age.toString()).replace('{{career}}', career)) || [];
 
   return (
-    <section className='flex w-full max-md:flex-col max-md:gap-2'>
+    <section className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>Introduce</SectionTitle>
       <div className='flex grow flex-col gap-2'>
         <div className='flex flex-col gap-4 text-lg break-keep'>

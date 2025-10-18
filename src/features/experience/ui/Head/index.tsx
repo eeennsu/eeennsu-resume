@@ -13,7 +13,7 @@ type Props = {
 const ExperienceHead: FC<Props> = ({ experience }) => {
   return (
     <div className='flex flex-col justify-between gap-3 md:flex-row md:items-end'>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center gap-2 max-md:justify-center'>
         <h3 className='rounded-md bg-gray-800 px-3 py-1.5 text-xl font-semibold tracking-tight text-white'>
           {experience.companyName}
         </h3>
@@ -25,7 +25,7 @@ const ExperienceHead: FC<Props> = ({ experience }) => {
         )}
       </div>
 
-      <div className='flex flex-col items-start gap-0.5 md:items-end'>
+      <div className='flex flex-col items-center gap-0.5 md:items-end'>
         <p className='text-base font-medium text-gray-800'>
           {experience.startDate} ~ {experience?.endDate || '현재'}
         </p>
