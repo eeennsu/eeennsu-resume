@@ -1,3 +1,18 @@
+- name: Bread And Source
+  descriptionList:
+    - 실제 운영중인 베이커리의 사이트 & 백오피스 (beta)
+  githubLink: https://github.com/eeennsu/bns
+  siteLink: https://bns-git-beta-eunsus-projects-093b2f33.vercel.app/
+  tools:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - Neon
+    - Drizzle
+    - Zustand
+    - Tanstack Query
+    - Framer motion
+
 - name: Eunsutory
   descriptionList:
     - 개인 회고 & 소개 블로그
@@ -55,14 +70,13 @@
     - Tailwind CSS
     - Clerk
     - Mongoose
-
-- name: Movie TV Actor
-  descriptionList:
-    - 영화 추천 사이트
-  githubLink: https://github.com/eeennsu/react-movie-tv-actor
-  siteLink: https://eeennsu.github.io/react-movie-tv-actor
-  tools:
-    - React.js
-    - TypeScript
-    - Antd
-    - TMDB API
+# - name: Movie TV Actor
+#   descriptionList:
+#     - 영화 추천 사이트
+#   githubLink: https://github.com/eeennsu/react-movie-tv-actor
+#   siteLink: https://eeennsu.github.io/react-movie-tv-actor
+#   tools:
+#     - React.js
+#     - TypeScript
+#     - Antd
+#     - TMDB API

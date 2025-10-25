@@ -9,7 +9,8 @@ const badgeVariants = cva('inline-flex items-center justify-center w-fit font-me
       orange: 'bg-orange-400 text-white',
       emerald: 'bg-emerald-500 text-white',
       black: 'bg-black text-white',
-      dark: 'bg-gray-700 text-white',
+      dark: 'bg-gray-400 text-white',
+      blue: 'bg-blue-400 text-white',
     },
     size: {
       sm: 'text-xs py-0.5 px-2 h-6',

@@ -1,10 +1,9 @@
+import SharedTooltip from '@shared/components/Tooltip';
 import { getCompanyServiceDuration } from '@shared/libs/date';
 import { ICompanyExperience } from '@shared/types/subjects';
 import dayjs from 'dayjs';
 import { CircleHelp } from 'lucide-react';
 import type { FC } from 'react';
-
-import NoteModal from '../NoteModal';
 
 type Props = {
   experience: ICompanyExperience;
@@ -19,9 +18,12 @@ const ExperienceHead: FC<Props> = ({ experience }) => {
         </h3>
 
         {experience.endDate && experience.note && (
-          <NoteModal description={experience.note.description}>
+          <SharedTooltip content={experience.note.description}>
             <CircleHelp className='size-5 text-gray-500' />
-          </NoteModal>
+          </SharedTooltip>
+          // <NoteModal description={}>
+
+          // </NoteModal>
         )}
       </div>
 

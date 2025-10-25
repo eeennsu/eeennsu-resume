@@ -1,8 +1,10 @@
 import { SITE_URL } from '@shared/consts/commons';
-import '@shared/css/globals.css';
+import { TooltipProvider } from '@shared/shadcn-ui/ui/tooltip';
 import type { Metadata } from 'next';
 
 import Footer from '@widgets/Footer';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -60,10 +62,14 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className='font-noto-sans_KR md:font-nanum-gothic antialiased'>
-        <div className='flex min-h-screen flex-col'>
-          <div className='mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>{children}</div>
-          <Footer />
-        </div>
+        <TooltipProvider>
+          <div className='flex min-h-screen flex-col'>
+            <div className='3xl:max-w-[1500px] mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
+              {children}
+            </div>
+            <Footer />
+          </div>
+        </TooltipProvider>
       </body>
     </html>
   );

@@ -1,7 +1,10 @@
 - companyName: (주)원더라운드
   startDate: '2025.04.14'
   activities:
+    - startDate: '2025.10.23'
+      title: '자사 애플리케이션 리뉴얼에 따른 관리자 시스템의 핵심 기능 전면 재구축'
     - startDate: '2025.07.03'
+      endDate: '2025.10-16'
       title: 자사 여행 콘텐츠 예약 및 결제 플랫폼의 관리자 페이지 개발
       doneList:
         - subject: '상품 / 패키지의 생성 및 수정 폼 페이지 개발'
@@ -24,11 +27,17 @@
         - subject: 예약 상세 내역 조회 페이지 개발
           details:
             - 환불할 금액을 퍼센트 단위로 선택해 부분 환불 또는 전체 환불이 가능한 폼 구현
+    - startDate: '2025.09.24'
+      endDate: '2025.10.02'
+      title: Wix로 제작된 여행 플랫폼 웹사이트를 Next.js 환경으로 전환
+      doneList:
+        - subject: '데스크톱, 태블릿, 모바일 환경에 대응하는 반응형 디자인 구현'
+        - subject: 'Docker, ECR, GitHub Actions를 이용한 CI/CD 파이프라인 구축'
 
     - startDate: '2025.04.14'
       endDate: '2025.07.02'
       title: 자사 애플리케이션 관리자 페이지 시스템 고도화 및 유지보수
-      estimatedDuration: 2.5
+      estimatedDuration: 2.5개월
       doneList:
         - subject: 기존 관리자 페이지 기능 리뉴얼
           details:
@@ -76,7 +85,7 @@
       doneList:
         - subject: WebSocket을 활용하여 실시간 강의 중 강사와 수강생들의 즉각적인 상호작용이 가능한 돌발 퀴즈 기능 개발
           details:
-            - problem: 실시간 데이터 기반 차트가 매우 빠른 속도로 갱신되어 실제 데이터 값을 렌더링하지 못하는 문제 직면
+            - problem: 실시간 데이터 기반 차트가 매우 빠른 속도로 갱신되어 실제 데이터 값을 렌더링하지 못하는 문제 발생
               solution: '결과 데이터 상태 값에 `throttle`을 적용하여 불필요한 업데이트를 줄이고, 데이터 유실없이 안정적으로 렌더링되도록 개선. 1000ms당 최대 n회 (실시간 미팅에 접속 중인 인원 수, 약 1500명) --> `throttle` 적용 후 50ms 당 한번씩 결과를 적용토록 함, 이후 cpu 사용률 20%감소'
             - problem: 돌발퀴즈 바로 시작 직전에 네트워크가 끊겼다가 다시 연결되면, 방금 진행한 돌발퀴즈가 뜨지 않는 문제에 직면
               solution: 재연결 로직을 추가. 기존 웹소켓 핑퐁의 count 값을 비교하고, 개수가 다른체 웹소켓이 연결이 되었으면 재연결이라고 판단. 이후 진행중인 돌발퀴즈를 다시 불러오도록 api를 호출하여 문제 해결
@@ -89,19 +98,19 @@
               solution: '권한이 필요한 페이지에 접근할 때 인증된 사용자인지 먼저 확인하는 미들웨어를 `React Router Dom`의 `Maps`를 이용해 직접 구현. 이후 권한이 허용되면 페이지로 이동하고, 아닐 경우 접근을 차단하도록 처리'
     - startDate: '2024.10.01'
       endDate: '2024.11.15'
-      estimatedDuration: 1.5
+      estimatedDuration: 1.5개월
       title: 기존 플랫폼의 고도화 및 유지보수
       doneList:
         - subject: 무한 스크롤 / Drag & Drop 이 가능한 테이블 컴포넌트 개발
           details:
-            - problem: 무한 스크롤에서 각 `row` 높이의 측정값이 일정하지 않아 가상화된 테이블에서 스크롤 시 데이터가 보이지 않거나 UI가 밀리는 문제 직면
+            - problem: 무한 스크롤에서 각 `row` 높이의 측정값이 일정하지 않아 가상화된 테이블에서 스크롤 시 데이터가 보이지 않거나 UI가 밀리는 문제 발생
               solution: '초기 `row` 높이를 추정하는 `estimateSize` 값을 설정하고, 이후 실제 렌더링된 `row`의 높이를 측정하여 동적으로 업데이트하여 문제 해결'
         - subject: 강의별 학습 진행 상태와 성과를 시각화하여 분석할 수 있는 관리자 페이지 개발
           details:
             - 단순히 그래프를 추가하는 것뿐만 아니라, 다양한 데이터 종류에 따라 UX 설계가 달라져야 함을 깨달음
     - startDate: '2024.08.02'
       endDate: '2024.10.01'
-      estimatedDuration: 2
+      estimatedDuration: 2개월
       title: 코딩테스트 전용 플랫폼 개발
       doneList:
         - subject: '`React-Code Mirror`를 커스터마이징하여 문제풀이가 가능한 코딩 에디터 개발'
@@ -113,11 +122,11 @@
           details:
             - problem: '유저가 작성한 코드를 지속적으로 저장하도록 zustand의 `persist` `(localStorage)` 활용했으나, 문제와 언어별로 데이터가 많아질수록 관리가 어려워짐'
               solution: '문제의 `id`를 객체의 `key`로 두고, 언어별로 중첩하여 유저 코드를 `JSON` 문자열로 저장, 저장 공간 최소화를 위해 최신 10개의 문제만 유지하도록 구현'
-            - problem: 제출한 문제의 채점 시간이 길어져 UX가 저하되는 문제 직면
+            - problem: 제출한 문제의 채점 시간이 길어져 UX가 저하되는 문제 발생
               solution: 대기 시간 동안 스켈레톤 UI를 보여주어 사용자가 대기 중임을 인지할 수 있도록 개선
         - subject: 유저가 자유롭게 관리할 수 있는 커스텀 테스트 케이스 기능 개발
           details:
-            - problem: '사용자가 입력한 테스트 케이스가 문제에서 지정한 데이터 타입(`int`, `float`, `boolean`, 이중 배열 등)과 일치하지 않거나, `JSON` 형식에서 올바르지 않은 따옴표를 사용하여 실행 중 오류가 발생하는 문제 직면'
+            - problem: '사용자가 입력한 테스트 케이스가 문제에서 지정한 데이터 타입(`int`, `float`, `boolean`, 이중 배열 등)과 일치하지 않거나, `JSON` 형식에서 올바르지 않은 따옴표를 사용하여 실행 중 오류가 발생하는 문제 발생'
               solution: '입력값을 사전에 검증하는 유효성 검사 로직을 적용하여 문제에서 지정한 데이터 타입과 일치하는지 확인하고, `JSON` 문자열 입력 시 싱글 따옴표가 포함된 경우 경고 메시지를 띄운 후 입력을 거부하도록 처리. 이를 통해 입력 단계에서 오류를 방지하고, 실행 중 예기치 않은 데이터 타입 오류를 최소화'
         - subject: React Hook Form과 Zod를 활용해 문제를 관리하는 관리자 페이지 개발
           details:
@@ -125,14 +134,14 @@
               solution: 관련 항목을 3가지 주요 탭으로 나누고, 각 탭 이동시 유효성 검사를 사전에 실행하도록 개선. 유효성 검사 로직은 전역 스토어에서 관리하며, 각 탭이 마운트될 때 해당 탭의 검증 함수를 설정하여 일관된 로직을 유지
     - startDate: '2024.07.10'
       endDate: '2024.08.02'
-      estimatedDuration: 1
+      estimatedDuration: 1개월
       title: 타사의 소개 및 지원서 사이트 개발
       doneList:
         - subject: 타사의 특장점을 소개하는 정적 페이지 제작
         - subject: 컴포넌트의 네임스페이스 패턴을 기반으로 만든 form을 통해 지원서 양식 개발
     - startDate: '2024.05.27'
       endDate: '2024.06.28'
-      estimatedDuration: 1
+      estimatedDuration: 1개월
       title: LMS 개발
       doneList:
         - subject: 프로젝트 설계, 공통 레이아웃과 컴포넌트 구조화, 기능 모듈화
@@ -146,7 +155,7 @@
             - 단순히 사용자가 입력한 데이터를 전송하는 데 그치는 것이 아니라, 안정적으로 저장하고 복구할 수 있는 UX를 고민하는 것이 중요함을 배움
     - startDate: '2024.03.11'
       endDate: '2024.05.24'
-      estimatedDuration: 2.5
+      estimatedDuration: 2.5개월
       title: 온라인 IT 교육 사이트 자사 플랫폼 개발
       doneList:
         - subject: 프로젝트 설계, 공통 레이아웃과 컴포넌트 구조화

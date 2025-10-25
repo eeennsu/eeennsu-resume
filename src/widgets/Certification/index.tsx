@@ -4,11 +4,11 @@ import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import type { FC } from 'react';
 
 const CertificationsWidget: FC = () => {
-  const certifications = loadSubjects<ICertification[]>('certification.yml') || [];
+  const certifications = loadSubjects<ICertification[]>('certification.yaml') || [];
 
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-4'>
-      <SectionTitle>Certifications</SectionTitle>
+      <SectionTitle>Certification</SectionTitle>
 
       <div className='flex flex-col gap-7'>
         <ul className='list-inside list-disc'>

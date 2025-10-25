@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import SkillCard from '@features/skill/ui/Card';
 
 const SkillsWidget: FC = () => {
-  const skills = loadSubjects<ISkill[]>('skill.yml') || [];
+  const skills = loadSubjects<ISkill[]>('skill.yaml') || [];
 
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-4'>

@@ -4,7 +4,7 @@ import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import type { FC } from 'react';
 
 const EducationWidget: FC = () => {
-  const education = loadSubjects<IEducation>('education.yml');
+  const education = loadSubjects<IEducation>('education.yaml');
 
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-4'>

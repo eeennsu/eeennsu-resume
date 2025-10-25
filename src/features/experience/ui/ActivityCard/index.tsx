@@ -10,7 +10,7 @@ type Props = ICompanyExperience['activities'][number];
 
 const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration, doneList }) => {
   return (
-    <div className='relative flex flex-col gap-4 overflow-hidden rounded-md border border-gray-200 p-5 shadow-[0_2px_10px_rgba(0,0,0,0.06)]'>
+    <div className='relative flex flex-col gap-4 overflow-hidden rounded-sm border border-gray-200 p-5 shadow-[0_2px_10px_rgba(0,0,0,0.06)]'>
       <div className='flex flex-col gap-1 md:flex-row md:justify-between md:gap-4'>
         <h4 className='text-xl font-bold md:text-2xl'>{title}</h4>
         <div className='flex items-center justify-end gap-3 md:justify-start'>
@@ -18,8 +18,8 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
             {startDate} ~ {endDate || '현재'}
           </p>
           {endDate && (
-            <Badge variant='cyan'>
-              {estimatedDuration || getEstimatedDuration(startDate, endDate)}개월
+            <Badge variant='blue'>
+              {estimatedDuration || getEstimatedDuration(startDate, endDate)}
             </Badge>
           )}
         </div>
@@ -28,9 +28,9 @@ const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration,
         {doneList?.map((done, index) => (
           <li
             key={`${done.subject}-${index}`}
-            className='border-b border-gray-300 bg-white p-2 text-gray-800 transition-colors first:rounded-t-md last:border-b-0 first-of-type:pt-3 last-of-type:pb-3 hover:bg-neutral-100 md:px-3 md:py-6'
+            className='border-b border-gray-300 bg-white p-2 text-gray-800 first:rounded-t-md last:border-b-0 first-of-type:pt-3 last-of-type:pb-3 md:px-3 md:py-6'
           >
-            <span className='text-base font-semibold text-slate-800 lg:text-lg'>
+            <span className='text-base font-semibold text-slate-800 underline-offset-4 lg:text-lg'>
               {done.subject}
             </span>
 

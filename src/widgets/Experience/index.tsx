@@ -8,7 +8,7 @@ import ActivityCard from '@features/experience/ui/ActivityCard';
 import ExperienceHead from '@features/experience/ui/Head';
 
 const ExperienceWidget: FC = () => {
-  const experiences = loadSubjects<ICompanyExperience[]>('experience.yml') || [];
+  const experiences = loadSubjects<ICompanyExperience[]>('experience.yaml') || [];
 
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-4'>

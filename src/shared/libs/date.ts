@@ -4,13 +4,19 @@ export const getEstimatedDuration = (startDate: string, endDate: string, offsetD
   const diffMonth = dayjs(endDate).diff(dayjs(startDate), 'month');
   const diffDays = dayjs(endDate).diff(dayjs(startDate), 'day');
 
+  // 1개월 미만
   if (diffMonth < 1) {
-    return diffDays >= offsetDay ? 1 : 0;
+    // 일 단위 차이가 offsetDay 이상이면 "1개월"
+    if (diffDays >= offsetDay) return '1개월';
+    // 그 외에는 주 단위로 표시
+    const weeks = Math.floor(diffDays / 7);
+    return `${weeks}주`;
   }
 
   const remainingDays = diffDays - diffMonth * 30;
+  const estimatedMonths = remainingDays > offsetDay ? diffMonth + 1 : diffMonth;
 
-  return remainingDays > offsetDay ? diffMonth + 1 : diffMonth;
+  return `${estimatedMonths}개월`;
 };
 
 export const getKoreanAge = (birthDate: string) => {

@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import PortfolioCard from '@features/portfolio/ui/Card';
 
 const PortfolioWidget: FC = () => {
-  const portfolios = loadSubjects<IPortfolio[]>('portfolio.yml') || [];
+  const portfolios = loadSubjects<IPortfolio[]>('portfolio.yaml') || [];
 
   return (
     <section className='flex w-full max-md:flex-col max-md:gap-4'>
