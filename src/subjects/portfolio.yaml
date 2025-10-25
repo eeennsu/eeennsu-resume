@@ -72,7 +72,7 @@
     - Mongoose
 # - name: Movie TV Actor
 #   descriptionList:
-#     - 영화 추천 사이트
+#     - 최신 영화 추천 사이트
 #   githubLink: https://github.com/eeennsu/react-movie-tv-actor
 #   siteLink: https://eeennsu.github.io/react-movie-tv-actor
 #   tools:
