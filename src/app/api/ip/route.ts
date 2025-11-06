@@ -7,3 +7,5 @@ export const GET = (req: NextRequest) => {
 
   return Response.json({ ip });
 };
+
+export const runtime = 'edge'; // 중요
