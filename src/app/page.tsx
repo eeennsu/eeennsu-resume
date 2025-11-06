@@ -25,6 +25,3 @@ const HomePage: FC = async () => {
 };
 
 export default HomePage;
-export const dynamic = 'force-dynamic';
-
-//https://eeennsu-github-io.vercel.app/
