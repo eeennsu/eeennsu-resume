@@ -1,0 +1,2 @@
+ALTER TABLE "visitors" ALTER COLUMN "created_at" SET DEFAULT (NOW() AT TIME ZONE 'Asia/Seoul');--> statement-breakpoint
+ALTER TABLE "visits" ALTER COLUMN "visited_at" SET DEFAULT (NOW() AT TIME ZONE 'Asia/Seoul');
