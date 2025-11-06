@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://eeennsu.github.io';
+export const SITE_URL = 'https://eunsu-resume.vercel.app';
 
 export const MY_PROFILE = {
   BIRTHDAY: '1999.01.21',

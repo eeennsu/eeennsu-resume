@@ -27,6 +27,7 @@
       "@entities/*": ["src/entities/*"],
       "@shared/*": ["src/shared/*"],
       "@lib/*": ["src/lib/*"],
+      "@db/*": ["src/db/*"]
       // "@utils/*": ["src/shared/utils/*"],
       // "@shadcn-ui/*": ["src/shared/shadcn-ui/*"],
       // "@magic-ui/*": ["src/shared/magic-ui/*"],

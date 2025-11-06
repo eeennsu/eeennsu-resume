@@ -5,6 +5,6 @@ const octokit = new Octokit({
 });
 
 export const OWNER = 'eeennsu';
-export const REPO = 'eeennsu.github.io';
+export const REPO = 'eeennsu-resume';
 
 export default octokit;

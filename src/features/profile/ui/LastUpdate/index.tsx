@@ -1,36 +1,35 @@
 'use client';
 
 import dayjs, { Dayjs } from 'dayjs';
-import { useEffect, useState, type FC } from 'react';
-
-import apiGetBranchCommitDate from '@features/github/apis/getBranchCommitDate';
+import { useState, type FC } from 'react';
 
 const LastUpdate: FC = () => {
-  const [commitDate, setCommitDate] = useState<Dayjs | null>(null);
+  // const [commitDate, setCommitDate] = useState<Dayjs | null>(null);
+  const [commitDate] = useState<Dayjs>(dayjs('2025.11.02'));
 
-  const setDefaultCommitDate = (date: string | Dayjs) => {
-    setCommitDate(dayjs(date).subtract(14, 'days'));
-  };
+  // const setDefaultCommitDate = (date: string | Dayjs) => {
+  //   setCommitDate(dayjs(date).subtract(14, 'days'));
+  // };
 
-  useEffect(() => {
-    const fetchBranchData = async () => {
-      try {
-        const isoDate = await apiGetBranchCommitDate();
+  // useEffect(() => {
+  //   const fetchBranchData = async () => {
+  //     try {
+  //       const isoDate = await apiGetBranchCommitDate();
 
-        if (!isoDate) {
-          setDefaultCommitDate(dayjs());
-          return;
-        }
+  //       if (!isoDate) {
+  //         setDefaultCommitDate(dayjs());
+  //         return;
+  //       }
 
-        setCommitDate(dayjs(isoDate));
-      } catch (error) {
-        console.log(error);
-        setDefaultCommitDate(dayjs());
-      }
-    };
+  //       setCommitDate(dayjs(isoDate));
+  //     } catch (error) {
+  //       console.log(error);
+  //       setDefaultCommitDate(dayjs());
+  //     }
+  //   };
 
-    fetchBranchData();
-  }, []);
+  //   fetchBranchData();
+  // }, []);
 
   const formattedDate = commitDate ? commitDate.format('YYYY.MM.DD') : null;
   const dayDiff = commitDate ? dayjs().startOf('day').diff(commitDate.startOf('day'), 'day') : null;
