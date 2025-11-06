@@ -9,9 +9,10 @@ import ProfileWidget from '@widgets/Profile';
 import SkillsWidget from '@widgets/Skill';
 
 const HomePage: FC = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || ''}/api/ip`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || ''}/api/ip`);
+  const data = await response.json();
 
-  console.log('res', res);
+  console.log('data', data);
 
   return (
     <main className='flex flex-col gap-10 md:gap-16'>
@@ -27,3 +28,4 @@ const HomePage: FC = async () => {
 };
 
 export default HomePage;
+export const dynamic = 'force-dynamic';
