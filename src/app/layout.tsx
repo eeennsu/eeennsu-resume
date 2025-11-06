@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
   },
   verification: {
-    google: '-gVPli_Efm-GOJTalY42H0Wtz_NhSRCUZleJ8MuQRmU',
+    google: 'rfbSQfyWkELUPUilE1aXzITToKOXCSOigigBxV75ZwA',
   },
   other: {
     'naver-site-verification': 'be1920ece0d2c39bde564fd813a10eb2b314ec35',
