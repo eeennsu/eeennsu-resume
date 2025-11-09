@@ -12,7 +12,7 @@ import SkillsWidget from '@widgets/Skill';
 const HomePage: FC = async () => {
   return (
     <main className='flex flex-col gap-10 md:gap-16'>
-      <CheckingWidget />
+      {process.env.NODE_ENV !== 'development' ? <CheckingWidget /> : null}
       <ProfileWidget />
       <IntroduceWidget />
       <ExperienceWidget />
