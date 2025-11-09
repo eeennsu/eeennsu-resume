@@ -9,6 +9,7 @@ export const visitors = pgTable('visitors', {
   createdAt: timestamp('created_at', { withTimezone: true })
     .default(sql`(NOW() AT TIME ZONE 'Asia/Seoul')`)
     .notNull(),
+  memo: text('memo'),
 });
 
 export const visits = pgTable('visits', {

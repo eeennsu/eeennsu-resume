@@ -15,6 +15,13 @@
       "when": 1762438092226,
       "tag": "0001_flawless_mantis",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762651128336,
+      "tag": "0002_grey_shockwave",
+      "breakpoints": true
     }
   ]
 }
