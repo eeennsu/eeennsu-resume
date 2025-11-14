@@ -1,6 +1,6 @@
 {
-  "homepage": "https://eeennsu.github.io/eeennsu.github.io",
-  "name": "eeennsu.github.io",
+  "homepage": "https://eunsu-resume.vercel.app/",
+  "name": "eunsu-resume",
   "version": "0.1.0",
   "private": true,
   "type": "module",

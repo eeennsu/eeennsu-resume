@@ -4,9 +4,7 @@ const config = {
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   sitemapSize: 5000,
-  outDir: './out',
-  changefreq: 'monthly',
-  priority: 1,
+  outDir: './public',
 };
 
 export default config;
