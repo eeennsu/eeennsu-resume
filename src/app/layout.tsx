@@ -28,10 +28,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_URL,
-    languages: {
-      en: '/en',
-      ko: '/',
-    },
   },
   openGraph: {
     type: 'website',
