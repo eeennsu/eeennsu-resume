@@ -1,71 +1,73 @@
 // import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/lib/ui/accordion';
-import Badge from '@shared/components/Badge';
 import Markdown from '@shared/components/Markdown';
-import { getEstimatedDuration } from '@shared/libs/date';
 import { cn } from '@shared/shadcn-ui/utils';
 import { ICompanyExperience } from '@shared/types/subjects';
 import { FC } from 'react';
 
-type Props = ICompanyExperience['activities'][number];
+type Props = ICompanyExperience['activities'][number] & {
+  index: number;
+};
 
-const ActivityCard: FC<Props> = ({ title, startDate, endDate, estimatedDuration, doneList }) => {
+const ActivityCard: FC<Props> = ({ title, doneList, index }) => {
   return (
-    <div className='relative flex flex-col gap-4 overflow-hidden rounded-sm border border-gray-200 p-5 shadow-[0_2px_10px_rgba(0,0,0,0.06)]'>
+    <div className='group relative flex flex-col gap-6 overflow-hidden border-b border-b-slate-400/80 bg-white p-6 transition-all last-of-type:border-b-0 last-of-type:pb-0 md:p-9'>
       <div className='flex flex-col gap-1 md:flex-row md:justify-between md:gap-4'>
-        <h4 className='text-xl font-bold md:text-2xl'>{title}</h4>
-        <div className='flex items-center justify-end gap-3 md:justify-start'>
-          <p className='text-sm text-gray-600 md:text-base'>
-            {startDate} ~ {endDate || '현재'}
-          </p>
-          {endDate && (
-            <Badge variant='blue'>
-              {estimatedDuration || getEstimatedDuration(startDate, endDate)}
-            </Badge>
-          )}
+        <div className='flex items-start gap-3 md:gap-4'>
+          <span className='mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-sm font-bold text-slate-700 md:mt-1 md:h-8 md:w-8 md:text-base'>
+            {index + 1}
+          </span>
+          <h4 className='text-xl font-bold text-slate-900 md:text-2xl'>{title}</h4>
         </div>
       </div>
-      <ol className='flex list-inside list-decimal flex-col md:ml-4'>
+      <ol className='flex list-outside list-decimal flex-col gap-8 pl-5 md:pl-6'>
         {doneList?.map((done, index) => (
-          <li
-            key={`${done.subject}-${index}`}
-            className='border-b border-gray-300 bg-white p-2 text-gray-800 first:rounded-t-md last:border-b-0 first-of-type:pt-3 last-of-type:pb-3 md:px-3 md:py-6'
-          >
-            <span className='text-base font-semibold text-slate-800 underline-offset-4 lg:text-lg'>
-              {done.subject}
-            </span>
+          <li key={`${done.subject}-${index}`} className='pl-2'>
+            <div className='flex flex-col gap-3 md:gap-4'>
+              <span className='text-lg font-semibold text-slate-800 lg:text-xl'>
+                {done.subject}
+              </span>
 
-            {done.details && (
-              <ul className='ml-1 flex list-outside list-disc flex-col gap-2 text-sm md:ml-4 md:gap-0 lg:text-base'>
-                {done.details.map((detail, index) => {
-                  const isPreviousString = index > 0 && typeof done.details[index - 1] === 'string';
+              {done.details && (
+                <ul className='flex list-outside list-disc flex-col gap-3 pl-5 text-slate-600 marker:text-slate-400 md:gap-4'>
+                  {done.details.map((detail, idx) => {
+                    const isPreviousString = idx > 0 && typeof done.details[idx - 1] === 'string';
 
-                  if (typeof detail === 'string') {
+                    if (typeof detail === 'string') {
+                      return (
+                        <li key={idx} className='pl-2 leading-relaxed'>
+                          <Markdown>{detail}</Markdown>
+                        </li>
+                      );
+                    }
+
                     return (
-                      <li key={index} className='mb-1 ml-6 font-normal'>
-                        <Markdown>{detail}</Markdown>
+                      <li
+                        key={detail.problem}
+                        className={cn(
+                          'mt-2 flex list-none flex-col gap-4 rounded-lg bg-slate-50 p-4 text-sm md:text-base',
+                          isPreviousString && 'mt-4',
+                        )}
+                      >
+                        <div className='flex flex-col gap-1'>
+                          <span className='text-xs font-bold tracking-wider text-orange-500 uppercase'>
+                            Problem
+                          </span>
+                          <Markdown className='text-slate-700'>{detail.problem}</Markdown>
+                        </div>
+                        <div className='flex flex-col gap-1'>
+                          <span className='text-xs font-bold tracking-wider text-blue-600 uppercase'>
+                            Solution
+                          </span>
+                          <Markdown className='font-medium text-slate-800'>
+                            {detail.solution}
+                          </Markdown>
+                        </div>
                       </li>
                     );
-                  }
-
-                  return (
-                    <li
-                      key={detail.problem}
-                      className={cn(
-                        'mb-4 flex list-none flex-col gap-0.5 font-medium last:mb-0',
-                        isPreviousString && 'mt-4',
-                      )}
-                    >
-                      <Markdown className='marker-problem flex gap-0.5 text-orange-400'>
-                        {detail.problem}
-                      </Markdown>
-                      <Markdown className='marker-solution flex gap-0.5 font-medium text-green-600'>
-                        {detail.solution}
-                      </Markdown>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+                  })}
+                </ul>
+              )}
+            </div>
           </li>
         ))}
       </ol>

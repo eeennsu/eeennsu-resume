@@ -19,15 +19,16 @@ const ExperienceWidget: FC = () => {
             <div className='flex flex-col gap-5'>
               <ExperienceHead experience={experience} />
 
-              <div className='flex flex-col gap-7'>
-                {experience.activities.map(activity => (
+              <div className='flex flex-col'>
+                {experience.activities.map((activity, j) => (
                   <ActivityCard
                     key={activity.title}
-                    startDate={activity.startDate}
-                    endDate={activity.endDate}
+                    // startDate={activity.startDate}
+                    // endDate={activity.endDate}
                     title={activity.title}
                     doneList={activity.doneList}
-                    estimatedDuration={activity.estimatedDuration}
+                    index={j}
+                    // estimatedDuration={activity.estimatedDuration}
                   />
                 ))}
               </div>
