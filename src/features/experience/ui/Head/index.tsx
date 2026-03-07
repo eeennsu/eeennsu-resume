@@ -13,7 +13,7 @@ const ExperienceHead: FC<Props> = ({ experience }) => {
   return (
     <div className='flex flex-col justify-between gap-3 md:flex-row md:items-end'>
       <div className='flex items-center gap-2 max-md:justify-center'>
-        <h3 className='rounded-md bg-gray-800 px-3 py-1.5 text-xl font-semibold tracking-tight text-white'>
+        <h3 className='rounded-md bg-gray-800 px-4 py-2.5 text-xl font-semibold tracking-tight text-white'>
           {experience.companyName}
         </h3>
 

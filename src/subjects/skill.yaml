@@ -9,14 +9,14 @@
   items:
     - React.js (vite)
     - Next.js
+    - React Native (CLI)
     - Tailwind CSS
-    - Emotion
     - Tanstack Query
     - Zustand
     - Recoil
     - Shadcn
     - Express
-- category: ETC
+- category: Backend
   items:
     - Prisma
     - Drizzle

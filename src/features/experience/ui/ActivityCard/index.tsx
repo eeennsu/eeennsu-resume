@@ -13,7 +13,7 @@ const ActivityCard: FC<Props> = ({ title, doneList, index }) => {
     <div className='group relative flex flex-col gap-6 overflow-hidden border-b border-b-slate-400/80 bg-white p-6 transition-all last-of-type:border-b-0 last-of-type:pb-0 md:p-9'>
       <div className='flex flex-col gap-1 md:flex-row md:justify-between md:gap-4'>
         <div className='flex items-start gap-3 md:gap-4'>
-          <span className='mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-sm font-bold text-slate-700 md:mt-1 md:h-8 md:w-8 md:text-base'>
+          <span className='flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-sm font-bold text-slate-100 md:h-8 md:w-8 md:text-base'>
             {index + 1}
           </span>
           <h4 className='text-xl font-bold text-slate-900 md:text-2xl'>{title}</h4>
@@ -28,7 +28,7 @@ const ActivityCard: FC<Props> = ({ title, doneList, index }) => {
               </span>
 
               {done.details && (
-                <ul className='flex list-outside list-disc flex-col gap-3 pl-5 text-slate-600 marker:text-slate-400 md:gap-4'>
+                <ul className='flex list-outside list-disc flex-col gap-3 pl-5 text-slate-900 marker:text-slate-400 md:gap-4'>
                   {done.details.map((detail, idx) => {
                     const isPreviousString = idx > 0 && typeof done.details[idx - 1] === 'string';
 
@@ -44,8 +44,8 @@ const ActivityCard: FC<Props> = ({ title, doneList, index }) => {
                       <li
                         key={detail.problem}
                         className={cn(
-                          'mt-2 flex list-none flex-col gap-4 rounded-lg bg-slate-50 p-4 text-sm md:text-base',
-                          isPreviousString && 'mt-4',
+                          'flex list-none flex-col gap-4 rounded-lg bg-slate-100/80 p-4 text-sm md:text-base',
+                          isPreviousString && 'mt-2',
                         )}
                       >
                         <div className='flex flex-col gap-1'>
