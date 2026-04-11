@@ -1,12 +1,12 @@
 {
-  "homepage": "https://eunsu-resume.vercel.app/",
+  "homepage": "https://resume.eunsu.pro/",
   "name": "eunsu-resume",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "pnpm lint && pnpm prettier && next build && next-sitemap",
+    "build": "pnpm lint && pnpm prettier && next build",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx ./src/db/configs/migrate.ts",

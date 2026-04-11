@@ -8,23 +8,36 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: '방은수 이력서',
+  title: {
+    default: '방은수 | 프론트엔드 개발자 이력서',
+    template: '%s | 방은수',
+  },
   description:
-    'typescript, react.js, next.js로 개발을 하는 프론트엔드 개발자 방은수의 이력서입니다.',
+    'TypeScript, React.js, Next.js 기반 프론트엔드 개발자 방은수의 이력서입니다. 경력, 기술 스택, 프로젝트 포트폴리오를 확인하세요.',
   authors: [
     {
       name: '방은수',
       url: 'https://github.com/eeennsu',
     },
   ],
+  creator: '방은수',
+  publisher: '방은수',
   twitter: {
-    title: '방은수 - 프론트엔드 개발자 이력서',
-    description:
-      'typescript, react.js, next.js로 개발을 하는 프론트엔드 개발자 방은수의 이력서입니다.',
+    card: 'summary_large_image',
+    title: '방은수 | 프론트엔드 개발자 이력서',
+    description: 'TypeScript, React.js, Next.js 기반 프론트엔드 개발자 방은수의 이력서입니다.',
+    images: ['/images/profile.jpg'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      'index': true,
+      'follow': true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   alternates: {
     canonical: SITE_URL,
@@ -32,13 +45,35 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: '방은수 - 프론트엔드 개발자 이력서',
+    siteName: '방은수 이력서',
+    title: '방은수 | 프론트엔드 개발자 이력서',
     description:
-      'typescript, react.js, next.js로 개발을 하는 프론트엔드 개발자 방은수의 이력서입니다.',
+      'TypeScript, React.js, Next.js 기반 프론트엔드 개발자 방은수의 이력서입니다. 경력, 기술 스택, 프로젝트 포트폴리오를 확인하세요.',
     locale: 'ko_KR',
+    images: [
+      {
+        url: '/images/profile.jpg',
+        width: 800,
+        height: 800,
+        alt: '방은수 프론트엔드 개발자',
+      },
+    ],
   },
-  keywords:
-    '프론트엔드 개발자, 방은수, 이력서, 포트폴리오, Bang Eunsu, React.js, React, Next.js, Next, Typescript, ts, Javascript, js, Frontend Developer, Resume, Portfolio',
+  keywords: [
+    '프론트엔드 개발자',
+    '방은수',
+    '이력서',
+    '포트폴리오',
+    'Bang Eunsu',
+    'React.js',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
+    'Frontend Developer',
+    'Resume',
+    'Portfolio',
+    '웹 개발자',
+  ],
   icons: {
     icon: '/favicon.ico',
   },
