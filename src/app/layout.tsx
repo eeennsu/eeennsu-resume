@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
   },
   verification: {
-    google: 'pmzLYIIWnn1F_d2ITav7cbWI-9DC5_VNtxzT-FroOu4',
+    google: 'OaYKYfrRLPAqCUlI4N9byUHRsCKrHGoxyLq7yneX5-E',
   },
   other: {
     'naver-site-verification': 'c7ebb4013211c995cee367b539af4523c49db4ff',
