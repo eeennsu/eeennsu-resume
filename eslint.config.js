@@ -30,6 +30,18 @@ export default [
     },
   },
   {
-    ignores: ['**/node_modules/**', '**/dist/**', '/proc', '/sys', '/dev', '.next', 'out'],
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '/proc',
+      '/sys',
+      '/dev',
+      '.next',
+      'out',
+      'next-env.d.ts',
+      'skills/**',
+      'agents/**',
+      '.claude/**',
+    ],
   },
 ];

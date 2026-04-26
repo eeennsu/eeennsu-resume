@@ -29,11 +29,11 @@ YAML 파일 기반으로 이력서 콘텐츠를 관리하고, 최신 프론트�
 ### Database
 
 ![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=flat-square&logo=drizzle&logoColor=black)
-![Neon](https://img.shields.io/badge/Neon_(PostgreSQL)-00E5A0?style=flat-square&logo=postgresql&logoColor=black)
+![Neon](<https://img.shields.io/badge/Neon_(PostgreSQL)-00E5A0?style=flat-square&logo=postgresql&logoColor=black>)
 
 ### Tooling
 
-![pnpm](https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white)
+![Bun](https://img.shields.io/badge/Bun-000000?style=flat-square&logo=bun&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white)
 ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black)
 
@@ -79,19 +79,19 @@ src/subjects/
 
 ```bash
 # 의존성 설치
-pnpm install
+bun install
 
 # 개발 서버 실행 (Turbopack)
-pnpm dev
+bun run dev
 
 # 린트 & 포맷팅
-pnpm lint
-pnpm prettier
+bun run lint
+bun run prettier
 
 # 데이터베이스 관련
-pnpm db:generate   # 마이그레이션 파일 생성
-pnpm db:migrate    # 마이그레이션 실행
-pnpm db:studio     # Drizzle Studio 실행
+bun run db:generate   # 마이그레이션 파일 생성
+bun run db:migrate    # 마이그레이션 실행
+bun run db:studio     # Drizzle Studio 실행
 ```
 
 ---
@@ -101,7 +101,7 @@ pnpm db:studio     # Drizzle Studio 실행
 ### 빌드
 
 ```bash
-pnpm build
+bun run build
 ```
 
 린트 → 포맷팅 → Next.js 빌드 순서로 실행됩니다.
@@ -109,7 +109,7 @@ pnpm build
 ### 배포 (GitHub Pages)
 
 ```bash
-pnpm deploy
+bun run deploy
 ```
 
 `gh-pages` 패키지를 사용하여 빌드 결과물(`out/`)을 GitHub Pages에 배포합니다. `predeploy` 스크립트가 배포 전 자동으로 빌드를 수행합니다.

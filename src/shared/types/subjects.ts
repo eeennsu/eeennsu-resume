@@ -5,9 +5,8 @@ export interface ICompanyExperience {
   startDate: string;
   endDate?: string;
   activities: Array<{
-    // startDate: string;
-    // endDate?: string;
-    // estimatedDuration?: number;
+    startDate?: string;
+    endDate?: string;
     title: string;
     doneList: Array<{
       subject: string;

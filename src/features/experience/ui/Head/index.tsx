@@ -1,4 +1,6 @@
 import SharedTooltip from '@shared/components/Tooltip';
+import type { Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
 import { getCompanyServiceDuration } from '@shared/libs/date';
 import { ICompanyExperience } from '@shared/types/subjects';
 import dayjs from 'dayjs';
@@ -7,40 +9,51 @@ import type { FC } from 'react';
 
 type Props = {
   experience: ICompanyExperience;
+  locale: Locale;
 };
 
-const ExperienceHead: FC<Props> = ({ experience }) => {
+const toYearMonth = (date: string) => {
+  const parts = date.replace(/-/g, '.').split('.');
+  if (parts.length < 2) return date;
+  return `${parts[0]}.${parts[1]}`;
+};
+
+const ExperienceHead: FC<Props> = ({ experience, locale }) => {
+  const dict = getDictionary(locale);
+  const showNote = !!experience.endDate && !!experience.note?.description;
+
+  const duration = experience.endDate
+    ? getCompanyServiceDuration(experience.startDate, experience.endDate, locale)
+    : null;
+  const daysWorking = !experience.endDate
+    ? dayjs().diff(dayjs(experience.startDate), 'days')
+    : null;
+
+  const summaryLabel = duration
+    ? dict.experience.totalDuration.replace('{{duration}}', duration)
+    : dict.experience.daysWorking.replace('{{days}}', String(daysWorking));
+
   return (
-    <div className='flex flex-col justify-between gap-3 md:flex-row md:items-end'>
-      <div className='flex items-center gap-2 max-md:justify-center'>
-        <h3 className='rounded-md bg-gray-800 px-4 py-2.5 text-xl font-semibold tracking-tight text-white'>
+    <header className='flex flex-col gap-3 border-b border-gray-200 pb-5 max-md:items-center md:flex-row md:items-end md:justify-between md:gap-6 dark:border-gray-800'>
+      <div className='flex items-center gap-2'>
+        <h3 className='text-[22px] font-semibold tracking-tight text-gray-900 md:text-[26px] dark:text-gray-100'>
           {experience.companyName}
         </h3>
-
-        {experience.endDate && experience.note && (
-          <SharedTooltip content={experience.note.description}>
-            <CircleHelp className='size-5 text-gray-500' />
+        {showNote && (
+          <SharedTooltip content={experience.note!.description}>
+            <CircleHelp className='size-4 text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300' />
           </SharedTooltip>
-          // <NoteModal description={}>
-
-          // </NoteModal>
         )}
       </div>
 
       <div className='flex flex-col items-center gap-0.5 md:items-end'>
-        <p className='text-base font-medium text-gray-800'>
-          {experience.startDate} ~ {experience?.endDate || '현재'}
+        <p className='text-[13px] font-medium text-gray-700 md:text-sm dark:text-gray-300'>
+          {toYearMonth(experience.startDate)} ~{' '}
+          {experience.endDate ? toYearMonth(experience.endDate) : dict.experience.present}
         </p>
-
-        <span className='text-xs text-gray-500'>
-          {experience.endDate ? (
-            <>총 {getCompanyServiceDuration(experience.startDate, experience.endDate)} 근무</>
-          ) : (
-            <>{dayjs().diff(dayjs(experience.startDate), 'days')}일째 근무 중</>
-          )}
-        </span>
+        <span className='text-xs text-gray-500 dark:text-gray-400'>{summaryLabel}</span>
       </div>
-    </div>
+    </header>
   );
 };
 

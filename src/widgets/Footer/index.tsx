@@ -1,5 +1,7 @@
 'use client';
 
+import { resolveDictionary } from '@shared/i18n/dictionaries';
+import { useParams } from 'next/navigation';
 import { useEffect, useState, type FC } from 'react';
 
 import apiGetLatestTag from '@features/github/apis/getLatestTag';
@@ -7,6 +9,8 @@ import apiGetLatestTag from '@features/github/apis/getLatestTag';
 const DEFAULT_VERSION = 'v.2.2.4';
 
 const Footer: FC = () => {
+  const { locale } = useParams<{ locale: string }>();
+  const { dict } = resolveDictionary(locale);
   const [version, setVersion] = useState<string>('');
 
   useEffect(() => {
@@ -25,10 +29,16 @@ const Footer: FC = () => {
   }, []);
 
   return (
-    <footer className='mt-10 w-full bg-neutral-200 py-5 text-center'>
-      <div className='flex flex-col items-center justify-center gap-2 text-sm'>
-        <p>Thanks for reading!</p>
-        {version && <p className='font-semibold'>{version}</p>}
+    <footer className='mt-12 w-full border-t border-gray-100 py-8 text-center md:mt-16 md:py-10 dark:border-gray-800'>
+      <div className='flex flex-col items-center justify-center gap-1.5'>
+        <p className='text-[13px] tracking-tight text-gray-500 md:text-sm dark:text-gray-400'>
+          {dict.footer.thanks}
+        </p>
+        {version && (
+          <p className='text-[11px] font-medium tracking-[0.14em] text-gray-400 uppercase tabular-nums dark:text-gray-500'>
+            {version}
+          </p>
+        )}
       </div>
     </footer>
   );

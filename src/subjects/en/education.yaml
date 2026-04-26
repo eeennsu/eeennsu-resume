@@ -1,0 +1,8 @@
+startDate: '2022.03.02'
+endDate: '2024.02.28'
+schoolName: Myongji College
+department: Department of Software Contents
+activities:
+  - 'Graduated with a GPA of 4.26'
+  - 'Ran a web development club as the vice president and led project development (2022.06 ~ 2024.02)'
+  - 'Built an equipment rental system, a local restaurant / spot finder site, a 2D roguelike mobile game, and more'

@@ -1,0 +1,72 @@
+- name: Bread And Source
+  descriptionList:
+    - Site & back-office for an actual operating bakery (beta)
+  githubLink: https://github.com/eeennsu/bns
+  siteLink: https://bns-git-beta-eunsus-projects-093b2f33.vercel.app/
+  tools:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - Neon
+    - Drizzle
+    - Zustand
+    - Tanstack Query
+    - Framer motion
+
+- name: Eunsutory
+  descriptionList:
+    - Personal retrospective & introduction blog
+  githubLink: https://github.com/eeennsu/eunstory
+  siteLink: https://eunstory.eunsu.kr
+  tools:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - Prisma
+
+- name: Scrama
+  descriptionList:
+    - Amazon web scraping site
+  githubLink: https://github.com/eeennsu/scrama
+  siteLink: https://scrama.eunsu.kr
+  tools:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - Cheerio
+
+- name: Wasd Rental System
+  descriptionList:
+    - Equipment rental system built for a university club
+  githubLink: https://github.com/eeennsu/wasd-rental-system
+  tools:
+    - React.js
+    - TypeScript
+    - Express.js
+    - Tailwind CSS
+    - Zustand
+    - Tanstack Query
+
+- name: Eunimation
+  descriptionList:
+    - Animation recommendation site
+  githubLink: https://github.com/eeennsu/nextjs-animation-app
+  siteLink: https://eunimation.eunsu.kr/
+  tools:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - Framer Motion
+    - Zustand
+
+- name: Eunsuread
+  descriptionList:
+    - Threads clone site
+  githubLink: https://github.com/eeennsu/nextjs-thread
+  siteLink: https://eeennsu-nextjs-thread.vercel.app
+  tools:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - Clerk
+    - Mongoose

@@ -1,11 +1,15 @@
 'use client';
 
+import { resolveDictionary } from '@shared/i18n/dictionaries';
 import dayjs, { Dayjs } from 'dayjs';
+import { useParams } from 'next/navigation';
 import { useEffect, useState, type FC } from 'react';
 
 import apiGetBranchCommitDate from '@features/github/apis/getBranchCommitDate';
 
 const LastUpdate: FC = () => {
+  const { locale } = useParams<{ locale: string }>();
+  const { dict } = resolveDictionary(locale);
   const [commitDate, setCommitDate] = useState<Dayjs | null>(null);
   // const [commitDate] = useState<Dayjs>(dayjs('2025.11.02'));
 
@@ -36,13 +40,20 @@ const LastUpdate: FC = () => {
   const formattedDate = commitDate ? commitDate.format('YYYY.MM.DD') : null;
   const dayDiff = commitDate ? dayjs().startOf('day').diff(commitDate.startOf('day'), 'day') : null;
 
+  const dDayLabel =
+    dayDiff !== null && dayDiff > 0
+      ? dict.lastUpdate.dDayPositive.replace('{{days}}', String(dayDiff))
+      : dict.lastUpdate.dDayZero;
+
   return (
     <div className='flex h-fit flex-col items-center rounded-md text-base md:mt-14 md:items-end md:px-4 md:py-2 md:text-sm'>
-      <p className='text-muted-foreground text-sm md:text-right md:text-xs'>마지막 업데이트</p>
+      <p className='text-muted-foreground text-sm md:text-right md:text-xs'>
+        {dict.lastUpdate.label}
+      </p>
       <div className='flex w-full flex-col items-center'>
         {formattedDate && (
           <span className='font-semibold tracking-tight'>
-            {formattedDate} (D {dayDiff! > 0 ? `+ ${dayDiff}` : '- Day'})
+            {formattedDate} ({dDayLabel})
           </span>
         )}
       </div>

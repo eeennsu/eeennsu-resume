@@ -1,22 +1,31 @@
+import type { Locale } from '@shared/i18n/config';
 import dayjs from 'dayjs';
 
-export const getEstimatedDuration = (startDate: string, endDate: string, offsetDay = 15) => {
+const DURATION_LABELS = {
+  ko: { y: '년', m: '개월', d: '일', w: '주', zero: '0개월' },
+  en: { y: 'y', m: 'mo', d: 'd', w: 'w', zero: '0mo' },
+} as const;
+
+export const getEstimatedDuration = (
+  startDate: string,
+  endDate: string,
+  locale: Locale = 'ko',
+  offsetDay = 15,
+) => {
+  const labels = DURATION_LABELS[locale];
   const diffMonth = dayjs(endDate).diff(dayjs(startDate), 'month');
   const diffDays = dayjs(endDate).diff(dayjs(startDate), 'day');
 
-  // 1개월 미만
   if (diffMonth < 1) {
-    // 일 단위 차이가 offsetDay 이상이면 "1개월"
-    if (diffDays >= offsetDay) return '1개월';
-    // 그 외에는 주 단위로 표시
+    if (diffDays >= offsetDay) return `1${labels.m}`;
     const weeks = Math.floor(diffDays / 7);
-    return `${weeks}주`;
+    return `${weeks}${labels.w}`;
   }
 
   const remainingDays = diffDays - diffMonth * 30;
   const estimatedMonths = remainingDays > offsetDay ? diffMonth + 1 : diffMonth;
 
-  return `${estimatedMonths}개월`;
+  return `${estimatedMonths}${labels.m}`;
 };
 
 export const getKoreanAge = (birthDate: string) => {
@@ -37,7 +46,12 @@ export const getKoreanAge = (birthDate: string) => {
   return age;
 };
 
-export const getCompanyServiceDuration = (startDate: string, endDate: string) => {
+export const getCompanyServiceDuration = (
+  startDate: string,
+  endDate: string,
+  locale: Locale = 'ko',
+) => {
+  const labels = DURATION_LABELS[locale];
   const start = dayjs(startDate);
   const end = dayjs(endDate);
 
@@ -50,14 +64,15 @@ export const getCompanyServiceDuration = (startDate: string, endDate: string) =>
 
   const result = [];
 
-  if (adjustedYears > 0) result.push(`${adjustedYears}년`);
-  if (adjustedMonths > 0) result.push(`${adjustedMonths}개월`);
-  if (adjustedDay > 0) result.push(`${adjustedDay}일`);
+  if (adjustedYears > 0) result.push(`${adjustedYears}${labels.y}`);
+  if (adjustedMonths > 0) result.push(`${adjustedMonths}${labels.m}`);
+  if (adjustedDay > 0) result.push(`${adjustedDay}${labels.d}`);
 
   return result.join(' ');
 };
 
-export const getWorkAnniversary = (startDate: string): string => {
+export const getWorkAnniversary = (startDate: string, locale: Locale = 'ko'): string => {
+  const labels = DURATION_LABELS[locale];
   const now = dayjs();
   const start = dayjs(startDate);
 
@@ -65,5 +80,10 @@ export const getWorkAnniversary = (startDate: string): string => {
   const years = Math.floor(totalMonths / 12);
   const months = (totalMonths % 12) - 1;
 
-  return `${years}년 ${months}개월`;
+  const result = [];
+
+  if (years > 0) result.push(`${years}${labels.y}`);
+  if (months > 0) result.push(`${months}${labels.m}`);
+
+  return result.length > 0 ? result.join(' ') : labels.zero;
 };

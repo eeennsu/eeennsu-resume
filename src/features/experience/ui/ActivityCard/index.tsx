@@ -1,6 +1,5 @@
-// import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/lib/ui/accordion';
 import Markdown from '@shared/components/Markdown';
-import { cn } from '@shared/shadcn-ui/utils';
+import { AccordionContent, AccordionItem, AccordionTrigger } from '@shared/shadcn-ui/ui/accordion';
 import { ICompanyExperience } from '@shared/types/subjects';
 import { FC } from 'react';
 
@@ -8,86 +7,112 @@ type Props = ICompanyExperience['activities'][number] & {
   index: number;
 };
 
-const ActivityCard: FC<Props> = ({ title, doneList, index }) => {
+const toYearMonth = (date: string) => {
+  const parts = date.replace(/-/g, '.').split('.');
+  if (parts.length < 2) return date;
+  return `${parts[0]}.${parts[1]}`;
+};
+
+const formatPeriod = (start?: string, end?: string) => {
+  if (!start) return null;
+
+  return `${toYearMonth(start)} ~ ${end ? toYearMonth(end) : '진행 중'}`;
+};
+
+const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index }) => {
+  const periodText = formatPeriod(startDate, endDate);
+
   return (
-    <div className='group relative flex flex-col gap-6 overflow-hidden border-b border-b-slate-400/80 bg-white p-6 transition-all last-of-type:border-b-0 last-of-type:pb-0 md:p-9'>
-      <div className='flex flex-col gap-1 md:flex-row md:justify-between md:gap-4'>
-        <div className='flex items-start gap-3 md:gap-4'>
-          <span className='flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-sm font-bold text-slate-100 md:h-8 md:w-8 md:text-base'>
-            {index + 1}
-          </span>
-          <h4 className='text-xl font-bold text-slate-900 md:text-2xl'>{title}</h4>
+    <AccordionItem
+      value={`activity-${index}`}
+      className='overflow-hidden rounded-xl border border-gray-200 bg-white px-5 transition-colors hover:border-gray-300 data-[state=open]:border-gray-300 md:px-7 dark:border-gray-800 dark:bg-gray-950/40 dark:hover:border-gray-700 dark:data-[state=open]:border-gray-700'
+    >
+      <AccordionTrigger className='cursor-pointer gap-4 py-5 hover:no-underline md:py-6 [&>svg]:size-5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-500'>
+        <div className='flex flex-1 flex-col gap-1.5 text-left'>
+          {periodText && (
+            <p className='text-xs tracking-tight text-gray-500 md:text-[13px] dark:text-gray-400'>
+              {periodText}
+            </p>
+          )}
+          <div className='flex items-baseline gap-3'>
+            <span className='shrink-0 text-base font-semibold tracking-wider text-blue-500 tabular-nums md:text-lg dark:text-blue-400'>
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span className='text-lg leading-snug font-semibold break-keep text-gray-900 md:text-xl dark:text-gray-100'>
+              {title}
+            </span>
+          </div>
         </div>
-      </div>
-      <ol className='flex list-outside list-decimal flex-col gap-8 pl-5 md:pl-6'>
-        {doneList?.map((done, index) => (
-          <li key={`${done.subject}-${index}`} className='pl-2'>
-            <div className='flex flex-col gap-3 md:gap-4'>
-              <span className='text-lg font-semibold text-slate-800 lg:text-xl'>
-                {done.subject}
-              </span>
+      </AccordionTrigger>
 
-              {done.details && (
-                <ul className='flex list-outside list-disc flex-col gap-3 pl-5 text-slate-900 marker:text-slate-400 md:gap-4'>
-                  {done.details.map((detail, idx) => {
-                    const isPreviousString = idx > 0 && typeof done.details[idx - 1] === 'string';
+      <AccordionContent className='pt-0 pb-7 md:pb-9'>
+        <div className='border-t border-gray-100 pt-6 md:pt-7 dark:border-gray-800'>
+          <ol className='flex flex-col divide-y divide-gray-100 dark:divide-gray-800'>
+            {doneList?.map((done, j) => (
+              <li
+                key={`${done.subject}-${j}`}
+                className='flex flex-col gap-4 py-7 first:pt-0 last:pb-0 md:py-9'
+              >
+                <h4 className='flex items-baseline gap-2.5 text-[15px] font-semibold break-keep text-gray-900 md:text-[17px] dark:text-gray-100'>
+                  <span className='shrink-0 text-blue-500/80 tabular-nums dark:text-blue-400/90'>
+                    {j + 1}.
+                  </span>
+                  <span className='flex-1'>
+                    <Markdown>{done.subject}</Markdown>
+                  </span>
+                </h4>
 
-                    if (typeof detail === 'string') {
+                {done.details && done.details.length > 0 && (
+                  <ul className='flex flex-col gap-4 pl-5'>
+                    {done.details.map((detail, k) => {
+                      if (typeof detail === 'string') {
+                        return (
+                          <li
+                            key={k}
+                            className='leading-1.2 list-outside list-disc text-[15px] text-gray-800 marker:text-gray-300 dark:text-gray-200 dark:marker:text-gray-600'
+                          >
+                            <Markdown>{detail}</Markdown>
+                          </li>
+                        );
+                      }
+
                       return (
-                        <li key={idx} className='pl-2 leading-relaxed'>
-                          <Markdown>{detail}</Markdown>
+                        <li key={k} className='-ml-5 list-none'>
+                          <ProblemSolution problem={detail.problem} solution={detail.solution} />
                         </li>
                       );
-                    }
-
-                    return (
-                      <li
-                        key={detail.problem}
-                        className={cn(
-                          'flex list-none flex-col gap-4 rounded-lg bg-slate-100/80 p-4 text-sm md:text-base',
-                          isPreviousString && 'mt-2',
-                        )}
-                      >
-                        <div className='flex flex-col gap-1'>
-                          <span className='text-xs font-bold tracking-wider text-orange-500 uppercase'>
-                            Problem
-                          </span>
-                          <Markdown className='text-slate-700'>{detail.problem}</Markdown>
-                        </div>
-                        <div className='flex flex-col gap-1'>
-                          <span className='text-xs font-bold tracking-wider text-blue-600 uppercase'>
-                            Solution
-                          </span>
-                          <Markdown className='font-medium text-slate-800'>
-                            {detail.solution}
-                          </Markdown>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
+                    })}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
   );
 };
 
-export default ActivityCard;
+const ProblemSolution: FC<{ problem: string; solution: string }> = ({ problem, solution }) => (
+  <div className='rounded-lg border border-gray-200 bg-gray-50 px-4 py-3.5 md:px-5 md:py-4'>
+    <div className='flex flex-col gap-1.5 md:flex-row md:gap-5'>
+      <span className='shrink-0 text-[10.5px] font-semibold tracking-[0.14em] text-rose-500 uppercase md:mt-[5px] md:w-[68px]'>
+        Problem
+      </span>
+      <div className='flex-1 text-[15px] leading-[1.75] text-gray-700'>
+        <Markdown>{problem}</Markdown>
+      </div>
+    </div>
+    <div className='my-3 h-px bg-gray-200/70 md:my-3.5' />
+    <div className='flex flex-col gap-1.5 md:flex-row md:gap-5'>
+      <span className='shrink-0 text-[10.5px] font-semibold tracking-[0.14em] text-blue-500 uppercase md:mt-[5px] md:w-[68px]'>
+        Solution
+      </span>
+      <div className='flex-1 text-[15px] leading-[1.75] text-gray-800'>
+        <Markdown>{solution}</Markdown>
+      </div>
+    </div>
+  </div>
+);
 
-// TODO: 추후 컨텐츠가 많아지면 아코디언 사용
-// const ActivityDetailAccordion: FC<{ trigger: string; content: string }> = ({
-//   trigger,
-//   content,
-// }) => {
-//   return (
-//     <Accordion type='multiple'>
-//       <AccordionItem value={trigger}>
-//         <AccordionTrigger>{trigger}</AccordionTrigger>
-//         <AccordionContent>{content}</AccordionContent>
-//       </AccordionItem>
-//     </Accordion>
-//   );
-// };
+export default ActivityCard;

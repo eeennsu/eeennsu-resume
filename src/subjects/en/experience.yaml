@@ -1,0 +1,206 @@
+- companyName: Wonder Round Inc.
+  startDate: '2025.04.14'
+  activities:
+    - startDate: '2026.02.04'
+      title: 'Role transition — Development and maintenance of an in-house React Native (CLI) mobile application'
+      doneList:
+        - subject: Introduced a staged-mount pattern to optimize entry performance on key screens
+          details:
+            - problem: 'On heavy screens that accumulate many `hooks` and API calls (lists / map / detail), every widget mounts at the same time on entry, which makes the navigation animation stutter and delays the appearance of the `skeleton`.'
+              solution: 'Split the screen into entry point and body in two stages — show the `skeleton` immediately right after the navigation transition, and detect the end of the transition with `setImmediate` so the body only mounts after the animation finishes. This minimizes the cost of the first paint and shortens perceived entry time.'
+            - 'Pre-warmed data shown at the top of the screen with a separate `prefetch` hook so that it is already cache-hit by the time the body mounts.'
+            - Introduced a shared hook that handles scroll event handlers in a JS-thread non-blocking way, so other interactions are not delayed during scrolling.
+        - subject: Built push notification and deep link entry flows
+          details:
+            - problem: When a push is tapped from a cold start, the navigation stack is not ready yet, so routing is sometimes dropped.
+              solution: 'Stored the `pending payload` in a global `store` and consumed the queue once navigation is `ready`, applying an async-queue pattern for routing.'
+            - problem: When the deep link target is a webview screen and the app is launched from a cold start, the navigation stack ends up containing only that single webview, so pressing back terminates the app instead of returning to the previous in-app screens.
+              solution: 'Instead of a plain `navigate` call, I composed the `navigation state` directly to `reset` it into a structure where `BottomTabs` is the base route and a `Stack` (related underlay screen + webview) is stacked on top. This guarantees a natural back flow: webview → related screen → `BottomTabs`.'
+            - Added a normalization layer for the notification list response to match the updated push-sending API schema on the backend.
+            - 'Implemented a deep link handler that parses the push payload and branches across cold-start / background / foreground entry cases.'
+        - subject: 'Introduced and standardized an optimistic-update pattern with `Tanstack Query`'
+          details:
+            - problem: 'For toggle-like `mutations` such as bookmark / like, the UI was not updated until the server response, so users repeatedly tapped the same button across multiple screens.'
+              solution: 'Applied the standard `cancel → snapshot → cache update → rollback` flow to reflect the change in the UI immediately. On failure, the `onError` step rolls back from the `snapshot` and shows a `toast` so the flow stays consistent.'
+            - 'Patched related screen caches directly with `setQueryData` to remove unnecessary network round-trips caused by `invalidate`, and to keep state consistent across screens.'
+        - subject: Implemented a Naver Map–based store discovery screen and optimized search/render
+          details:
+            - problem: 'Code-driven camera moves (region filter selection, initial camera setup) were treated identically to user gestures, which caused the result-list API to be called multiple times.'
+              solution: 'Tracked code-driven camera moves with a separate ref to distinguish them from real user gestures, and toggled a re-search-enabled flag so re-search is only triggered on meaningful user actions.'
+            - 'Built a util that derives the southwest/northeast bounds of the visible area from the map camera center and lat/lng deltas, and passes them as the search range to the result-list API. This way, only results that match exactly what the user is looking at on the map are fetched.'
+        - subject: 'Implemented a custom pull-to-refresh inside a `BottomSheet` layout where a banner is always visible'
+          details:
+            - problem: 'The main screen has a composite layout where a `BottomSheet` is partially visible above a top banner, with the `BottomSheet` `snapPoint` fixed so the banner is always visible. In this setup, binding a standard `RefreshControl` to the list inside the `BottomSheet` does not detect a `pull` gesture in the banner area, so pull-to-refresh does not work on either iOS or Android.'
+              solution: 'Wrapped the entire screen with a `GestureDetector`, detected the `pull` gesture directly via `Pan Gesture`, and synced the indicator position / rotation / `opacity` to the pull distance with `Reanimated worklet`. Triggered the refresh once the threshold was crossed and held the indicator until the response completed — designing the state flow myself.'
+            - 'Resolved conflicts between scroll gestures inside the `BottomSheet` and the screen-wide `Pan Gesture` by adjusting gesture priorities with `waitFor`, so pull in the banner area and scroll inside the `BottomSheet` were cleanly separated.'
+            - 'Branched the indicator look / position per platform to follow iOS and Android guidelines.'
+        - subject: Android-specific platform troubleshooting
+          details:
+            - problem: 'On high-refresh-rate / high-density Android devices, fast `fling` scrolls on virtualized lists briefly showed empty rows, making the scroll feel choppy.'
+              solution: 'Added an Android-specific branch in the shared `LegendList` wrapper. Increased `drawDistance` (which defines the pre-render area) from 250 to 400 to widen the pre-rendered range, and split `decelerationRate` into `fast` for iOS / `normal` for Android to compensate for platform inertia differences. Exposed `removeClippedSubviews` (which temporarily detaches off-screen views) as an opt-in to reduce Android `overdraw` cost.'
+            - problem: The image picker library cut off its action button area on Android because it was hidden behind the system bottom navigation bar.
+              solution: 'Patched the library itself to respect `SafeArea inset`, and managed it through a `pnpm patch` workflow so the patch is preserved across dependency upgrades.'
+            - problem: 'A custom horizontal swiper built with `Reanimated Spring` + `Pan Gesture` overshot too much on Android, missed fast swipes, and felt sluggish compared to iOS for the same gesture.'
+              solution: 'Branched Spring settings and gesture thresholds per platform. For Android, increased `damping` to 25 (iOS 22) to suppress overshoot, narrowed `Pan Gesture` `activeOffsetX` from ±10 to ±8 to improve swipe sensitivity, and lowered the swipe trigger `velocity threshold` to 150 to compensate for Android reporting lower `velocity` values — bringing the feel close to iOS.'
+        - subject: Built a Claude Code–based development productivity infrastructure
+          details:
+            - With the prior RN app developer leaving and domain knowledge handover broken, I had to maintain the app and ship new features alone with limited RN experience. To cut the learning cost and keep domain context always accessible, I designed and built a Claude Code–based assist infrastructure myself.
+            - 'Split project rules per domain (UI ecosystem / performance / animation / server state / navigation / global state / i18n / new feature flow), so only the rules relevant to the current task are loaded based on keywords.'
+            - 'Composed a `planner → generator → evaluator` 3-stage loop sub-agent to automate parts of the implementation work.'
+            - 'Built a separate sub-agent dedicated to Android performance optimization, so it can automatically diagnose Android-specific issues — virtualized list jank / gesture conflicts / render load / memory usage — and propose code changes.'
+            - Hardened the dev environment with RN debugging tool hook setup.
+
+    - startDate: '2025.07.03'
+      endDate: '2025.10.16'
+      title: Built the admin page for an in-house travel content reservation and payment platform
+      doneList:
+        - subject: 'Built the create / edit form pages for products and packages'
+          details:
+            - 'Combined the `tiptap` editor with `react-hook-form` `FormField` to allow per-language tabs for separately entering title / description / images (Korean, English, Japanese, Simplified Chinese, Traditional Chinese).'
+            - Built a form for managing data per date range, with the ability to bulk-edit data by selecting specific dates or holidays.
+            - 'Managed product/package form data with `zustand` and persisted it to `localStorage`, building a temporary save feature so users can recover after leaving the page. `JSON` parsing is validated with a `Zod` schema for stability.'
+            - problem: 'In data managed by `react-hook-form` `useFieldArray`, the server-provided `id` collided with the `useFieldArray` internal `id` key, making it impossible to distinguish existing data from newly added data — risking sending wrong data.'
+              solution: 'Assigned a custom ID to `useFieldArray` `keyName` to clearly distinguish existing vs. new data, ensuring user edits are reflected accurately.'
+            - problem: When registering localized images, I implemented copying from English as the source so the same image is uploaded for the other languages — but the upload API was being called once per copied language.
+              solution: Restructured so that the English version image `ID` is shared across the other languages, mitigating the duplicate upload problem. Also, on image replacement, the linked images for all sharing languages are replaced together based on the shared image ID, keeping everything consistent.
+
+        - subject: Built i18n features using i18next (English, Simplified / Traditional Chinese)
+          details:
+            - Implemented zod validation error messages + dayjs time formatting expressions in multiple languages
+            - problem: 'Bundling all translation `JSON` files at once caused slow initial load.'
+              solution: 'Improved this with lazy loading via `resourcesToBackend`, dynamically importing only the languages and namespaces we need.'
+            - problem: Custom error messages built with zod `refine` and similar were frozen at React init time, so the error message language did not change when the user switched locale.
+              solution: Stored only the translation key in the validation logic and applied translation at render time, so existing error messages also update in real time on locale change.
+    - startDate: '2025.09.24'
+      endDate: '2025.10.02'
+      title: Migrated a Wix-built travel platform website to a Next.js environment
+      doneList:
+        - subject: 'Implemented responsive design for desktop, tablet, and mobile environments'
+        - subject: 'Built a CI/CD pipeline using Docker, ECR, and GitHub Actions'
+
+    - startDate: '2025.04.14'
+      endDate: '2025.07.02'
+      title: Enhanced and maintained the in-house application admin page system
+      doneList:
+        - subject: Renewed existing admin page features
+          details:
+            - On the list page, added a copy feature that pre-fills the create form with values including images and dependent child data when a specific item is selected.
+            - On critical content edits, built a UI that visualizes before/after values per field as `JSON` to track change history.
+            - 'Replaced `Toast UI Editor` with `Tiptap Editor` and extended it with image upload loading state and delete-during-upload handling.'
+            - 'Built an image editing (Crop/Zoom) UI with `react-easy-crop`.'
+        - subject: Designed and implemented a dashboard page using traffic / user activity / content data
+          details:
+            - 'Adopted `Recharts` to build line / bar / pie chart UIs, and customized labels, axes, and tooltips per chart.'
+            - Aggregated monthly data per year as averages and visualized them on charts so annual trends and monthly changes can be grasped at a glance.
+            - 'Added a feature that, when querying a date range, also shows the equivalent previous range for comparison (e.g., last 7 days vs. the 7 days before that).'
+            - problem: 'Implemented period selection via a `Select` (last 7 days / last 14 days / etc.), but each selection re-rendered the whole screen to fetch new data — a UX issue.'
+              solution: '`prefetch`-ed the dataset for each `Select` option in advance, so selecting an option swaps the data instantly without a screen transition.'
+            - problem: When querying statistics for a custom date range, unintended other queries were also being re-fetched.
+              solution: Separated fixed data queries from period-specific statistics queries to clearly partition cache per query, minimizing API calls.
+        - subject: 'Adopted `vitest` and wrote TDD test code for general admin page features'
+          details:
+            - problem: 'Existing `React Router`-based components did not render or navigate properly in the test environment (`Vitest` + `JSDOM`).'
+              solution: 'Built a custom render util including `MemoryRouter` and `Tanstack Query Provider`. Designed nested routing and routing state via `mock` so the test environment closely mirrors the actual runtime.'
+            - problem: 'Components using `Portal` (e.g., `Dropdown`, `Modal`) did not detect trigger element click events in the test environment, rendering differently from the real UI flow.'
+              solution: 'Resolved this by introducing `userEvent`, which triggers test-environment screen flows smoothly, like a real user.'
+- companyName: Korea Global Knowledge Network Inc.
+  startDate: '2024.03.11'
+  endDate: '2025.03.21'
+  activities:
+    - startDate: '2025.01.16'
+      endDate: '2025.03.21'
+      title: Built the dedicated admin site for an existing in-house platform
+      doneList:
+        - subject: Built question bank management features needed for quizzes
+          details:
+            - problem: When changing the order of choices, the API request needed each choice ID — but during add / edit / delete, it was hard to distinguish new choices from existing ones.
+              solution: 'After adding/editing/deleting a choice, kept the question data fresh by leveraging `Tanstack Query` `invalidateQueries` to auto-refresh. Then sorted based on the latest choice data and called the order-change API for accuracy.'
+        - subject: Built management features for course composition units (chapters / sections / VOD / quiz / hands-on)
+          details:
+            - problem: Configuration values required for hands-on, VOD, etc. differed, so providing a single consistent form was hard, and UI complexity grew.
+              solution: Built independent forms per content type and rendered them dynamically based on the selected type, easing UI complexity and improving usability.
+        - subject: Built an attendance calendar component & a feature that shows attendance status by selected year, month, and week
+          details:
+            - Implemented weekly / monthly view modes
+            - Built a popup component letting users select a specific year, month, and week
+    - startDate: '2024.11.18'
+      endDate: '2025.01.15'
+      title: Built a course-taking site / admin & operator site for external companies
+      doneList:
+        - subject: Built a real-time pop-quiz feature using WebSocket, enabling instant interaction between instructor and learners during live lectures
+          details:
+            - problem: A real-time data-driven chart updated so quickly that it could not render the actual data values.
+              solution: 'Applied `throttle` to the result data state to reduce unnecessary updates and render reliably without data loss. From up to ~1500 updates per second (number of users in the live meeting, ~1500) → throttled to 1 update per 50ms (~20 updates per second). CPU usage dropped by ~20%.'
+            - problem: When the network briefly dropped right before a pop-quiz started and reconnected, the just-started pop-quiz did not appear.
+              solution: Added reconnection logic. Compared the WebSocket ping-pong count values — if the websocket reconnected with mismatched counts, treated it as a reconnection. Then re-fetched the in-progress pop-quiz via API to resolve.
+            - problem: With many users reconnecting at once, there was a risk of server load.
+              solution: 'Applied exponential backoff to reconnection attempts and added jitter (randomness) to spread concurrent requests, minimizing server load. Maximum simultaneous reconnection requests dropped from ~1500 (live meeting attendees, ~1500) → ~1/10 (~150).'
+        - subject: Designed UI separating features and permissions appropriate for admin and operator roles
+          details:
+            - problem: 'When accessing URLs requiring specific permissions, the middleware that checks permissions before access was implemented using `React Router Dom` `loader`, but it completed execution before the user info was loaded.'
+              solution: 'Built a route guard component directly using `React Router Dom` `Outlet` and `Navigate` to check authenticated users first when accessing protected pages. If allowed, render child routes; otherwise block access.'
+    - startDate: '2024.10.01'
+      endDate: '2024.11.15'
+      title: Enhanced and maintained the existing platform
+      doneList:
+        - subject: Built a table component supporting infinite scroll / Drag & Drop
+          details:
+            - problem: The measured height of each `row` in infinite scroll was inconsistent, so virtualized table scroll caused data not to appear or the UI to shift.
+              solution: 'Set an `estimateSize` value to estimate initial `row` height, then dynamically updated based on the actual rendered `row` height to resolve the issue.'
+        - subject: Built an admin page that visualizes per-course learning progress and performance for analysis
+    - startDate: '2024.08.02'
+      endDate: '2024.10.01'
+      title: Built a dedicated coding test platform
+      doneList:
+        - subject: 'Built a coding editor for solving problems by customizing `CodeMirror`'
+          details:
+            - Customized CSS styles using the library's built-in `class` and configured a theme so it works in dark mode too.
+            - When code lines are folded, or when a custom placeholder style is needed, applied designs that fit varying requirements using CSS pseudo-elements.
+            - Applied responsive design using `flex` and `grid`-related properties so it works smoothly on tablets too.
+        - subject: Built UI and features so users can solve coding test problems and submit answers to check correctness
+          details:
+            - problem: 'To persist the user-written code, used `zustand` `persist (localStorage)` — but as data grew per problem and language, management became difficult.'
+              solution: 'Used the problem `id` as the object `key`, nested per language, and stored user code as a `JSON` string. To minimize storage, kept only the latest 10 problems.'
+            - problem: Submitted problems took long to grade, degrading UX.
+              solution: Showed a skeleton UI during the wait so users could perceive that processing was in progress.
+        - subject: Built a custom test case feature users can manage freely
+          details:
+            - problem: 'Test cases entered by users sometimes did not match the data type defined by the problem (`int`, `float`, `boolean`, nested arrays, etc.) or used invalid quotes for `JSON` format, causing runtime errors.'
+              solution: 'Applied a pre-validation layer that checks input matches the data type defined by the problem, and rejects input with a warning when single quotes are included in `JSON` strings. This blocks errors at the input stage and minimizes unexpected data type errors at runtime.'
+        - subject: Built an admin page to manage problems using React Hook Form and Zod
+          details:
+            - problem: Combining the problem details / language and memory/time-limit selection / default test cases into one form made the UI complex and hard to maintain.
+              solution: Split the related items into 3 main tabs and pre-validated when moving between tabs. Validation logic is managed in a global store, and each tab sets its validation function on mount to keep the logic consistent.
+    - startDate: '2024.07.10'
+      endDate: '2024.08.02'
+      title: Built an introduction and application site for an external company
+      doneList:
+        - subject: Built static pages introducing the external company's strengths
+        - subject: Built an application form using a namespace-pattern-based component composition
+    - startDate: '2024.05.27'
+      endDate: '2024.06.28'
+      title: LMS development
+      doneList:
+        - subject: Project design, common layout/component structuring, feature modularization
+          details:
+            - problem: Feedback from a prior project showed it was hard to maintain features at the unit level and scaling was problematic.
+              solution: 'Adopted FSD folder structure to modularize components and features efficiently. Defined a feature unit as an "entity" and managed API, schema, type, and global state together to improve scalability.'
+        - subject: Built core features — exam evaluation & assignment submission & survey & my page, etc.
+          details:
+            - problem: 'When solving problems, doing answer-sheet creation and selected-answer checking via API in a single "Submit" click was inefficient, and a network drop during the exam caused data loss.'
+              solution: 'On entering the exam page, called an API to create the user’s answer sheet in advance, and sent a PATCH request to the server every time the user marks an answer to save exam progress in real time. Data loss during exams dropped from ~10/50 → 0/50.'
+    - startDate: '2024.03.11'
+      endDate: '2024.05.24'
+      title: Built the in-house platform for an online IT education site
+      doneList:
+        - subject: Project design, common layout/component structuring
+        - subject: Built course list, my page, QnA board, and quiz pages
+        - subject: Integrated payment via Toss Payments
+        - subject: Customized a text editor using the tiptap library
+          details:
+            - problem: The Framer Motion library introduced for comment-area animation caused unintended layout changes when the animated element overlapped with other UI elements.
+              solution: 'Resolved by injecting the animation state into the component `key` or wrapping the component with `AnimatePresence` so layout changes are detected.'
+        - subject: 'Adopted `jest` for frontend testing and wrote per-page test code'
+  note:
+    reasonForLeaving: 'Left due to commute difficulties after a workplace relocation (Incheon ↔ Gasan Digital Complex changed to Incheon ↔ Gangnam)'
+    description: Formerly Coding Hub, acquired and merged into Korea Global Knowledge
