@@ -1,10 +1,13 @@
 import Markdown from '@shared/components/Markdown';
+import type { Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@shared/shadcn-ui/ui/accordion';
 import { ICompanyExperience } from '@shared/types/subjects';
 import { FC } from 'react';
 
 type Props = ICompanyExperience['activities'][number] & {
   index: number;
+  locale: Locale;
 };
 
 const toYearMonth = (date: string) => {
@@ -13,14 +16,15 @@ const toYearMonth = (date: string) => {
   return `${parts[0]}.${parts[1]}`;
 };
 
-const formatPeriod = (start?: string, end?: string) => {
+const formatPeriod = (inProgressLabel: string, start?: string, end?: string) => {
   if (!start) return null;
 
-  return `${toYearMonth(start)} ~ ${end ? toYearMonth(end) : '진행 중'}`;
+  return `${toYearMonth(start)} ~ ${end ? toYearMonth(end) : inProgressLabel}`;
 };
 
-const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index }) => {
-  const periodText = formatPeriod(startDate, endDate);
+const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index, locale }) => {
+  const dict = getDictionary(locale);
+  const periodText = formatPeriod(dict.experience.activityInProgress, startDate, endDate);
 
   return (
     <AccordionItem
