@@ -44,6 +44,13 @@ export const ko = {
   profile: {
     photoAlt: '방은수 프론트엔드 개발자 프로필 사진',
     age: '(만 {{age}}세)',
+    itemAriaLabel: '{{label}} - {{value}}',
+    iconLabel: {
+      'email': '이메일',
+      'github': 'GitHub',
+      'velog': 'Velog',
+      'self-blog': '개인 블로그',
+    },
   },
   header: {
     githubAriaLabel: 'GitHub 프로필',
@@ -53,11 +60,14 @@ export const ko = {
     totalDuration: '총 {{duration}} 근무',
     daysWorking: '{{days}}일째 근무 중',
     activityInProgress: '진행 중',
+    problemLabel: 'Problem',
+    solutionLabel: 'Solution',
   },
   lastUpdate: {
     label: '마지막 업데이트',
     dDayPositive: 'D + {{days}}',
     dDayZero: 'D - Day',
+    loading: '업데이트 정보 불러오는 중',
   },
   notFound: {
     heading: '404 - Not Found',
@@ -66,7 +76,12 @@ export const ko = {
   },
   error: {
     heading: '문제가 발생했습니다.',
+    description: '잠시 후 다시 시도해주세요.',
     retry: '다시 시도',
+    home: '홈으로',
+  },
+  externalLink: {
+    newTab: '새 창에서 열림',
   },
   footer: {
     thanks: 'Thanks for reading!',

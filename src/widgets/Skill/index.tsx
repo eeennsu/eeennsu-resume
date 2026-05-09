@@ -16,6 +16,13 @@ const SkillsWidget: FC<Props> = ({ locale }) => {
   const skills = loadSubjects<ISkill[]>('skill.yaml', locale) || [];
   const dict = getDictionary(locale);
 
+  if (skills.length === 0) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`[SkillsWidget] skill.yaml is empty for locale "${locale}"`);
+    }
+    return null;
+  }
+
   return (
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.skills}</SectionTitle>

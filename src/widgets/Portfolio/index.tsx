@@ -16,6 +16,13 @@ const PortfolioWidget: FC<Props> = ({ locale }) => {
   const portfolios = loadSubjects<IPortfolio[]>('portfolio.yaml', locale) || [];
   const dict = getDictionary(locale);
 
+  if (portfolios.length === 0) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`[PortfolioWidget] portfolio.yaml is empty for locale "${locale}"`);
+    }
+    return null;
+  }
+
   return (
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.portfolio}</SectionTitle>
@@ -30,6 +37,7 @@ const PortfolioWidget: FC<Props> = ({ locale }) => {
               githubLink={portfolio.githubLink}
               siteLink={portfolio?.siteLink}
               tools={portfolio.tools}
+              locale={locale}
             />
           ))}
         </div>

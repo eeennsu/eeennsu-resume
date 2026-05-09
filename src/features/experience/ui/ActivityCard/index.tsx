@@ -82,7 +82,12 @@ const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index, l
 
                       return (
                         <li key={k} className='-ml-5 list-none'>
-                          <ProblemSolution problem={detail.problem} solution={detail.solution} />
+                          <ProblemSolution
+                            problem={detail.problem}
+                            solution={detail.solution}
+                            problemLabel={dict.experience.problemLabel}
+                            solutionLabel={dict.experience.solutionLabel}
+                          />
                         </li>
                       );
                     })}
@@ -97,11 +102,23 @@ const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index, l
   );
 };
 
-const ProblemSolution: FC<{ problem: string; solution: string }> = ({ problem, solution }) => (
+interface ProblemSolutionProps {
+  problem: string;
+  solution: string;
+  problemLabel: string;
+  solutionLabel: string;
+}
+
+const ProblemSolution: FC<ProblemSolutionProps> = ({
+  problem,
+  solution,
+  problemLabel,
+  solutionLabel,
+}) => (
   <div className='rounded-lg border border-gray-200 bg-gray-50 px-4 py-3.5 md:px-5 md:py-4 dark:border-gray-800 dark:bg-gray-900/60'>
     <div className='flex flex-col gap-1.5 md:flex-row md:gap-5'>
       <span className='shrink-0 text-[10.5px] font-semibold tracking-[0.14em] text-rose-500 uppercase md:mt-[5px] md:w-[68px] dark:text-rose-400'>
-        Problem
+        {problemLabel}
       </span>
       <div className='flex-1 text-[15px] leading-[1.75] text-gray-700 dark:text-gray-300'>
         <Markdown>{problem}</Markdown>
@@ -110,7 +127,7 @@ const ProblemSolution: FC<{ problem: string; solution: string }> = ({ problem, s
     <div className='my-3 h-px bg-gray-200/70 md:my-3.5 dark:bg-gray-700/60' />
     <div className='flex flex-col gap-1.5 md:flex-row md:gap-5'>
       <span className='shrink-0 text-[10.5px] font-semibold tracking-[0.14em] text-blue-500 uppercase md:mt-[5px] md:w-[68px] dark:text-blue-400'>
-        Solution
+        {solutionLabel}
       </span>
       <div className='flex-1 text-[15px] leading-[1.75] text-gray-800 dark:text-gray-200'>
         <Markdown>{solution}</Markdown>

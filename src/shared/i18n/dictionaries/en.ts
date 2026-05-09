@@ -44,6 +44,13 @@ export const en: Dictionary = {
   profile: {
     photoAlt: 'Bang Eunsu, Frontend Developer profile photo',
     age: '(age {{age}})',
+    itemAriaLabel: '{{label}} - {{value}}',
+    iconLabel: {
+      'email': 'Email',
+      'github': 'GitHub',
+      'velog': 'Velog',
+      'self-blog': 'Personal blog',
+    },
   },
   header: {
     githubAriaLabel: 'GitHub profile',
@@ -53,11 +60,14 @@ export const en: Dictionary = {
     totalDuration: '{{duration}} of total experience',
     daysWorking: 'Day {{days}} on the job',
     activityInProgress: 'In progress',
+    problemLabel: 'Problem',
+    solutionLabel: 'Solution',
   },
   lastUpdate: {
     label: 'Last update',
     dDayPositive: 'D + {{days}}',
     dDayZero: 'D - Day',
+    loading: 'Loading update info',
   },
   notFound: {
     heading: '404 - Not Found',
@@ -66,7 +76,12 @@ export const en: Dictionary = {
   },
   error: {
     heading: 'Something went wrong!',
+    description: 'Please try again in a moment.',
     retry: 'Try again',
+    home: 'Return Home',
+  },
+  externalLink: {
+    newTab: 'opens in new tab',
   },
   footer: {
     thanks: 'Thanks for reading!',

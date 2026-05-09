@@ -64,6 +64,7 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
                     description.type === 'email' ? `mailto:${description.value}` : description.value
                   }
                   value={description.value}
+                  locale={locale}
                 />
               ))}
             </div>

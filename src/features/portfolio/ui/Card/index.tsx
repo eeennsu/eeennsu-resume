@@ -1,3 +1,5 @@
+import type { Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
 import { ArrowUpRight, Github } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -8,9 +10,18 @@ interface Props {
   githubLink: string;
   siteLink?: string;
   tools: string[];
+  locale: Locale;
 }
 
-const PortfolioCard: FC<Props> = ({ name, descriptionList, githubLink, siteLink, tools }) => {
+const PortfolioCard: FC<Props> = ({
+  name,
+  descriptionList,
+  githubLink,
+  siteLink,
+  tools,
+  locale,
+}) => {
+  const dict = getDictionary(locale);
   return (
     <div className='flex flex-col gap-5 border-r border-b border-gray-100 p-6 last:border-b-0 max-md:border-r-0 md:gap-6 md:p-8 md:even:border-r-0 dark:border-gray-800 md:[&:nth-last-child(-n+2)]:border-b-0 md:[&:nth-last-child(2):nth-child(odd)]:border-b-0'>
       <div className='flex flex-col gap-3'>
@@ -34,20 +45,24 @@ const PortfolioCard: FC<Props> = ({ name, descriptionList, githubLink, siteLink,
           href={githubLink}
           target='_blank'
           rel='noopener noreferrer'
+          aria-label={`${name} GitHub (${dict.externalLink.newTab})`}
           className='inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1 text-[12px] font-medium text-gray-700 transition-colors hover:border-gray-300 hover:text-gray-900 md:text-[13px] dark:border-gray-700 dark:bg-gray-900/70 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-100'
         >
-          <Github className='size-3.5' />
+          <Github className='size-3.5' aria-hidden='true' />
           GitHub
+          <span className='sr-only'> ({dict.externalLink.newTab})</span>
         </Link>
         {siteLink && (
           <Link
             href={siteLink}
             target='_blank'
             rel='noopener noreferrer'
+            aria-label={`${name} Live (${dict.externalLink.newTab})`}
             className='inline-flex items-center gap-1.5 rounded-md border border-blue-200 bg-blue-50/60 px-2.5 py-1 text-[12px] font-medium text-blue-600 transition-colors hover:border-blue-300 hover:bg-blue-50 md:text-[13px] dark:border-blue-900/70 dark:bg-blue-950/30 dark:text-blue-300 dark:hover:border-blue-800 dark:hover:bg-blue-950/50'
           >
-            <ArrowUpRight className='size-3.5' />
+            <ArrowUpRight className='size-3.5' aria-hidden='true' />
             Live
+            <span className='sr-only'> ({dict.externalLink.newTab})</span>
           </Link>
         )}
       </div>

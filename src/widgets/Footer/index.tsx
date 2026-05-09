@@ -34,11 +34,18 @@ const Footer: FC = () => {
         <p className='text-[13px] tracking-tight text-gray-500 md:text-sm dark:text-gray-400'>
           {dict.footer.thanks}
         </p>
-        {version && (
-          <p className='text-[11px] font-medium tracking-[0.14em] text-gray-400 uppercase tabular-nums dark:text-gray-500'>
-            {version}
-          </p>
-        )}
+        <div className='flex h-4 items-center justify-center'>
+          {version ? (
+            <p className='text-[11px] font-medium tracking-[0.14em] text-gray-400 uppercase tabular-nums dark:text-gray-500'>
+              {version}
+            </p>
+          ) : (
+            <span
+              aria-hidden='true'
+              className='h-3 w-16 animate-pulse rounded bg-gray-200/70 dark:bg-gray-800/70'
+            />
+          )}
+        </div>
       </div>
     </footer>
   );

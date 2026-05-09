@@ -21,29 +21,40 @@ const Header: FC<Props> = ({ isHeaderVisible }) => {
   return (
     <header
       className={twMerge(
-        'fixed top-0 left-0 z-50 w-full bg-white/30 shadow-md backdrop-blur-lg transition-opacity duration-300 ease-out dark:bg-gray-950/40 dark:shadow-black/40',
-        isHeaderVisible ? 'opacity-100' : 'opacity-0',
+        'fixed top-0 left-0 z-50 w-full transition-all duration-300 ease-out',
+        isHeaderVisible
+          ? 'bg-white/30 shadow-md backdrop-blur-lg dark:bg-gray-950/40 dark:shadow-black/40'
+          : 'pointer-events-none bg-transparent',
       )}
     >
-      <div className='mx-auto flex max-w-6xl items-center justify-between px-6 py-4'>
-        <div className='flex items-end gap-2'>
-          <p className='font-pretendard text-2xl font-semibold tracking-tight text-gray-800 dark:text-gray-100'>
+      <div className='mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6'>
+        <div
+          className={twMerge(
+            'flex items-end gap-2 transition-opacity duration-300',
+            isHeaderVisible ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
+          )}
+        >
+          <p className='font-pretendard text-xl font-semibold tracking-tight text-gray-800 sm:text-2xl dark:text-gray-100'>
             {dict.jsonLd.name}
           </p>
-          <span className='text-sm text-gray-700 dark:text-gray-400'>{MY_PROFILE.BIRTHDAY}</span>
+          <span className='hidden text-sm text-gray-700 sm:inline dark:text-gray-400'>
+            {MY_PROFILE.BIRTHDAY}
+          </span>
         </div>
 
-        <div className='flex items-center gap-1'>
+        <div className='pointer-events-auto flex items-center gap-1 p-1 backdrop-blur-md'>
           <LanguageToggle />
+          <div className='h-4 w-px bg-gray-300 dark:bg-gray-600' />
           <ThemeToggle />
+          <div className='h-4 w-px bg-gray-300 dark:bg-gray-600' />
           <Link
             href='https://github.com/eeennsu'
             target='_blank'
             rel='noopener noreferrer'
-            aria-label={dict.header.githubAriaLabel}
-            className='inline-flex size-9 items-center justify-center rounded-md text-gray-800 transition-colors hover:bg-gray-200/60 hover:text-blue-600 dark:text-gray-200 dark:hover:bg-white/10 dark:hover:text-blue-400'
+            aria-label={`${dict.header.githubAriaLabel} (${dict.externalLink.newTab})`}
+            className='inline-flex size-9 items-center justify-center rounded-md text-gray-700 transition-colors hover:bg-gray-200/60 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white'
           >
-            <Github size={20} />
+            <Github size={18} aria-hidden='true' />
           </Link>
         </div>
       </div>

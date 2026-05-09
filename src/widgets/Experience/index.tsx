@@ -18,6 +18,13 @@ const ExperienceWidget: FC<Props> = ({ locale }) => {
   const experiences = loadSubjects<ICompanyExperience[]>('experience.yaml', locale) || [];
   const dict = getDictionary(locale);
 
+  if (experiences.length === 0) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`[ExperienceWidget] experience.yaml is empty for locale "${locale}"`);
+    }
+    return null;
+  }
+
   return (
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.experience}</SectionTitle>

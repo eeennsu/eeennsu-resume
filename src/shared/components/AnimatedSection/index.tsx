@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type HTMLMotionProps } from 'motion/react';
+import { motion, useReducedMotion, type HTMLMotionProps } from 'motion/react';
 import type { FC } from 'react';
 
 type Props = HTMLMotionProps<'section'> & {
@@ -8,6 +8,12 @@ type Props = HTMLMotionProps<'section'> & {
 };
 
 const AnimatedSection: FC<Props> = ({ children, delay = 0, ...rest }) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <motion.section {...rest}>{children}</motion.section>;
+  }
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 16 }}

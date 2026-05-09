@@ -50,11 +50,20 @@ const LastUpdate: FC = () => {
       <p className='text-muted-foreground text-sm md:text-right md:text-xs'>
         {dict.lastUpdate.label}
       </p>
-      <div className='flex w-full flex-col items-center'>
-        {formattedDate && (
+      <div
+        className='flex min-h-6 w-full flex-col items-center md:items-end'
+        aria-live='polite'
+        aria-busy={!formattedDate}
+      >
+        {formattedDate ? (
           <span className='font-semibold tracking-tight'>
             {formattedDate} ({dDayLabel})
           </span>
+        ) : (
+          <span
+            className='h-5 w-40 animate-pulse rounded bg-gray-200/70 dark:bg-gray-800/70'
+            aria-label={dict.lastUpdate.loading}
+          />
         )}
       </div>
     </div>

@@ -14,6 +14,13 @@ const EducationWidget: FC<Props> = ({ locale }) => {
   const education = loadSubjects<IEducation>('education.yaml', locale);
   const dict = getDictionary(locale);
 
+  if (!education?.schoolName) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`[EducationWidget] education.yaml is empty for locale "${locale}"`);
+    }
+    return null;
+  }
+
   return (
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.education}</SectionTitle>
