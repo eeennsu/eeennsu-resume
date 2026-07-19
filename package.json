@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "bun run lint && bun run prettier && next build",
+    "fetch:velog": "bun scripts/fetch-velog.ts",
+    "build": "bun run fetch:velog && bun run lint && bun run prettier && next build",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx ./src/db/configs/migrate.ts",
@@ -39,6 +40,7 @@
     "react-dom": "^19.2.4",
     "react-markdown": "^9.1.0",
     "remark-breaks": "^4.0.0",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^2.6.1",
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
