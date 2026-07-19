@@ -1,7 +1,8 @@
 - companyName: Wonder Round Inc.
   startDate: '2025.04.14'
   activities:
-    - startDate: '2026.02.04'
+    - id: wonder-rn-app-2026
+      startDate: '2026.02.04'
       title: 'Role transition — Development and maintenance of an in-house React Native (CLI) mobile application'
       doneList:
         - subject: Introduced a staged-mount pattern to optimize entry performance on key screens
@@ -50,7 +51,8 @@
             - 'Built a separate sub-agent dedicated to Android performance optimization, so it can automatically diagnose Android-specific issues — virtualized list jank / gesture conflicts / render load / memory usage — and propose code changes.'
             - Hardened the dev environment with RN debugging tool hook setup.
 
-    - startDate: '2025.07.03'
+    - id: wonder-admin-travel-2025
+      startDate: '2025.07.03'
       endDate: '2025.10.16'
       title: Built the admin page for an in-house travel content reservation and payment platform
       doneList:
@@ -71,14 +73,16 @@
               solution: 'Improved this with lazy loading via `resourcesToBackend`, dynamically importing only the languages and namespaces we need.'
             - problem: Custom error messages built with zod `refine` and similar were frozen at React init time, so the error message language did not change when the user switched locale.
               solution: Stored only the translation key in the validation logic and applied translation at render time, so existing error messages also update in real time on locale change.
-    - startDate: '2025.09.24'
+    - id: wonder-wix-migration-2025
+      startDate: '2025.09.24'
       endDate: '2025.10.02'
       title: Migrated a Wix-built travel platform website to a Next.js environment
       doneList:
         - subject: 'Implemented responsive design for desktop, tablet, and mobile environments'
         - subject: 'Built a CI/CD pipeline using Docker, ECR, and GitHub Actions'
 
-    - startDate: '2025.04.14'
+    - id: wonder-admin-enhance-2025
+      startDate: '2025.04.14'
       endDate: '2025.07.02'
       title: Enhanced and maintained the in-house application admin page system
       doneList:
@@ -107,7 +111,8 @@
   startDate: '2024.03.11'
   endDate: '2025.03.21'
   activities:
-    - startDate: '2025.01.16'
+    - id: kgkn-admin-site-2025
+      startDate: '2025.01.16'
       endDate: '2025.03.21'
       title: Built the dedicated admin site for an existing in-house platform
       doneList:
@@ -123,7 +128,8 @@
           details:
             - Implemented weekly / monthly view modes
             - Built a popup component letting users select a specific year, month, and week
-    - startDate: '2024.11.18'
+    - id: kgkn-external-course-2024
+      startDate: '2024.11.18'
       endDate: '2025.01.15'
       title: Built a course-taking site / admin & operator site for external companies
       doneList:
@@ -139,7 +145,8 @@
           details:
             - problem: 'When accessing URLs requiring specific permissions, the middleware that checks permissions before access was implemented using `React Router Dom` `loader`, but it completed execution before the user info was loaded.'
               solution: 'Built a route guard component directly using `React Router Dom` `Outlet` and `Navigate` to check authenticated users first when accessing protected pages. If allowed, render child routes; otherwise block access.'
-    - startDate: '2024.10.01'
+    - id: kgkn-platform-enhance-2024
+      startDate: '2024.10.01'
       endDate: '2024.11.15'
       title: Enhanced and maintained the existing platform
       doneList:
@@ -148,7 +155,8 @@
             - problem: The measured height of each `row` in infinite scroll was inconsistent, so virtualized table scroll caused data not to appear or the UI to shift.
               solution: 'Set an `estimateSize` value to estimate initial `row` height, then dynamically updated based on the actual rendered `row` height to resolve the issue.'
         - subject: Built an admin page that visualizes per-course learning progress and performance for analysis
-    - startDate: '2024.08.02'
+    - id: kgkn-coding-test-2024
+      startDate: '2024.08.02'
       endDate: '2024.10.01'
       title: Built a dedicated coding test platform
       doneList:
@@ -171,13 +179,15 @@
           details:
             - problem: Combining the problem details / language and memory/time-limit selection / default test cases into one form made the UI complex and hard to maintain.
               solution: Split the related items into 3 main tabs and pre-validated when moving between tabs. Validation logic is managed in a global store, and each tab sets its validation function on mount to keep the logic consistent.
-    - startDate: '2024.07.10'
+    - id: kgkn-application-site-2024
+      startDate: '2024.07.10'
       endDate: '2024.08.02'
       title: Built an introduction and application site for an external company
       doneList:
         - subject: Built static pages introducing the external company's strengths
         - subject: Built an application form using a namespace-pattern-based component composition
-    - startDate: '2024.05.27'
+    - id: kgkn-lms-2024
+      startDate: '2024.05.27'
       endDate: '2024.06.28'
       title: LMS development
       doneList:
@@ -189,7 +199,8 @@
           details:
             - problem: 'When solving problems, doing answer-sheet creation and selected-answer checking via API in a single "Submit" click was inefficient, and a network drop during the exam caused data loss.'
               solution: 'On entering the exam page, called an API to create the user’s answer sheet in advance, and sent a PATCH request to the server every time the user marks an answer to save exam progress in real time. Data loss during exams dropped from ~10/50 → 0/50.'
-    - startDate: '2024.03.11'
+    - id: kgkn-online-platform-2024
+      startDate: '2024.03.11'
       endDate: '2024.05.24'
       title: Built the in-house platform for an online IT education site
       doneList:

@@ -2,10 +2,10 @@ import Markdown from '@shared/components/Markdown';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@shared/shadcn-ui/ui/accordion';
-import { ICompanyExperience } from '@shared/types/subjects';
+import { IActivity } from '@shared/types/subjects';
 import { FC } from 'react';
 
-type Props = ICompanyExperience['activities'][number] & {
+type Props = IActivity & {
   index: number;
   locale: Locale;
 };

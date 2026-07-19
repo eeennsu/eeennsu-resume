@@ -39,7 +39,8 @@ const ExperienceWidget: FC<Props> = ({ locale }) => {
             >
               {experience.activities.map((activity, j) => (
                 <ActivityCard
-                  key={activity.title}
+                  key={activity.id}
+                  id={activity.id}
                   startDate={activity.startDate}
                   endDate={activity.endDate}
                   title={activity.title}
