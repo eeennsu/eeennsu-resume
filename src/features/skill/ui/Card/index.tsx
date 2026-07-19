@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import SkillBadge from '@features/skill/ui/SkillBadge';
+
 interface Props {
   name: string;
   detailList: string[];
@@ -13,12 +15,7 @@ const SkillCard: FC<Props> = ({ name, detailList }) => {
       </h3>
       <ul className='flex flex-wrap gap-x-2 gap-y-2 md:col-span-5'>
         {detailList.map((detail, index) => (
-          <li
-            key={index}
-            className='rounded-md border border-gray-200 bg-white px-2.5 py-1 text-[13px] font-medium text-gray-800 md:text-sm dark:border-gray-800 dark:bg-gray-900/60 dark:text-gray-200'
-          >
-            {detail}
-          </li>
+          <SkillBadge key={index} label={detail} />
         ))}
       </ul>
     </div>
