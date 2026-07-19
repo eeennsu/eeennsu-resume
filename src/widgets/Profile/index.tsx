@@ -24,7 +24,7 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
 
   return (
     <AnimatedSection className='w-full pt-6 md:pt-10'>
-      <ProfileHeader />
+      <ProfileHeader latestVelogReleasedAt={null} />
 
       <div className='flex flex-col gap-10 px-6 md:mx-auto md:max-w-6xl md:flex-row md:items-start md:justify-between md:px-12'>
         <div className='flex flex-col items-center gap-7 md:flex-row md:gap-9'>

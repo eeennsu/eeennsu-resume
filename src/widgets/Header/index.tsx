@@ -12,6 +12,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface Props {
   isHeaderVisible: boolean;
+  latestVelogReleasedAt: string | null;
 }
 
 const Header: FC<Props> = ({ isHeaderVisible }) => {
