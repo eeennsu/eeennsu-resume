@@ -1,15 +1,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
-import {
-  VELOG_GRAPHQL_ENDPOINT,
-  VELOG_USERNAME,
-} from '../src/shared/consts/velog';
-import type {
-  IVelogArchive,
-  IVelogPost,
-  IVelogTagStat,
-} from '../src/shared/types/velog';
+import { VELOG_GRAPHQL_ENDPOINT, VELOG_USERNAME } from '../src/shared/consts/velog';
+import type { IVelogArchive, IVelogPost, IVelogTagStat } from '../src/shared/types/velog';
 
 const OUTPUT_PATH = join(process.cwd(), 'src', 'data', 'velog-posts.json');
 const PAGE_LIMIT = 100;
@@ -97,9 +90,7 @@ const fetchPage = async (cursor: string | null): Promise<RawVelogPost[]> => {
     errors?: Array<{ message: string }>;
   };
   if (payload.errors && payload.errors.length > 0) {
-    throw new Error(
-      `GraphQL errors: ${payload.errors.map(e => e.message).join('; ')}`,
-    );
+    throw new Error(`GraphQL errors: ${payload.errors.map(e => e.message).join('; ')}`);
   }
   return payload.data?.posts ?? [];
 };
