@@ -1,0 +1,40 @@
+# Activity ↔ Velog post mapping (docs/my-velog-posts.md v3 §2.4, §8.2).
+# 언어 무관: experience.{ko,en}.yaml의 activity.id로만 조인.
+# techTags: velog 태그와 tag→SkillId 매핑을 통해 자동 매칭.
+# featuredVelogSlugs: 강조 (자동 매칭 여부와 무관하게 포함).
+# excludeVelogSlugs: 자동 매칭 결과에서 제외.
+
+- activityId: wonder-rn-app-2026
+  techTags: [react-native, typescript, tanstack-query]
+  featuredVelogSlugs: []
+  excludeVelogSlugs: []
+
+- activityId: wonder-admin-travel-2025
+  techTags: [react, typescript, tanstack-query]
+
+- activityId: wonder-wix-migration-2025
+  techTags: [react, typescript]
+
+- activityId: wonder-admin-enhance-2025
+  techTags: [react, typescript, tanstack-query]
+
+- activityId: kgkn-admin-site-2025
+  techTags: [nextjs, typescript, react-query]
+
+- activityId: kgkn-external-course-2024
+  techTags: [nextjs, typescript, react-query]
+
+- activityId: kgkn-platform-enhance-2024
+  techTags: [nextjs, react-query]
+
+- activityId: kgkn-coding-test-2024
+  techTags: [nextjs, react]
+
+- activityId: kgkn-application-site-2024
+  techTags: [nextjs, react]
+
+- activityId: kgkn-lms-2024
+  techTags: [nextjs, react, react-query]
+
+- activityId: kgkn-online-platform-2024
+  techTags: [nextjs, react, react-query]
