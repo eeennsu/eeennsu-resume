@@ -1,5 +1,5 @@
 import { incrementAndCheck, recordTokens } from '@shared/ai/cap';
-import { CHAT_MODEL, getAnthropic } from '@shared/ai/client';
+import { CHAT_MODEL, getGemini } from '@shared/ai/client';
 import { buildChatSystemPrompt } from '@shared/ai/prompts';
 import { checkOrigin, verifyTurnstile, wrapUntrusted } from '@shared/ai/security';
 import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
@@ -53,31 +53,44 @@ export async function POST(request: Request) {
   const system = buildChatSystemPrompt(locale);
 
   // 사용자 메시지는 태그로 래핑(인젝션 방어). assistant는 그대로 전달.
-  const apiMessages = messages.map(message =>
+  // Gemini는 assistant 롤을 'model'로 표기한다.
+  const contents = messages.map(message =>
     message.role === 'user'
-      ? { role: 'user' as const, content: wrapUntrusted('user_question', String(message.content)) }
-      : { role: 'assistant' as const, content: String(message.content) },
+      ? {
+          role: 'user' as const,
+          parts: [{ text: wrapUntrusted('user_question', String(message.content)) }],
+        }
+      : { role: 'model' as const, parts: [{ text: String(message.content) }] },
   );
 
-  const client = getAnthropic();
+  const client = getGemini();
   const encoder = new TextEncoder();
 
-  // 4. Haiku 스트리밍 (effort 미지원 → temperature만)
+  // 4. Gemini Flash 스트리밍. 챗봇 응답성 위해 thinking 비활성.
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        const anthropicStream = client.messages.stream({
+        const geminiStream = await client.models.generateContentStream({
           model: CHAT_MODEL,
-          max_tokens: 1024,
-          temperature: 0.3,
-          system,
-          messages: apiMessages,
+          contents,
+          config: {
+            systemInstruction: system,
+            temperature: 0.3,
+            maxOutputTokens: 1024,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
         });
 
-        anthropicStream.on('text', text => controller.enqueue(encoder.encode(text)));
+        let usage: { promptTokenCount?: number; candidatesTokenCount?: number } | undefined;
+        for await (const chunk of geminiStream) {
+          const text = chunk.text;
+          if (text) controller.enqueue(encoder.encode(text));
+          if (chunk.usageMetadata) usage = chunk.usageMetadata;
+        }
 
-        const final = await anthropicStream.finalMessage();
-        void recordTokens('chat', final.usage.input_tokens, final.usage.output_tokens);
+        if (usage) {
+          void recordTokens('chat', usage.promptTokenCount ?? 0, usage.candidatesTokenCount ?? 0);
+        }
       } catch (err) {
         console.error('[api/chat] stream error', err);
         controller.enqueue(

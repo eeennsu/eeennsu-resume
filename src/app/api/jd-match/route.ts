@@ -1,18 +1,42 @@
-import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
+import { Type } from '@google/genai';
 import { incrementAndCheck, recordTokens, refund } from '@shared/ai/cap';
-import { getAnthropic, JD_MODEL } from '@shared/ai/client';
+import { getGemini, JD_MODEL } from '@shared/ai/client';
 import { buildJdSystemPrompt } from '@shared/ai/prompts';
 import { checkOrigin, verifyTurnstile, wrapUntrusted } from '@shared/ai/security';
 import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
 import { z } from 'zod';
 
-// fs(이력서 로드) + dotenv(db) 때문에 Edge 불가. Sonnet 원샷 여유.
+// fs(이력서 로드) + dotenv(db) 때문에 Edge 불가. 원샷 분석 여유.
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
 const MAX_JD_LENGTH = 8000;
 
-// output_config.format은 min/max 등 수치 제약 미지원 → fitScore 범위는 코드에서 clamp.
+// Gemini 응답 스키마(구조화 출력 강제). 수치 범위는 미보장 → fitScore는 코드에서 clamp.
+const responseSchema = {
+  type: Type.OBJECT,
+  properties: {
+    fitScore: { type: Type.NUMBER },
+    summary: { type: Type.ARRAY, items: { type: Type.STRING } },
+    matchedSkills: { type: Type.ARRAY, items: { type: Type.STRING } },
+    gaps: { type: Type.ARRAY, items: { type: Type.STRING } },
+    pitch: { type: Type.ARRAY, items: { type: Type.STRING } },
+    relevantExperience: {
+      type: Type.ARRAY,
+      items: {
+        type: Type.OBJECT,
+        properties: {
+          title: { type: Type.STRING },
+          why: { type: Type.STRING },
+        },
+        required: ['title', 'why'],
+      },
+    },
+  },
+  required: ['fitScore', 'summary', 'matchedSkills', 'gaps', 'pitch', 'relevantExperience'],
+};
+
+// 파싱 결과 런타임 검증(모델이 스키마를 어겨도 안전).
 const jdSchema = z.object({
   fitScore: z.number(),
   summary: z.array(z.string()),
@@ -64,26 +88,38 @@ export async function POST(request: Request) {
 
   const locale = body.locale && isLocale(body.locale) ? body.locale : DEFAULT_LOCALE;
   const system = buildJdSystemPrompt(locale);
-  const client = getAnthropic();
+  const client = getGemini();
 
   try {
-    // 5. Sonnet 구조화 출력. Sonnet 5는 temperature 미지원 → effort low로 바운드.
-    //    JD는 태그로 래핑(인젝션 방어).
-    const message = await client.messages.parse({
+    // 5. Gemini 구조화 출력. JD는 태그로 래핑(인젝션 방어).
+    const response = await client.models.generateContent({
       model: JD_MODEL,
-      max_tokens: 2048,
-      system,
-      output_config: { format: zodOutputFormat(jdSchema), effort: 'low' },
-      messages: [{ role: 'user', content: wrapUntrusted('jd_data', jd) }],
+      contents: wrapUntrusted('jd_data', jd),
+      config: {
+        systemInstruction: system,
+        temperature: 0.3,
+        responseMimeType: 'application/json',
+        responseSchema,
+        thinkingConfig: { thinkingBudget: 0 },
+      },
     });
 
-    const parsed = message.parsed_output;
-    if (!parsed) {
+    const text = response.text;
+    if (!text) {
       await refund('jd');
       return new Response('Analysis failed', { status: 502 });
     }
 
-    void recordTokens('jd', message.usage.input_tokens, message.usage.output_tokens);
+    let parsed: z.infer<typeof jdSchema>;
+    try {
+      parsed = jdSchema.parse(JSON.parse(text));
+    } catch {
+      await refund('jd');
+      return new Response('Analysis failed', { status: 502 });
+    }
+
+    const usage = response.usageMetadata;
+    void recordTokens('jd', usage?.promptTokenCount ?? 0, usage?.candidatesTokenCount ?? 0);
 
     // 6. fitScore 0~100 clamp (스키마가 범위를 보장하지 않음)
     const result = {
