@@ -15,6 +15,7 @@ import type { Metadata, Viewport } from 'next';
 import { Open_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 
+import AiChat from '@widgets/AiChat';
 import Footer from '@widgets/Footer';
 
 import '../globals.css';
@@ -173,6 +174,7 @@ export default async function RootLayout({
               </div>
               <Footer />
             </div>
+            <AiChat locale={locale} labels={dict.aiChat} />
           </TooltipProvider>
         </ThemeProvider>
       </body>
