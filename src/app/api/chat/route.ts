@@ -1,5 +1,12 @@
 import { incrementAndCheck, recordTokens } from '@shared/ai/cap';
-import { CHAT_MODEL, getGemini } from '@shared/ai/client';
+import {
+  CHAT_MODEL,
+  FALLBACK_MODEL,
+  getGemini,
+  isRetryableGeminiError,
+  thinkingConfigFor,
+  withGeminiRetry,
+} from '@shared/ai/client';
 import { buildChatSystemPrompt } from '@shared/ai/prompts';
 import { checkOrigin, verifyTurnstile, wrapUntrusted } from '@shared/ai/security';
 import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
@@ -66,20 +73,33 @@ export async function POST(request: Request) {
   const client = getGemini();
   const encoder = new TextEncoder();
 
-  // 4. Gemini Flash 스트리밍. 챗봇 응답성 위해 thinking 비활성.
+  // 4. Gemini Flash 스트리밍. 챗봇 응답성 위해 thinking 비활성(기본 모델).
+  const streamFor = (model: string) => {
+    const thinking = thinkingConfigFor(model);
+    return client.models.generateContentStream({
+      model,
+      contents,
+      config: {
+        systemInstruction: system,
+        temperature: 0.3,
+        maxOutputTokens: 1024,
+        ...(thinking ? { thinkingConfig: thinking } : {}),
+      },
+    });
+  };
+
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        const geminiStream = await client.models.generateContentStream({
-          model: CHAT_MODEL,
-          contents,
-          config: {
-            systemInstruction: system,
-            temperature: 0.3,
-            maxOutputTokens: 1024,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
-        });
+        // 기본 모델 재시도 → 지속 과부하 시 폴백 모델로 1회 시도.
+        let geminiStream;
+        try {
+          geminiStream = await withGeminiRetry(() => streamFor(CHAT_MODEL));
+        } catch (err) {
+          if (!isRetryableGeminiError(err)) throw err;
+          console.warn('[api/chat] primary model overloaded, falling back');
+          geminiStream = await streamFor(FALLBACK_MODEL);
+        }
 
         let usage: { promptTokenCount?: number; candidatesTokenCount?: number } | undefined;
         for await (const chunk of geminiStream) {

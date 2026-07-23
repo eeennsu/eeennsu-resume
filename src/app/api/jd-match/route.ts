@@ -1,6 +1,13 @@
 import { Type } from '@google/genai';
 import { incrementAndCheck, recordTokens, refund } from '@shared/ai/cap';
-import { getGemini, JD_MODEL } from '@shared/ai/client';
+import {
+  FALLBACK_MODEL,
+  getGemini,
+  isRetryableGeminiError,
+  JD_MODEL,
+  thinkingConfigFor,
+  withGeminiRetry,
+} from '@shared/ai/client';
 import { buildJdSystemPrompt } from '@shared/ai/prompts';
 import { checkOrigin, verifyTurnstile, wrapUntrusted } from '@shared/ai/security';
 import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
@@ -90,19 +97,32 @@ export async function POST(request: Request) {
   const system = buildJdSystemPrompt(locale);
   const client = getGemini();
 
-  try {
-    // 5. Gemini 구조화 출력. JD는 태그로 래핑(인젝션 방어).
-    const response = await client.models.generateContent({
-      model: JD_MODEL,
+  // 5. Gemini 구조화 출력. JD는 태그로 래핑(인젝션 방어).
+  const requestFor = (model: string) => {
+    const thinking = thinkingConfigFor(model);
+    return client.models.generateContent({
+      model,
       contents: wrapUntrusted('jd_data', jd),
       config: {
         systemInstruction: system,
         temperature: 0.3,
         responseMimeType: 'application/json',
         responseSchema,
-        thinkingConfig: { thinkingBudget: 0 },
+        ...(thinking ? { thinkingConfig: thinking } : {}),
       },
     });
+  };
+
+  try {
+    // 기본 모델 재시도 → 지속 과부하 시 폴백 모델로 1회 시도.
+    let response;
+    try {
+      response = await withGeminiRetry(() => requestFor(JD_MODEL));
+    } catch (err) {
+      if (!isRetryableGeminiError(err)) throw err;
+      console.warn('[api/jd-match] primary model overloaded, falling back');
+      response = await requestFor(FALLBACK_MODEL);
+    }
 
     const text = response.text;
     if (!text) {
