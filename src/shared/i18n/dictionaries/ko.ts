@@ -152,6 +152,14 @@ export const ko = {
       posts: '정리 글 {{count}}개',
       tags: '태그 {{count}}개',
     },
+    skillMap: {
+      count: '{{count}}편',
+      empty: '아직 스킬에 매칭된 글이 없습니다. 태그를 정리하면 자동으로 채워집니다.',
+    },
+    tagCloud: {
+      all: '전체',
+      empty: '이 태그의 정리 글이 아직 없습니다.',
+    },
     relatedPosts: {
       badgeLabel: '관련 정리 글 {{count}}개',
       empty: '관련 정리 글이 아직 없습니다.',
@@ -166,6 +174,15 @@ export const ko = {
     behindTheScenes: {
       title: '이 페이지는 어떻게 만들어졌나요?',
       description: 'Velog GraphQL → 배포 파이프라인 → RSC 정적 렌더링까지의 흐름',
+      cronNote: 'GitHub Actions cron이 velog RSS를 폴링해 새 글 감지 시 배포 웹훅을 트리거합니다.',
+      stack: ['Velog GraphQL', 'Next.js RSC', 'TypeScript', 'GitHub Actions'],
+      steps: {
+        source: 'velog.io/@diso592 posts + tags',
+        fetch: '배포 시 GraphQL 커서 페이지네이션',
+        seed: '커밋된 시드, 실패 시 이전 JSON 유지',
+        render: '서버에서 fs로 로드, RSC 정적 렌더링',
+        output: '/{locale}/writings 정적 HTML',
+      },
     },
     nav: {
       link: 'Writings',

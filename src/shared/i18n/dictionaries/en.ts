@@ -152,6 +152,14 @@ export const en: Dictionary = {
       posts: '{{count}} writings',
       tags: '{{count}} tags',
     },
+    skillMap: {
+      count: '{{count}} posts',
+      empty: 'No skill-mapped writings yet. Tag your Velog posts to fill this in.',
+    },
+    tagCloud: {
+      all: 'All',
+      empty: 'No writings for this tag yet.',
+    },
     relatedPosts: {
       badgeLabel: '{{count}} related writings',
       empty: 'No related writings yet.',
@@ -166,6 +174,16 @@ export const en: Dictionary = {
     behindTheScenes: {
       title: 'How was this page built?',
       description: 'Velog GraphQL → deployment pipeline → RSC static rendering',
+      cronNote:
+        'A GitHub Actions cron polls the velog RSS and triggers a deploy webhook when a new post is detected.',
+      stack: ['Velog GraphQL', 'Next.js RSC', 'TypeScript', 'GitHub Actions'],
+      steps: {
+        source: 'velog.io/@diso592 posts + tags',
+        fetch: 'GraphQL cursor pagination on deploy',
+        seed: 'committed seed, previous JSON retained on failure',
+        render: 'server fs load, RSC static rendering',
+        output: '/{locale}/writings static HTML',
+      },
     },
     nav: {
       link: 'Writings',
