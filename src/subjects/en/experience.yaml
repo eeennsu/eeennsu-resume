@@ -4,6 +4,19 @@
     - startDate: '2026.02.04'
       title: 'Role transition — Development and maintenance of an in-house React Native (CLI) mobile application'
       doneList:
+        - subject: 'Introduced and operationalized a new OTA (over-the-air code delivery) infrastructure with `hot-updater`'
+          details:
+            - 'To resolve the structure where urgent bug fixes and QA changes were delayed by the store review cycle, I newly introduced an OTA pipeline with `hot-updater` that delivers JS bundles over the air without review. Designed and built the whole flow — bundle store integration, a system that manages iOS / Android and `dev` / `beta` / `pro` per environment, and the deploy/rollback operations flow.'
+            - problem: 'Initially all environments shared channels and settings, so a higher-environment bundle could overwrite a lower-environment native build, or a missed settings swap before deploy left the bundle and native mismatched. Wrong key settings repeatedly crashed social login.'
+              solution: 'Isolated deploy destinations by an `appVersion` + channel (`dev` / `beta` / `production`) combination, and automated injecting channel/environment settings at build time. Standardized the `set-<env>` → deploy → restore `dev` procedure to establish a partition so bundles always reach only the intended environment.'
+            - problem: 'In certain situations the app fell into a force-update (`force update`) infinite loop, making normal entry itself impossible — a critical failure.'
+              solution: 'Added rollback instrumentation that makes the boot-failure loop observable (current bundle id === minimum bundle id → confirmed boot failure), and secured a manual kill switch recoverable immediately via console/DB to establish a failure-response path.'
+
+        - subject: Separated and controlled platform-native HTTP cache policy
+          details:
+            - problem: 'The default URL response cache in the iOS / Android native layer returned stale responses for some `GET` requests, conflicting with app-level server-state freshness control (`TanStack Query`) and causing cases where the latest data was not reflected to the user.'
+              solution: 'Separated and controlled the native request cache per platform, and disabled the native cache path for freshness-critical `GET` requests. Unified single ownership of the cache policy at the app level (`staleTime`-based queries) to eliminate data inconsistency from dual native/app caching.'
+
         - subject: Introduced a staged-mount pattern to optimize entry performance on key screens
           details:
             - problem: 'On heavy screens that accumulate many `hooks` and API calls (lists / map / detail), every widget mounts at the same time on entry, which makes the navigation animation stutter and delays the appearance of the `skeleton`.'
@@ -28,27 +41,19 @@
             - problem: 'Code-driven camera moves (region filter selection, initial camera setup) were treated identically to user gestures, which caused the result-list API to be called multiple times.'
               solution: 'Tracked code-driven camera moves with a separate ref to distinguish them from real user gestures, and toggled a re-search-enabled flag so re-search is only triggered on meaningful user actions.'
             - 'Built a util that derives the southwest/northeast bounds of the visible area from the map camera center and lat/lng deltas, and passes them as the search range to the result-list API. This way, only results that match exactly what the user is looking at on the map are fetched.'
-        - subject: 'Implemented a custom pull-to-refresh inside a `BottomSheet` layout where a banner is always visible'
+        - subject: 'Implemented a custom pull-to-refresh in a layout where a `BottomSheet` stays partially visible above a fixed top area'
           details:
-            - problem: 'The main screen has a composite layout where a `BottomSheet` is partially visible above a top banner, with the `BottomSheet` `snapPoint` fixed so the banner is always visible. In this setup, binding a standard `RefreshControl` to the list inside the `BottomSheet` does not detect a `pull` gesture in the banner area, so pull-to-refresh does not work on either iOS or Android.'
+            - problem: 'A composite layout where a `BottomSheet` is partially visible above a fixed top area (banner, etc.), with the `BottomSheet` `snapPoint` fixed to the bottom of that area so it is always visible. In this setup, binding a standard `RefreshControl` to the list inside the `BottomSheet` does not detect a `pull` gesture in the fixed top area, so pull-to-refresh does not work on either iOS or Android.'
               solution: 'Wrapped the entire screen with a `GestureDetector`, detected the `pull` gesture directly via `Pan Gesture`, and synced the indicator position / rotation / `opacity` to the pull distance with `Reanimated worklet`. Triggered the refresh once the threshold was crossed and held the indicator until the response completed — designing the state flow myself.'
-            - 'Resolved conflicts between scroll gestures inside the `BottomSheet` and the screen-wide `Pan Gesture` by adjusting gesture priorities with `waitFor`, so pull in the banner area and scroll inside the `BottomSheet` were cleanly separated.'
+            - 'Resolved conflicts between scroll gestures inside the `BottomSheet` and the screen-wide `Pan Gesture` by adjusting gesture priorities with `waitFor`, so pull in the fixed top area and scroll inside the `BottomSheet` were cleanly separated.'
             - 'Branched the indicator look / position per platform to follow iOS and Android guidelines.'
-        - subject: Android-specific platform troubleshooting
-          details:
-            - problem: 'On high-refresh-rate / high-density Android devices, fast `fling` scrolls on virtualized lists briefly showed empty rows, making the scroll feel choppy.'
-              solution: 'Added an Android-specific branch in the shared `LegendList` wrapper. Increased `drawDistance` (which defines the pre-render area) from 250 to 400 to widen the pre-rendered range, and split `decelerationRate` into `fast` for iOS / `normal` for Android to compensate for platform inertia differences. Exposed `removeClippedSubviews` (which temporarily detaches off-screen views) as an opt-in to reduce Android `overdraw` cost.'
-            - problem: The image picker library cut off its action button area on Android because it was hidden behind the system bottom navigation bar.
-              solution: 'Patched the library itself to respect `SafeArea inset`, and managed it through a `pnpm patch` workflow so the patch is preserved across dependency upgrades.'
-            - problem: 'A custom horizontal swiper built with `Reanimated Spring` + `Pan Gesture` overshot too much on Android, missed fast swipes, and felt sluggish compared to iOS for the same gesture.'
-              solution: 'Branched Spring settings and gesture thresholds per platform. For Android, increased `damping` to 25 (iOS 22) to suppress overshoot, narrowed `Pan Gesture` `activeOffsetX` from ±10 to ±8 to improve swipe sensitivity, and lowered the swipe trigger `velocity threshold` to 150 to compensate for Android reporting lower `velocity` values — bringing the feel close to iOS.'
         - subject: Built a Claude Code–based development productivity infrastructure
           details:
             - With the prior RN app developer leaving and domain knowledge handover broken, I had to maintain the app and ship new features alone with limited RN experience. To cut the learning cost and keep domain context always accessible, I designed and built a Claude Code–based assist infrastructure myself.
             - 'Split project rules per domain (UI ecosystem / performance / animation / server state / navigation / global state / i18n / new feature flow), so only the rules relevant to the current task are loaded based on keywords.'
-            - 'Composed a `planner → generator → evaluator` 3-stage loop sub-agent to automate parts of the implementation work.'
-            - 'Built a separate sub-agent dedicated to Android performance optimization, so it can automatically diagnose Android-specific issues — virtualized list jank / gesture conflicts / render load / memory usage — and propose code changes.'
-            - Hardened the dev environment with RN debugging tool hook setup.
+            - 'Role-separated multi-agent pipeline — on top of the `planner → generator → evaluator` implementation loop, composed a self-verification lane where a separate `critic` agent objectively refutes and verifies the analysis, mitigating the bias of single-context self-verification.'
+            - 'Turned repeated implementation patterns into skills — codified standardized tasks (adding an API / optimistic-update mutation / screen entry optimization / i18n application) into reusable commands, so I get consistent output without re-explaining conventions every time.'
+            - 'Routed models by task complexity (lightweight lookups → architecture/deep analysis), and tuned prompt caching and reasoning effort to optimize response latency and token cost.'
 
     - startDate: '2025.07.03'
       endDate: '2025.10.16'
