@@ -138,4 +138,40 @@ export const en: Dictionary = {
     limit: "Today's analysis limit has been reached. Please try again tomorrow.",
     disclaimer: 'An AI-generated reference analysis comparing the resume and the JD.',
   },
+  writings: {
+    pageTitle: 'Writings & Retrospectives',
+    pageDescription:
+      'A tag-first restructuring of my frontend and React Native learning notes and retrospectives, curated on Velog (@diso592).',
+    tab: {
+      tagCloud: 'By tag',
+      timeline: 'By time',
+    },
+    empty: 'No writings collected yet.',
+    lastFetched: 'Collected as of {{when}}',
+    stats: {
+      posts: '{{count}} writings',
+      tags: '{{count}} tags',
+    },
+    relatedPosts: {
+      badgeLabel: '{{count}} related writings',
+      empty: 'No related writings yet.',
+      inlineAria: 'View {{count}} writings for this skill',
+    },
+    activityBadge: {
+      label: 'Real-world link',
+    },
+    recent: {
+      badge: 'NEW',
+    },
+    behindTheScenes: {
+      title: 'How was this page built?',
+      description: 'Velog GraphQL → deployment pipeline → RSC static rendering',
+    },
+    nav: {
+      link: 'Writings',
+    },
+    cta: {
+      viewAll: 'View all writings',
+    },
+  },
 };

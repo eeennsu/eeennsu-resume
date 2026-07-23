@@ -138,6 +138,42 @@ export const ko = {
     limit: '오늘의 분석 이용량을 초과했어요. 내일 다시 시도해주세요.',
     disclaimer: 'AI가 이력서와 JD를 비교해 생성한 참고용 분석입니다.',
   },
+  writings: {
+    pageTitle: '기술 정리 & 회고',
+    pageDescription:
+      'Velog(@diso592)에 정리한 프론트엔드·React Native 학습과 실무 궤적을 태그 중심으로 재구성했습니다.',
+    tab: {
+      tagCloud: '태그별 보기',
+      timeline: '시간순 보기',
+    },
+    empty: '아직 수집된 정리 글이 없습니다.',
+    lastFetched: '{{when}} 기준 수집',
+    stats: {
+      posts: '정리 글 {{count}}개',
+      tags: '태그 {{count}}개',
+    },
+    relatedPosts: {
+      badgeLabel: '관련 정리 글 {{count}}개',
+      empty: '관련 정리 글이 아직 없습니다.',
+      inlineAria: '이 스킬 관련 정리 글 {{count}}개 보기',
+    },
+    activityBadge: {
+      label: '실무 연결',
+    },
+    recent: {
+      badge: 'NEW',
+    },
+    behindTheScenes: {
+      title: '이 페이지는 어떻게 만들어졌나요?',
+      description: 'Velog GraphQL → 배포 파이프라인 → RSC 정적 렌더링까지의 흐름',
+    },
+    nav: {
+      link: 'Writings',
+    },
+    cta: {
+      viewAll: '전체 정리 글 보기',
+    },
+  },
 };
 
 export type Dictionary = typeof ko;
