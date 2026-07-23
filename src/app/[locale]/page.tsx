@@ -1,4 +1,5 @@
 import { isLocale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
@@ -7,6 +8,7 @@ import CheckingWidget from '@widgets/Checking';
 import EducationWidget from '@widgets/Eduction';
 import ExperienceWidget from '@widgets/Experience';
 import IntroduceWidget from '@widgets/Introduce';
+import JdMatchWidget from '@widgets/JdMatch';
 import PortfolioWidget from '@widgets/Portfolio';
 import ProfileWidget from '@widgets/Profile';
 import SkillsWidget from '@widgets/Skill';
@@ -19,11 +21,14 @@ const HomePage: FC<Props> = async ({ params }) => {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
+  const dict = getDictionary(locale);
+
   return (
     <main className='flex flex-col gap-10 md:gap-16'>
       {process.env.NODE_ENV !== 'development' ? <CheckingWidget /> : null}
       <ProfileWidget locale={locale} />
       <IntroduceWidget locale={locale} />
+      <JdMatchWidget locale={locale} labels={dict.jdMatch} />
       <ExperienceWidget locale={locale} />
       <SkillsWidget locale={locale} />
       <PortfolioWidget locale={locale} />

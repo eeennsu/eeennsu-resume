@@ -15,7 +15,7 @@ const useGetIp = () => {
         });
         const data = await res.json();
 
-        await trackVisitor(data.ip, navigator.userAgent);
+        await trackVisitor(data.ip, null, navigator.userAgent);
       } catch (err) {
         console.error(err);
       } finally {

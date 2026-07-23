@@ -1,5 +1,5 @@
 import { relations, sql } from 'drizzle-orm';
-import { pgTable, serial, text, timestamp, integer } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp, unique } from 'drizzle-orm/pg-core';
 
 export const visitors = pgTable('visitors', {
   id: serial('id').primaryKey(),
@@ -32,3 +32,20 @@ export const visitsRelations = relations(visits, ({ one }) => ({
     references: [visitors.id],
   }),
 }));
+
+// AI 기능(챗봇/JD) 전역 일일 사용량 카운터. (feature, usedOn) 하루 1행.
+// 비용 방어의 핵심 — 전역 캡 초과 시 그날 해당 기능 차단.
+export const aiUsage = pgTable(
+  'ai_usage',
+  {
+    id: serial('id').primaryKey(),
+    feature: text('feature').notNull(), // 'chat' | 'jd'
+    usedOn: text('used_on').notNull(), // 'YYYY-MM-DD' (Asia/Seoul)
+    count: integer('count').notNull().default(0),
+    tokensIn: integer('tokens_in').notNull().default(0),
+    tokensOut: integer('tokens_out').notNull().default(0),
+  },
+  table => ({
+    featureDayUnique: unique('ai_usage_feature_used_on_unique').on(table.feature, table.usedOn),
+  }),
+);
