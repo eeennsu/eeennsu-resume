@@ -42,12 +42,8 @@ yarn-error.log*
 next-env.d.ts
 
 # AGENTS
-CLAUDE.md
-/.claude
-/skills
-AGENTS.md
-/agents
-LICENSE
+/CLAUDE.local.md
+/.claude/settings.local.json
 
 # oh-my-claudecode (운영 아티팩트)
 /.omc

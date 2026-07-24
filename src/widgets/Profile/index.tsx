@@ -37,7 +37,7 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
     <AnimatedSection className='w-full pt-6 md:pt-10'>
       <ProfileHeader isNewVelogPost={isNewVelogPost} />
 
-      <div className='flex flex-col gap-10 px-6 md:mx-auto md:max-w-6xl md:px-12'>
+      <div className='flex flex-col gap-10'>
         <div className='flex flex-col items-center gap-7 md:flex-row md:items-center md:gap-9'>
           <figure className='relative w-40 shrink-0 md:w-52 md:self-center'>
             <Image

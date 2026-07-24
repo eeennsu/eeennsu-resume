@@ -89,7 +89,7 @@ const ActivityCard: FC<Props> = ({
                         return (
                           <li
                             key={k}
-                            className='leading-1.2 list-outside list-disc text-[15px] text-gray-800 marker:text-gray-300 dark:text-gray-200 dark:marker:text-gray-600'
+                            className='list-outside list-disc text-[15px] leading-relaxed text-gray-800 marker:text-gray-300 dark:text-gray-200 dark:marker:text-gray-600'
                           >
                             <Markdown>{detail}</Markdown>
                           </li>
