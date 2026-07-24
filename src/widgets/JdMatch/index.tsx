@@ -43,6 +43,48 @@ interface Props {
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
+// 마지막 분석 결과를 세션 동안 유지(새로고침 대비). 로케일이 다르면 무시.
+const STORAGE_KEY = 'jd-match:last-result';
+
+interface StoredResult {
+  locale: string;
+  result: JdResult;
+}
+
+const isJdResult = (value: unknown): value is JdResult => {
+  if (!value || typeof value !== 'object') return false;
+  const candidate = value as JdResult;
+  return (
+    typeof candidate.fitScore === 'number' &&
+    [
+      candidate.summary,
+      candidate.matchedSkills,
+      candidate.gaps,
+      candidate.pitch,
+      candidate.relevantExperience,
+    ].every(Array.isArray)
+  );
+};
+
+const loadStoredResult = (locale: Locale): JdResult | null => {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as StoredResult;
+    return parsed.locale === locale && isJdResult(parsed.result) ? parsed.result : null;
+  } catch {
+    return null;
+  }
+};
+
+const saveStoredResult = (locale: Locale, result: JdResult) => {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ locale, result } satisfies StoredResult));
+  } catch {
+    // 시크릿 모드 등 저장 불가 환경은 무시
+  }
+};
+
 const TONES = {
   match: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300',
   gap: 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300',
@@ -63,6 +105,13 @@ const SCORE_BAR = {
   high: 'bg-emerald-500',
   mid: 'bg-amber-500',
   low: 'bg-rose-400/80',
+} as const;
+
+// 적합도 헤드라인 패널 — 흰 배경과 구분되되 은은한 밴드 색 틴트
+const SCORE_PANEL = {
+  high: 'border-emerald-200/50 bg-emerald-50/40 dark:border-emerald-500/15 dark:bg-emerald-500/[0.04]',
+  mid: 'border-amber-200/50 bg-amber-50/40 dark:border-amber-500/15 dark:bg-amber-500/[0.04]',
+  low: 'border-rose-200/50 bg-rose-50/40 dark:border-rose-500/15 dark:bg-rose-500/[0.04]',
 } as const;
 
 const TagList: FC<{ items: string[]; tone?: keyof typeof TONES }> = ({
@@ -103,6 +152,12 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
 
   // SITE_KEY가 설정된 환경에서만 Turnstile을 강제. 토큰 발급 전에는 전송 UI 비활성.
   const turnstileBlocked = Boolean(SITE_KEY) && !token;
+
+  // 새로고침 후에도 마지막 결과 복원 (sessionStorage는 클라이언트 전용이라 effect에서)
+  useEffect(() => {
+    const stored = loadStoredResult(locale);
+    if (stored) setResult(stored);
+  }, [locale]);
 
   // 로딩 중 분석 단계 문구를 순환시켜 "AI가 분석 중"인 느낌을 준다.
   useEffect(() => {
@@ -156,7 +211,9 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
         return;
       }
 
-      setResult((await res.json()) as JdResult);
+      const data = (await res.json()) as JdResult;
+      setResult(data);
+      saveStoredResult(locale, data);
     } catch {
       setModalError(labels.error);
     } finally {
@@ -204,7 +261,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
               </span>
             </SharedTooltip>
           </DialogTitle>
-          <DialogDescription>{labels.description}</DialogDescription>
+          <DialogDescription className='text-xs'>{labels.description}</DialogDescription>
         </DialogHeader>
 
         <div className='flex flex-1 flex-col gap-4 overflow-y-auto scroll-smooth px-5 py-5 sm:px-6'>
@@ -311,9 +368,20 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
           {/* 결과 */}
           {!loading && !modalError && result && (
             <ErrorBoundary fallback={<p className='text-destructive text-sm'>{labels.error}</p>}>
-              <div ref={resultRef} className='flex flex-col gap-8'>
+              <motion.div
+                ref={resultRef}
+                className='flex flex-col gap-8'
+                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+              >
                 {/* 적합도 — 헤드라인 패널 */}
-                <div className='bg-muted/40 flex flex-col gap-3 rounded-xl p-5'>
+                <div
+                  className={cn(
+                    'flex flex-col gap-3 rounded-xl border p-5',
+                    SCORE_PANEL[scoreBand(result.fitScore)],
+                  )}
+                >
                   <div className='flex items-baseline justify-between'>
                     <span className='text-sm font-medium'>{labels.fitScore}</span>
                     <span
@@ -323,14 +391,20 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
                       <span className='text-muted-foreground text-base font-normal'>/100</span>
                     </span>
                   </div>
-                  <div className='bg-muted h-2.5 w-full overflow-hidden rounded-full'>
-                    <div
-                      className={cn(
-                        'h-full rounded-full transition-all',
-                        SCORE_BAR[scoreBand(result.fitScore)],
-                      )}
-                      style={{ width: `${result.fitScore}%` }}
-                    />
+                  <div className='h-2.5 w-full overflow-hidden rounded-full bg-black/[0.06] dark:bg-white/10'>
+                    {reduceMotion ? (
+                      <div
+                        className={cn('h-full rounded-full', SCORE_BAR[scoreBand(result.fitScore)])}
+                        style={{ width: `${result.fitScore}%` }}
+                      />
+                    ) : (
+                      <motion.div
+                        className={cn('h-full rounded-full', SCORE_BAR[scoreBand(result.fitScore)])}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${result.fitScore}%` }}
+                        transition={{ duration: 0.7, ease: 'easeOut' }}
+                      />
+                    )}
                   </div>
                   {result.summary.length > 0 && (
                     <div className='flex flex-col gap-1.5 pt-1'>
@@ -376,7 +450,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
                     <ResultHeading icon={Briefcase}>{labels.relevantExperience}</ResultHeading>
                     <ul className='flex flex-col gap-3'>
                       {result.relevantExperience.map((item, index) => (
-                        <li key={index} className='border-border rounded-lg border p-4'>
+                        <li key={index} className='border-border bg-muted/30 rounded-lg border p-4'>
                           <p className='text-sm font-semibold break-keep'>{item.title}</p>
                           <p className='text-muted-foreground mt-1 text-sm leading-relaxed break-keep'>
                             {item.why}
@@ -387,8 +461,10 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
                   </div>
                 )}
 
-                <p className='text-muted-foreground pt-1 text-[10px]'>{labels.disclaimer}</p>
-              </div>
+                <p className='text-muted-foreground border-border/60 border-t pt-3 text-[10px]'>
+                  {labels.disclaimer}
+                </p>
+              </motion.div>
             </ErrorBoundary>
           )}
         </div>

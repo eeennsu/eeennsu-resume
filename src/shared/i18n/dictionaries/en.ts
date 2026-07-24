@@ -126,8 +126,10 @@ export const en: Dictionary = {
   jdMatch: {
     sectionTitle: 'JD Match',
     title: 'JD Fit Analysis',
-    description: 'Paste a job description and AI will analyze how well my resume fits it.',
+    description:
+      'Paste a job description and Gemini 3.5 Flash will analyze the fit, grounded in my actual resume data.',
     cta: 'Start analysis',
+    viewResult: 'View result',
     placeholder: 'Paste the job description here…',
     analyze: 'Analyze',
     analyzing: 'Analyzing…',
@@ -146,6 +148,10 @@ export const en: Dictionary = {
     gaps: 'Gaps',
     pitch: 'Pitch points',
     relevantExperience: 'Relevant experience',
+    empty: 'Please enter a job description.',
+    error: 'Analysis failed. Please try again in a moment.',
+    limit: "Today's analysis limit has been reached. Please try again tomorrow.",
+    disclaimer: 'An AI-generated reference analysis comparing the resume and the JD.',
     flow: {
       ariaLabel: 'View JD Match flow',
       title: 'How was this built?',
@@ -157,10 +163,6 @@ export const en: Dictionary = {
         'Results render as a score band and tag lists.',
       ],
     },
-    empty: 'Please enter a job description.',
-    error: 'Analysis failed. Please try again in a moment.',
-    limit: "Today's analysis limit has been reached. Please try again tomorrow.",
-    disclaimer: 'An AI-generated reference analysis comparing the resume and the JD.',
   },
   writings: {
     pageTitle: 'Writings & Retrospectives',

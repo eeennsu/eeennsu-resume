@@ -126,8 +126,10 @@ export const ko = {
   jdMatch: {
     sectionTitle: 'JD Match',
     title: 'JD 맞춤 분석',
-    description: '채용공고(JD)를 붙여넣으면 제 이력서와의 적합도를 AI가 분석해드려요.',
+    description:
+      '채용공고(JD)를 붙여넣으면 Gemini 3.5 Flash 모델이 실제 이력서 데이터를 근거로 적합도를 분석해드려요.',
     cta: '분석 시작',
+    viewResult: '결과 보기',
     placeholder: '채용공고 내용을 여기에 붙여넣어 주세요…',
     analyze: '분석하기',
     analyzing: '분석 중…',
@@ -146,6 +148,10 @@ export const ko = {
     gaps: '보완할 점',
     pitch: '어필 포인트',
     relevantExperience: '관련 경력',
+    empty: 'JD를 입력해주세요.',
+    error: '분석에 실패했어요. 잠시 후 다시 시도해주세요.',
+    limit: '오늘의 분석 이용량을 초과했어요. 내일 다시 시도해주세요.',
+    disclaimer: 'AI가 이력서와 JD를 비교해 생성한 참고용 분석입니다.',
     flow: {
       ariaLabel: 'JD Match 작동 플로우 보기',
       title: '어떻게 만들어졌나요?',
@@ -157,10 +163,6 @@ export const ko = {
         '결과는 점수 밴드·태그 리스트로 시각화됩니다.',
       ],
     },
-    empty: 'JD를 입력해주세요.',
-    error: '분석에 실패했어요. 잠시 후 다시 시도해주세요.',
-    limit: '오늘의 분석 이용량을 초과했어요. 내일 다시 시도해주세요.',
-    disclaimer: 'AI가 이력서와 JD를 비교해 생성한 참고용 분석입니다.',
   },
   writings: {
     pageTitle: '기술 정리 & 회고',
