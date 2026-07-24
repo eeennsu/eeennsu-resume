@@ -1,5 +1,5 @@
-import type { IVelogArchive } from '@shared/types/velog';
-import { type FC } from 'react';
+import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
+import { type FC, type ReactNode } from 'react';
 
 import VelogPostCard from '@features/velog/ui/VelogPostCard';
 
@@ -14,9 +14,10 @@ interface Props {
     recentBadge: string;
   };
   isRecent?: (releasedAt: string) => boolean;
+  renderCrossLink?: (post: IVelogPost) => ReactNode;
 }
 
-const TagCloud: FC<Props> = ({ archive, activeTag, labels, isRecent }) => {
+const TagCloud: FC<Props> = ({ archive, activeTag, labels, isRecent, renderCrossLink }) => {
   const filtered = activeTag
     ? archive.posts.filter(post => post.tags.includes(activeTag))
     : archive.posts;
@@ -46,7 +47,9 @@ const TagCloud: FC<Props> = ({ archive, activeTag, labels, isRecent }) => {
                 post={post}
                 isRecent={isRecent?.(post.releasedAt)}
                 recentLabel={labels.recentBadge}
-              />
+              >
+                {renderCrossLink?.(post)}
+              </VelogPostCard>
             </li>
           ))}
         </ul>

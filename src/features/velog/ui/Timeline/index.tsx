@@ -1,6 +1,6 @@
 import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
 import dayjs from 'dayjs';
-import { type FC } from 'react';
+import { type FC, type ReactNode } from 'react';
 
 import VelogPostCard from '@features/velog/ui/VelogPostCard';
 
@@ -11,6 +11,7 @@ interface Props {
     recentBadge: string;
   };
   isRecent?: (releasedAt: string) => boolean;
+  renderCrossLink?: (post: IVelogPost) => ReactNode;
 }
 
 const groupByYearMonth = (
@@ -31,7 +32,7 @@ const groupByYearMonth = (
   }));
 };
 
-const Timeline: FC<Props> = ({ archive, labels, isRecent }) => {
+const Timeline: FC<Props> = ({ archive, labels, isRecent, renderCrossLink }) => {
   if (archive.posts.length === 0) {
     return (
       <p className='mx-6 rounded-xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm text-gray-500 md:mx-auto md:max-w-6xl dark:border-gray-700 dark:bg-gray-950/40 dark:text-gray-400'>
@@ -67,7 +68,9 @@ const Timeline: FC<Props> = ({ archive, labels, isRecent }) => {
                     post={post}
                     isRecent={isRecent?.(post.releasedAt)}
                     recentLabel={labels.recentBadge}
-                  />
+                  >
+                    {renderCrossLink?.(post)}
+                  </VelogPostCard>
                 </li>
               ))}
             </ul>

@@ -1,8 +1,13 @@
+import ActivityBadge from '@shared/components/CrossLinkBadge/ActivityBadge';
 import { VELOG_BASE_URL, VELOG_RSS_URL } from '@shared/consts/velog';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
+import type { IActivity, IActivityVelogMapping, ICompanyExperience } from '@shared/types/subjects';
+import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
 import { isRecentPost } from '@shared/utils/utilIsRecentPost';
+import { loadYaml } from '@shared/utils/utilLoadYaml';
+import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
 import dayjs from 'dayjs';
 import { CalendarClock, ExternalLink, Rss } from 'lucide-react';
 import Link from 'next/link';
@@ -28,8 +33,31 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
   const dict = getDictionary(locale);
   const t = dict.writings;
 
+  const experiences = loadSubjects<ICompanyExperience[]>('experience.yaml', locale) ?? [];
+  const mappings = loadYaml<IActivityVelogMapping[]>('src/data/activity-velog-mapping.yaml') ?? [];
+  const allActivities: IActivity[] = experiences.flatMap(e => e.activities);
+  const activityPosts = mapActivityToVelog(allActivities, mappings, archive);
+
+  const activityById = new Map<string, IActivity>();
+  for (const activity of allActivities) activityById.set(activity.id, activity);
+
+  const postToActivity = new Map<string, IActivity>();
+  for (const [activityId, posts] of activityPosts.entries()) {
+    const activity = activityById.get(activityId);
+    if (!activity) continue;
+    for (const post of posts) {
+      if (!postToActivity.has(post.id)) postToActivity.set(post.id, activity);
+    }
+  }
+
   const buildTimeMs = Date.now();
   const isRecent = (releasedAt: string) => isRecentPost(releasedAt, buildTimeMs);
+
+  const renderActivityLink = (postId: string) => {
+    const activity = postToActivity.get(postId);
+    if (!activity) return null;
+    return <ActivityBadge activity={activity} locale={locale} label={t.activityBadge.label} />;
+  };
 
   const fetchedLabel =
     archive.fetchedAt && archive.fetchedAt !== EMPTY_ISO
@@ -103,6 +131,7 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
                   recentBadge: t.recent.badge,
                 }}
                 isRecent={isRecent}
+                renderCrossLink={post => renderActivityLink(post.id)}
               />
             ) : (
               <Timeline
@@ -112,6 +141,7 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
                   recentBadge: t.recent.badge,
                 }}
                 isRecent={isRecent}
+                renderCrossLink={post => renderActivityLink(post.id)}
               />
             )}
           </div>
