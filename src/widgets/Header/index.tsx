@@ -4,30 +4,20 @@ import LanguageToggle from '@shared/components/LanguageToggle';
 import ThemeToggle from '@shared/components/ThemeToggle';
 import { MY_PROFILE } from '@shared/consts/commons';
 import { resolveDictionary } from '@shared/i18n/dictionaries';
-import { isRecentPost } from '@shared/utils/utilIsRecentPost';
 import { Github } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useEffect, useState, type FC } from 'react';
+import type { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
   isHeaderVisible: boolean;
-  latestVelogReleasedAt: string | null;
+  isNewVelogPost: boolean;
 }
 
-const Header: FC<Props> = ({ isHeaderVisible, latestVelogReleasedAt }) => {
+const Header: FC<Props> = ({ isHeaderVisible, isNewVelogPost }) => {
   const { locale } = useParams<{ locale: string }>();
   const { dict } = resolveDictionary(locale);
-  const [isNewVelogPost, setIsNewVelogPost] = useState(false);
-
-  useEffect(() => {
-    if (!latestVelogReleasedAt) {
-      setIsNewVelogPost(false);
-      return;
-    }
-    setIsNewVelogPost(isRecentPost(latestVelogReleasedAt, Date.now()));
-  }, [latestVelogReleasedAt]);
 
   return (
     <header

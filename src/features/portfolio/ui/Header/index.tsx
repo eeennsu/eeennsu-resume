@@ -6,15 +6,15 @@ import { type FC } from 'react';
 import Header from '@widgets/Header';
 
 interface Props {
-  latestVelogReleasedAt: string | null;
+  isNewVelogPost: boolean;
 }
 
-const ProfileHeader: FC<Props> = ({ latestVelogReleasedAt }) => {
+const ProfileHeader: FC<Props> = ({ isNewVelogPost }) => {
   const [isHeaderVisible, profileRef] = useVisibilityObserver<HTMLDivElement>();
 
   return (
     <section ref={profileRef}>
-      <Header isHeaderVisible={isHeaderVisible} latestVelogReleasedAt={latestVelogReleasedAt} />
+      <Header isHeaderVisible={isHeaderVisible} isNewVelogPost={isNewVelogPost} />
     </section>
   );
 };

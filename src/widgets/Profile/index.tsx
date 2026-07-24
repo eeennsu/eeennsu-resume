@@ -6,6 +6,7 @@ import { getKoreanAge } from '@shared/libs/date';
 import { IProfile } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
+import { isRecentPost } from '@shared/utils/utilIsRecentPost';
 import Image from 'next/image';
 import { type FC } from 'react';
 
@@ -24,16 +25,16 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
   const ageLabel = dict.profile.age.replace('{{age}}', String(getKoreanAge(MY_PROFILE.BIRTHDAY)));
 
   const archive = fetchVelogArchive();
-  const latestVelogReleasedAt =
-    archive.posts.reduce<string | null>((latest, post) => {
-      if (!post.releasedAt) return latest;
-      if (!latest) return post.releasedAt;
-      return Date.parse(post.releasedAt) > Date.parse(latest) ? post.releasedAt : latest;
-    }, null) ?? null;
+  const latestVelogReleasedAt = archive.posts.reduce<string | null>((latest, post) => {
+    if (!post.releasedAt) return latest;
+    if (!latest) return post.releasedAt;
+    return Date.parse(post.releasedAt) > Date.parse(latest) ? post.releasedAt : latest;
+  }, null);
+  const isNewVelogPost = isRecentPost(latestVelogReleasedAt, Date.now());
 
   return (
     <AnimatedSection className='w-full pt-6 md:pt-10'>
-      <ProfileHeader latestVelogReleasedAt={latestVelogReleasedAt} />
+      <ProfileHeader isNewVelogPost={isNewVelogPost} />
 
       <div className='flex flex-col gap-10 px-6 md:mx-auto md:max-w-6xl md:flex-row md:items-start md:justify-between md:px-12'>
         <div className='flex flex-col items-center gap-7 md:flex-row md:gap-9'>
