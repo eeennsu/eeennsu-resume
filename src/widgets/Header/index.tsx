@@ -4,10 +4,11 @@ import LanguageToggle from '@shared/components/LanguageToggle';
 import ThemeToggle from '@shared/components/ThemeToggle';
 import { MY_PROFILE } from '@shared/consts/commons';
 import { resolveDictionary } from '@shared/i18n/dictionaries';
+import { isRecentPost } from '@shared/utils/utilIsRecentPost';
 import { Github } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import type { FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
@@ -15,9 +16,18 @@ interface Props {
   latestVelogReleasedAt: string | null;
 }
 
-const Header: FC<Props> = ({ isHeaderVisible }) => {
+const Header: FC<Props> = ({ isHeaderVisible, latestVelogReleasedAt }) => {
   const { locale } = useParams<{ locale: string }>();
   const { dict } = resolveDictionary(locale);
+  const [isNewVelogPost, setIsNewVelogPost] = useState(false);
+
+  useEffect(() => {
+    if (!latestVelogReleasedAt) {
+      setIsNewVelogPost(false);
+      return;
+    }
+    setIsNewVelogPost(isRecentPost(latestVelogReleasedAt, Date.now()));
+  }, [latestVelogReleasedAt]);
 
   return (
     <header
@@ -44,6 +54,20 @@ const Header: FC<Props> = ({ isHeaderVisible }) => {
         </div>
 
         <div className='pointer-events-auto flex items-center gap-1 p-1 backdrop-blur-md'>
+          <Link
+            href={`/${locale}/writings`}
+            className='relative inline-flex items-center rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200/60 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white'
+          >
+            {dict.writings.nav.link}
+            {isNewVelogPost && (
+              <span
+                aria-hidden
+                className='absolute top-1 right-1 size-1.5 rounded-full bg-rose-500 dark:bg-rose-400'
+              />
+            )}
+            {isNewVelogPost && <span className='sr-only'>{dict.writings.recent.badge}</span>}
+          </Link>
+          <div className='h-4 w-px bg-gray-300 dark:bg-gray-600' />
           <LanguageToggle />
           <div className='h-4 w-px bg-gray-300 dark:bg-gray-600' />
           <ThemeToggle />
