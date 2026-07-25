@@ -25,6 +25,7 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
   const ageLabel = dict.profile.age.replace('{{age}}', String(getKoreanAge(MY_PROFILE.BIRTHDAY)));
 
   const archive = fetchVelogArchive();
+
   const latestVelogReleasedAt = archive.posts.reduce<string | null>((latest, post) => {
     if (!post.releasedAt) return latest;
     if (!latest) return post.releasedAt;

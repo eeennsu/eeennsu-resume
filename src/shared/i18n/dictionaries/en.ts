@@ -54,6 +54,10 @@ export const en: Dictionary = {
   },
   header: {
     githubAriaLabel: 'GitHub profile',
+    settingsAriaLabel: 'Settings',
+    settingsLanguage: 'Language',
+    settingsTheme: 'Theme',
+    jdMatchLink: 'JD Match',
   },
   experience: {
     present: 'Present',
@@ -110,6 +114,7 @@ export const en: Dictionary = {
     starters: ['Main projects?', 'React experience?', 'Biggest strengths?'],
   },
   jdMatch: {
+    sectionTitle: 'JD Match',
     title: 'JD Fit Analysis',
     description: 'Paste a job description and AI will analyze how well my resume fits it.',
     cta: 'Start analysis',

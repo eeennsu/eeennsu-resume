@@ -1,9 +1,9 @@
 {
-  "fetchedAt": "2026-07-24T12:57:00.118Z",
+  "fetchedAt": "2026-07-25T03:59:50.498Z",
   "posts": [
     {
       "id": "1bbda02a-e0f8-47a1-8332-451b0001e4f3",
-      "title": "React Native 에서 Fastlane으로 배포 파이프라인 설계하기 (4. android 배포 자동화 - 1)",
+      "title": "React Native 에서 Fastlane으로 배포 파이프라인 설계하기 (4. android 배포 자동화의 환경 구성)",
       "description": "개요\n\n이번 편이 끝나면 다음 세 줄로 환경별 Play Store 트랙 업로드가 끝난다.\n\n내부적으로는 각각 다음 명령을 호출한다.\n\n이를 위해 다루는 내용은 다음과 같다.\n\nAndroid keystore(업로드 키) 생성과 안전한 보관\nPlay App Signing ",
       "thumbnail": null,
       "urlSlug": "React-Native-에서-Fastlane으로-배포-파이프라인-설계하기-4.-android-배포-자동화-1",

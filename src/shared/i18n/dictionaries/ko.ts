@@ -54,6 +54,10 @@ export const ko = {
   },
   header: {
     githubAriaLabel: 'GitHub 프로필',
+    settingsAriaLabel: '설정',
+    settingsLanguage: '언어',
+    settingsTheme: '테마',
+    jdMatchLink: 'JD Match',
   },
   experience: {
     present: '현재',
@@ -110,6 +114,7 @@ export const ko = {
     starters: ['주요 프로젝트는?', 'React 경험은?', '가장 큰 강점은?'],
   },
   jdMatch: {
+    sectionTitle: 'JD Match',
     title: 'JD 맞춤 분석',
     description: '채용공고(JD)를 붙여넣으면 제 이력서와의 적합도를 AI가 분석해드려요.',
     cta: '분석 시작',

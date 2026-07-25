@@ -48,10 +48,13 @@ const RecentWritings: FC<Props> = ({ locale }) => {
         <div className='flex justify-end'>
           <Link
             href={`/${locale}/writings`}
-            className='inline-flex items-center gap-1 text-[13px] font-medium text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200'
+            className='group inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-700 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-blue-300 dark:hover:bg-blue-500/10 dark:hover:text-blue-200 dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
           >
             {t.cta.viewAll}
-            <ArrowRight className='size-3.5' aria-hidden />
+            <ArrowRight
+              aria-hidden
+              className='size-4 transition-transform duration-150 ease-out group-hover:translate-x-0.5'
+            />
           </Link>
         </div>
       </div>

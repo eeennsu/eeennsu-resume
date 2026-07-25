@@ -1,6 +1,8 @@
 'use client';
 
 import AnimatedSection from '@shared/components/AnimatedSection';
+import ErrorBoundary from '@shared/components/ErrorBoundary';
+import SectionTitle from '@shared/components/SectionTitle';
 import type { Locale } from '@shared/i18n/config';
 import type { Dictionary } from '@shared/i18n/dictionaries';
 import {
@@ -94,6 +96,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
   const [stepIndex, setStepIndex] = useState(0);
 
   const tokenRef = useRef<string | undefined>(undefined);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const reduceMotion = useReducedMotion();
 
   // 로딩 중 분석 단계 문구를 순환시켜 "AI가 분석 중"인 느낌을 준다.
@@ -153,31 +156,41 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
 
   return (
     <AnimatedSection id='jd-match' className='flex w-full max-md:flex-col max-md:gap-4'>
-      {/* 제목 없이 콘텐츠만 우측 정렬(형제 섹션 콘텐츠 열과 라인 일치) */}
-      <div aria-hidden className='hidden md:block md:min-w-[210px]' />
+      <SectionTitle>{labels.sectionTitle}</SectionTitle>
       <div className='flex grow flex-col gap-4'>
         {/* 기능 진입 CTA 카드 — 클릭 시 모달에서 입력·분석·결과 */}
         <button
           type='button'
           onClick={() => setOpen(true)}
-          className='group border-border bg-muted/30 hover:bg-muted/50 flex cursor-pointer items-center gap-4 rounded-2xl border p-5 text-left transition-colors hover:border-blue-500/40'
+          className='group border-border bg-muted/30 hover:bg-muted/50 flex cursor-pointer items-center gap-3.5 rounded-2xl border p-4 text-left transition-[background-color,border-color] duration-150 ease-out hover:border-blue-500/40 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
         >
-          <span className='border-border bg-background flex size-11 shrink-0 items-center justify-center rounded-xl border'>
-            <Sparkles className='size-5 text-blue-500 dark:text-blue-400' />
+          <span className='border-border bg-background flex size-10 shrink-0 items-center justify-center rounded-xl border'>
+            <Sparkles className='size-4.5 text-blue-500 dark:text-blue-400' />
           </span>
           <span className='flex grow flex-col gap-0.5'>
-            <span className='font-semibold'>{labels.title}</span>
-            <span className='text-muted-foreground text-sm break-keep'>{labels.description}</span>
+            <span className='text-[15px] font-semibold text-pretty'>{labels.title}</span>
+            <span className='text-muted-foreground text-[13px] text-pretty break-keep'>
+              {labels.description}
+            </span>
           </span>
           <span className='text-muted-foreground group-hover:text-foreground flex shrink-0 items-center gap-1 text-sm font-medium transition-colors'>
             <span className='max-sm:hidden'>{labels.cta}</span>
-            <ArrowRight className='size-4 transition-transform group-hover:translate-x-0.5' />
+            <ArrowRight
+              className='size-4 transition-transform duration-150 ease-out group-hover:translate-x-0.5'
+              aria-hidden
+            />
           </span>
         </button>
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className='max-h-[85vh] max-w-[92vw] overflow-y-auto sm:max-w-3xl'>
+        <DialogContent
+          className='max-h-[85vh] max-w-[92vw] overflow-y-auto sm:max-w-3xl'
+          onOpenAutoFocus={event => {
+            event.preventDefault();
+            textareaRef.current?.focus();
+          }}
+        >
           <DialogHeader>
             <DialogTitle className='flex items-center gap-2'>
               <Sparkles className='size-5 text-blue-500 dark:text-blue-400' />
@@ -189,6 +202,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
           {/* 입력 */}
           <form onSubmit={onSubmit} className='flex flex-col gap-3'>
             <textarea
+              ref={textareaRef}
               value={jd}
               onChange={event => setJd(event.target.value)}
               placeholder={labels.placeholder}
@@ -299,84 +313,86 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
 
           {/* 결과 */}
           {!loading && !modalError && result && (
-            <div className='flex flex-col gap-8'>
-              {/* 적합도 — 헤드라인 패널 */}
-              <div className='bg-muted/40 flex flex-col gap-3 rounded-xl p-5'>
-                <div className='flex items-baseline justify-between'>
-                  <span className='text-sm font-medium'>{labels.fitScore}</span>
-                  <span
-                    className={cn('text-4xl font-bold', SCORE_TEXT[scoreBand(result.fitScore)])}
-                  >
-                    {result.fitScore}
-                    <span className='text-muted-foreground text-base font-normal'>/100</span>
-                  </span>
+            <ErrorBoundary fallback={<p className='text-destructive text-sm'>{labels.error}</p>}>
+              <div className='flex flex-col gap-8'>
+                {/* 적합도 — 헤드라인 패널 */}
+                <div className='bg-muted/40 flex flex-col gap-3 rounded-xl p-5'>
+                  <div className='flex items-baseline justify-between'>
+                    <span className='text-sm font-medium'>{labels.fitScore}</span>
+                    <span
+                      className={cn('text-4xl font-bold', SCORE_TEXT[scoreBand(result.fitScore)])}
+                    >
+                      {result.fitScore}
+                      <span className='text-muted-foreground text-base font-normal'>/100</span>
+                    </span>
+                  </div>
+                  <div className='bg-muted h-2.5 w-full overflow-hidden rounded-full'>
+                    <div
+                      className={cn(
+                        'h-full rounded-full transition-all',
+                        SCORE_BAR[scoreBand(result.fitScore)],
+                      )}
+                      style={{ width: `${result.fitScore}%` }}
+                    />
+                  </div>
+                  {result.summary.length > 0 && (
+                    <div className='flex flex-col gap-1.5 pt-1'>
+                      {result.summary.map((line, index) => (
+                        <p
+                          key={index}
+                          className='text-foreground/80 text-sm leading-relaxed break-keep'
+                        >
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className='bg-muted h-2.5 w-full overflow-hidden rounded-full'>
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all',
-                      SCORE_BAR[scoreBand(result.fitScore)],
-                    )}
-                    style={{ width: `${result.fitScore}%` }}
-                  />
-                </div>
-                {result.summary.length > 0 && (
-                  <div className='flex flex-col gap-1.5 pt-1'>
-                    {result.summary.map((line, index) => (
-                      <p
-                        key={index}
-                        className='text-foreground/80 text-sm leading-relaxed break-keep'
-                      >
-                        {line}
-                      </p>
-                    ))}
+
+                {result.matchedSkills.length > 0 && (
+                  <div className='flex flex-col gap-3'>
+                    <ResultHeading icon={CircleCheck}>{labels.matchedSkills}</ResultHeading>
+                    <TagList items={result.matchedSkills} tone='match' />
                   </div>
                 )}
+
+                {result.gaps.length > 0 && (
+                  <div className='flex flex-col gap-3'>
+                    <ResultHeading icon={CircleAlert}>{labels.gaps}</ResultHeading>
+                    <TagList items={result.gaps} tone='gap' />
+                  </div>
+                )}
+
+                {result.pitch.length > 0 && (
+                  <div className='flex flex-col gap-3'>
+                    <ResultHeading icon={Sparkles}>{labels.pitch}</ResultHeading>
+                    <ul className='marker:text-muted-foreground flex list-disc flex-col gap-2.5 pl-5 text-sm leading-relaxed break-keep'>
+                      {result.pitch.map((line, index) => (
+                        <li key={index}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {result.relevantExperience.length > 0 && (
+                  <div className='flex flex-col gap-3'>
+                    <ResultHeading icon={Briefcase}>{labels.relevantExperience}</ResultHeading>
+                    <ul className='flex flex-col gap-3'>
+                      {result.relevantExperience.map((item, index) => (
+                        <li key={index} className='border-border rounded-lg border p-4'>
+                          <p className='text-sm font-semibold break-keep'>{item.title}</p>
+                          <p className='text-muted-foreground mt-1 text-sm leading-relaxed break-keep'>
+                            {item.why}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <p className='text-muted-foreground pt-1 text-[10px]'>{labels.disclaimer}</p>
               </div>
-
-              {result.matchedSkills.length > 0 && (
-                <div className='flex flex-col gap-3'>
-                  <ResultHeading icon={CircleCheck}>{labels.matchedSkills}</ResultHeading>
-                  <TagList items={result.matchedSkills} tone='match' />
-                </div>
-              )}
-
-              {result.gaps.length > 0 && (
-                <div className='flex flex-col gap-3'>
-                  <ResultHeading icon={CircleAlert}>{labels.gaps}</ResultHeading>
-                  <TagList items={result.gaps} tone='gap' />
-                </div>
-              )}
-
-              {result.pitch.length > 0 && (
-                <div className='flex flex-col gap-3'>
-                  <ResultHeading icon={Sparkles}>{labels.pitch}</ResultHeading>
-                  <ul className='marker:text-muted-foreground flex list-disc flex-col gap-2.5 pl-5 text-sm leading-relaxed break-keep'>
-                    {result.pitch.map((line, index) => (
-                      <li key={index}>{line}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {result.relevantExperience.length > 0 && (
-                <div className='flex flex-col gap-3'>
-                  <ResultHeading icon={Briefcase}>{labels.relevantExperience}</ResultHeading>
-                  <ul className='flex flex-col gap-3'>
-                    {result.relevantExperience.map((item, index) => (
-                      <li key={index} className='border-border rounded-lg border p-4'>
-                        <p className='text-sm font-semibold break-keep'>{item.title}</p>
-                        <p className='text-muted-foreground mt-1 text-sm leading-relaxed break-keep'>
-                          {item.why}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <p className='text-muted-foreground pt-1 text-[10px]'>{labels.disclaimer}</p>
-            </div>
+            </ErrorBoundary>
           )}
         </DialogContent>
       </Dialog>

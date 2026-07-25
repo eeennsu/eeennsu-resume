@@ -1,10 +1,11 @@
 'use client';
 
+import ErrorBoundary from '@shared/components/ErrorBoundary';
 import type { Locale } from '@shared/i18n/config';
 import type { Dictionary } from '@shared/i18n/dictionaries';
 import { cn } from '@shared/shadcn-ui/utils';
 import { Loader2, MessageCircle, Send, X } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { FC, FormEvent, useRef, useState } from 'react';
 
 import Turnstile from '@features/ai-chat/ui/Turnstile';
@@ -37,6 +38,7 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
 
   const tokenRef = useRef<string | undefined>(undefined);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   const scrollToBottom = () => {
     requestAnimationFrame(() => {
@@ -135,10 +137,10 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
         {open && (
           <motion.div
             key='ai-chat-panel'
-            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: reduceMotion ? 0 : 0.18, ease: 'easeOut' }}
             className={cn(
               'fixed right-4 bottom-24 z-50 flex max-h-[70vh] w-[min(92vw,380px)] flex-col overflow-hidden rounded-2xl border shadow-2xl',
               'bg-background text-foreground border-border',
@@ -158,49 +160,60 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
             </div>
 
             {/* 메시지 목록 */}
-            <div ref={scrollRef} className='flex-1 space-y-3 overflow-y-auto px-4 py-4'>
-              <p className='text-muted-foreground text-sm'>{labels.greeting}</p>
-
-              {messages.length === 0 && (
-                <div className='flex flex-wrap gap-2 pt-1'>
-                  {labels.starters.map(starter => (
-                    <button
-                      key={starter}
-                      type='button'
-                      onClick={() => void send(starter)}
-                      className='border-border hover:bg-muted rounded-full border px-3 py-1 text-xs transition-colors'
-                    >
-                      {starter}
-                    </button>
-                  ))}
+            <ErrorBoundary
+              fallback={
+                <div className='flex flex-1 items-center justify-center px-4 py-6'>
+                  <p className='text-destructive text-xs'>{labels.error}</p>
                 </div>
-              )}
+              }
+            >
+              <div ref={scrollRef} className='flex-1 space-y-3 overflow-y-auto px-4 py-4'>
+                <p className='text-muted-foreground text-sm'>{labels.greeting}</p>
 
-              {messages.map(message => (
-                <div
-                  key={message.id}
-                  className={cn('flex', message.role === 'user' ? 'justify-end' : 'justify-start')}
-                >
+                {messages.length === 0 && (
+                  <div className='flex flex-wrap gap-2 pt-1'>
+                    {labels.starters.map(starter => (
+                      <button
+                        key={starter}
+                        type='button'
+                        onClick={() => void send(starter)}
+                        className='border-border hover:bg-muted rounded-full border px-3 py-1 text-xs transition-colors'
+                      >
+                        {starter}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {messages.map(message => (
                   <div
+                    key={message.id}
                     className={cn(
-                      'max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap',
-                      message.role === 'user'
-                        ? 'bg-foreground text-background'
-                        : 'bg-muted text-foreground',
+                      'flex',
+                      message.role === 'user' ? 'justify-end' : 'justify-start',
                     )}
                   >
-                    {message.content ||
-                      (streaming ? (
-                        <Loader2 className='size-4 animate-spin' aria-label={labels.thinking} />
-                      ) : (
-                        ''
-                      ))}
+                    <div
+                      className={cn(
+                        'max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap',
+                        message.role === 'user'
+                          ? 'bg-foreground text-background'
+                          : 'bg-muted text-foreground',
+                      )}
+                    >
+                      {message.content ||
+                        (streaming ? (
+                          <Loader2 className='size-4 animate-spin' aria-label={labels.thinking} />
+                        ) : (
+                          ''
+                        ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              {errorMsg && <p className='text-destructive text-xs'>{errorMsg}</p>}
-            </div>
+                {errorMsg && <p className='text-destructive text-xs'>{errorMsg}</p>}
+              </div>
+            </ErrorBoundary>
 
             {/* 입력 */}
             <form onSubmit={onSubmit} className='border-border border-t p-3'>

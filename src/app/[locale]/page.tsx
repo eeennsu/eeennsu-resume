@@ -29,13 +29,13 @@ const HomePage: FC<Props> = async ({ params }) => {
       {process.env.NODE_ENV !== 'development' ? <CheckingWidget /> : null}
       <ProfileWidget locale={locale} />
       <IntroduceWidget locale={locale} />
-      <RecentWritings locale={locale} />
-      <JdMatchWidget locale={locale} labels={dict.jdMatch} />
       <ExperienceWidget locale={locale} />
       <SkillsWidget locale={locale} />
       <PortfolioWidget locale={locale} />
       <EducationWidget locale={locale} />
       <CertificationsWidget locale={locale} />
+      <RecentWritings locale={locale} />
+      <JdMatchWidget locale={locale} labels={dict.jdMatch} />
     </main>
   );
 };
