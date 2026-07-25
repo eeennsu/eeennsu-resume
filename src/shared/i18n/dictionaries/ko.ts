@@ -54,6 +54,10 @@ export const ko = {
   },
   header: {
     githubAriaLabel: 'GitHub 프로필',
+    settingsAriaLabel: '설정',
+    settingsLanguage: '언어',
+    settingsTheme: '테마',
+    jdMatchLink: 'JD Match',
   },
   experience: {
     present: '현재',
@@ -110,6 +114,7 @@ export const ko = {
     starters: ['주요 프로젝트는?', 'React 경험은?', '가장 큰 강점은?'],
   },
   jdMatch: {
+    sectionTitle: 'JD Match',
     title: 'JD 맞춤 분석',
     description: '채용공고(JD)를 붙여넣으면 제 이력서와의 적합도를 AI가 분석해드려요.',
     cta: '분석 시작',
@@ -137,6 +142,59 @@ export const ko = {
     error: '분석에 실패했어요. 잠시 후 다시 시도해주세요.',
     limit: '오늘의 분석 이용량을 초과했어요. 내일 다시 시도해주세요.',
     disclaimer: 'AI가 이력서와 JD를 비교해 생성한 참고용 분석입니다.',
+  },
+  writings: {
+    pageTitle: '기술 정리 & 회고',
+    pageDescription:
+      'Velog(@diso592)에 정리한 프론트엔드·React Native 학습과 실무 궤적을 태그 중심으로 재구성했습니다.',
+    tab: {
+      tagCloud: '태그별 보기',
+      timeline: '시간순 보기',
+    },
+    empty: '아직 수집된 정리 글이 없습니다.',
+    lastFetched: '{{when}} 기준 수집',
+    stats: {
+      posts: '정리 글 {{count}}개',
+      tags: '태그 {{count}}개',
+    },
+    skillMap: {
+      count: '{{count}}편',
+      empty: '아직 스킬에 매칭된 글이 없습니다. 태그를 정리하면 자동으로 채워집니다.',
+    },
+    tagCloud: {
+      all: '전체',
+      empty: '이 태그의 정리 글이 아직 없습니다.',
+    },
+    relatedPosts: {
+      badgeLabel: '관련 정리 글 {{count}}개',
+      empty: '관련 정리 글이 아직 없습니다.',
+      inlineAria: '이 스킬 관련 정리 글 {{count}}개 보기',
+    },
+    activityBadge: {
+      label: '실무 연결',
+    },
+    recent: {
+      badge: 'NEW',
+    },
+    behindTheScenes: {
+      title: '이 페이지는 어떻게 만들어졌나요?',
+      description: 'Velog GraphQL → 배포 파이프라인 → RSC 정적 렌더링까지의 흐름',
+      cronNote: 'GitHub Actions cron이 velog RSS를 폴링해 새 글 감지 시 배포 웹훅을 트리거합니다.',
+      stack: ['Velog GraphQL', 'Next.js RSC', 'TypeScript', 'GitHub Actions'],
+      steps: {
+        source: 'velog.io/@diso592 posts + tags',
+        fetch: '배포 시 GraphQL 커서 페이지네이션',
+        seed: '커밋된 시드, 실패 시 이전 JSON 유지',
+        render: '서버에서 fs로 로드, RSC 정적 렌더링',
+        output: '/{locale}/writings 정적 HTML',
+      },
+    },
+    nav: {
+      link: 'Writings',
+    },
+    cta: {
+      viewAll: '전체 정리 글 보기',
+    },
   },
 };
 

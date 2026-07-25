@@ -1,0 +1,129 @@
+name: velog-new-post-cron
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: velog-cron
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    env:
+      VELOG_RSS_URL: https://v2.velog.io/rss/@diso592
+      DEBOUNCE_SECONDS: 600
+
+    steps:
+      - name: Restore previous last-seen artifact
+        id: restore
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          name: velog-last-seen
+          path: .velog-state
+          workflow: velog-cron.yml
+          if_no_artifact_found: warn
+
+      - name: Load previous state (defaults if missing)
+        id: prev
+        run: |
+          set -euo pipefail
+          mkdir -p .velog-state
+          PREV_GUID=""
+          PREV_PUBDATE=""
+          PREV_TRIGGERED=0
+          if [ -f .velog-state/state.txt ]; then
+            PREV_GUID=$(awk -F= '/^guid=/{print substr($0, index($0,"=")+1)}' .velog-state/state.txt || true)
+            PREV_PUBDATE=$(awk -F= '/^pubDate=/{print substr($0, index($0,"=")+1)}' .velog-state/state.txt || true)
+            PREV_TRIGGERED=$(awk -F= '/^lastTriggered=/{print substr($0, index($0,"=")+1)}' .velog-state/state.txt || echo 0)
+          fi
+          echo "guid=$PREV_GUID" >> "$GITHUB_OUTPUT"
+          echo "pubDate=$PREV_PUBDATE" >> "$GITHUB_OUTPUT"
+          echo "lastTriggered=${PREV_TRIGGERED:-0}" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch RSS and read top item
+        id: fetch
+        run: |
+          set -euo pipefail
+          curl -sSfL "$VELOG_RSS_URL" -o rss.xml
+          FIRST_ITEM=$(awk '/<item>/{flag=1} flag; /<\/item>/{flag=0; exit}' rss.xml)
+          TOP_GUID=$(printf '%s' "$FIRST_ITEM" | sed -n 's:.*<guid[^>]*>\(.*\)</guid>.*:\1:p' | head -n 1)
+          TOP_PUBDATE=$(printf '%s' "$FIRST_ITEM" | sed -n 's:.*<pubDate>\(.*\)</pubDate>.*:\1:p' | head -n 1)
+          if [ -z "$TOP_GUID" ]; then
+            echo "::warning::RSS parse failed — top guid empty; skipping."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "guid=$TOP_GUID" >> "$GITHUB_OUTPUT"
+          echo "pubDate=$TOP_PUBDATE" >> "$GITHUB_OUTPUT"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Decide trigger (compare + debounce)
+        id: decide
+        if: steps.fetch.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          NOW=$(date -u +%s)
+          PREV_GUID="${{ steps.prev.outputs.guid }}"
+          PREV_TRIGGERED="${{ steps.prev.outputs.lastTriggered }}"
+          TOP_GUID="${{ steps.fetch.outputs.guid }}"
+          DECIDE=false
+          if [ "$TOP_GUID" != "$PREV_GUID" ]; then
+            DIFF=$((NOW - PREV_TRIGGERED))
+            if [ "$DIFF" -ge "$DEBOUNCE_SECONDS" ]; then
+              DECIDE=true
+            else
+              echo "::notice::Debounced (${DIFF}s < ${DEBOUNCE_SECONDS}s)"
+            fi
+          else
+            echo "::notice::No change (guid=$TOP_GUID)"
+          fi
+          echo "shouldTrigger=$DECIDE" >> "$GITHUB_OUTPUT"
+          echo "now=$NOW" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger Vercel deploy hook
+        if: steps.decide.outputs.shouldTrigger == 'true'
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_DEPLOY_HOOK_URL:-}" ]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK_URL secret is not set — skipping trigger."
+            exit 0
+          fi
+          HTTP_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' -X POST "$VERCEL_DEPLOY_HOOK_URL")
+          echo "Vercel webhook HTTP $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ge 400 ]; then
+            echo "::error::Webhook failed with HTTP $HTTP_STATUS"
+            exit 1
+          fi
+
+      - name: Persist state to artifact
+        if: always() && steps.fetch.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          NOW="${{ steps.decide.outputs.now }}"
+          NEW_TRIGGERED="${{ steps.prev.outputs.lastTriggered }}"
+          if [ "${{ steps.decide.outputs.shouldTrigger }}" = "true" ]; then
+            NEW_TRIGGERED="$NOW"
+          fi
+          {
+            echo "guid=${{ steps.fetch.outputs.guid }}"
+            echo "pubDate=${{ steps.fetch.outputs.pubDate }}"
+            echo "lastTriggered=$NEW_TRIGGERED"
+          } > .velog-state/state.txt
+
+      - name: Upload state artifact
+        if: always() && steps.fetch.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: velog-last-seen
+          path: .velog-state/state.txt
+          retention-days: 90
+          overwrite: true

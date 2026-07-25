@@ -1,10 +1,14 @@
 import AnimatedSection from '@shared/components/AnimatedSection';
+import RelatedPostsBadge from '@shared/components/CrossLinkBadge/RelatedPostsBadge';
 import SectionTitle from '@shared/components/SectionTitle';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { Accordion } from '@shared/shadcn-ui/ui/accordion';
-import { ICompanyExperience } from '@shared/types/subjects';
+import { IActivityVelogMapping, ICompanyExperience } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
+import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
+import { loadYaml } from '@shared/utils/utilLoadYaml';
+import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
 import type { FC } from 'react';
 
 import ActivityCard from '@features/experience/ui/ActivityCard';
@@ -25,6 +29,12 @@ const ExperienceWidget: FC<Props> = ({ locale }) => {
     return null;
   }
 
+  const archive = fetchVelogArchive();
+  const mappings = loadYaml<IActivityVelogMapping[]>('src/data/activity-velog-mapping.yaml') ?? [];
+  const allActivities = experiences.flatMap(e => e.activities);
+  const activityPosts = mapActivityToVelog(allActivities, mappings, archive);
+  const relatedLabels = dict.writings.relatedPosts;
+
   return (
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.experience}</SectionTitle>
@@ -37,17 +47,29 @@ const ExperienceWidget: FC<Props> = ({ locale }) => {
               defaultValue={['activity-0']}
               className='flex flex-col gap-3 md:gap-4'
             >
-              {experience.activities.map((activity, j) => (
-                <ActivityCard
-                  key={activity.title}
-                  startDate={activity.startDate}
-                  endDate={activity.endDate}
-                  title={activity.title}
-                  doneList={activity.doneList}
-                  index={j}
-                  locale={locale}
-                />
-              ))}
+              {experience.activities.map((activity, j) => {
+                const posts = activityPosts.get(activity.id) ?? [];
+                return (
+                  <ActivityCard
+                    key={activity.id}
+                    id={activity.id}
+                    startDate={activity.startDate}
+                    endDate={activity.endDate}
+                    title={activity.title}
+                    doneList={activity.doneList}
+                    index={j}
+                    locale={locale}
+                  >
+                    {posts.length > 0 && (
+                      <RelatedPostsBadge
+                        posts={posts}
+                        label={relatedLabels.badgeLabel}
+                        emptyLabel={relatedLabels.empty}
+                      />
+                    )}
+                  </ActivityCard>
+                );
+              })}
             </Accordion>
           </article>
         ))}

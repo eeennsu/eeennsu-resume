@@ -11,6 +11,7 @@ import IntroduceWidget from '@widgets/Introduce';
 import JdMatchWidget from '@widgets/JdMatch';
 import PortfolioWidget from '@widgets/Portfolio';
 import ProfileWidget from '@widgets/Profile';
+import RecentWritings from '@widgets/RecentWritings';
 import SkillsWidget from '@widgets/Skill';
 
 interface Props {
@@ -28,12 +29,13 @@ const HomePage: FC<Props> = async ({ params }) => {
       {process.env.NODE_ENV !== 'development' ? <CheckingWidget /> : null}
       <ProfileWidget locale={locale} />
       <IntroduceWidget locale={locale} />
-      <JdMatchWidget locale={locale} labels={dict.jdMatch} />
       <ExperienceWidget locale={locale} />
       <SkillsWidget locale={locale} />
       <PortfolioWidget locale={locale} />
       <EducationWidget locale={locale} />
       <CertificationsWidget locale={locale} />
+      <RecentWritings locale={locale} />
+      <JdMatchWidget locale={locale} labels={dict.jdMatch} />
     </main>
   );
 };

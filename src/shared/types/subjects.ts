@@ -1,22 +1,34 @@
 export type ProfileIconType = 'email' | 'github' | 'velog' | 'self-blog';
 
+export interface IActivityDone {
+  subject: string;
+  details?: Array<string | { problem: string; solution: string }>;
+}
+
+export interface IActivity {
+  id: string;
+  startDate?: string;
+  endDate?: string;
+  title: string;
+  doneList: IActivityDone[];
+}
+
 export interface ICompanyExperience {
   companyName: string;
   startDate: string;
   endDate?: string;
-  activities: Array<{
-    startDate?: string;
-    endDate?: string;
-    title: string;
-    doneList: Array<{
-      subject: string;
-      details?: Array<string | { problem: string; solution: string }>;
-    }>;
-  }>;
+  activities: IActivity[];
   note?: {
     reasonForLeaving?: string;
     description?: string;
   };
+}
+
+export interface IActivityVelogMapping {
+  activityId: string;
+  techTags: string[];
+  featuredVelogSlugs?: string[];
+  excludeVelogSlugs?: string[];
 }
 
 export interface IPortfolio {

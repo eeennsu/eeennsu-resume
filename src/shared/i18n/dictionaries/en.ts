@@ -54,6 +54,10 @@ export const en: Dictionary = {
   },
   header: {
     githubAriaLabel: 'GitHub profile',
+    settingsAriaLabel: 'Settings',
+    settingsLanguage: 'Language',
+    settingsTheme: 'Theme',
+    jdMatchLink: 'JD Match',
   },
   experience: {
     present: 'Present',
@@ -110,6 +114,7 @@ export const en: Dictionary = {
     starters: ['Main projects?', 'React experience?', 'Biggest strengths?'],
   },
   jdMatch: {
+    sectionTitle: 'JD Match',
     title: 'JD Fit Analysis',
     description: 'Paste a job description and AI will analyze how well my resume fits it.',
     cta: 'Start analysis',
@@ -137,5 +142,59 @@ export const en: Dictionary = {
     error: 'Analysis failed. Please try again in a moment.',
     limit: "Today's analysis limit has been reached. Please try again tomorrow.",
     disclaimer: 'An AI-generated reference analysis comparing the resume and the JD.',
+  },
+  writings: {
+    pageTitle: 'Writings & Retrospectives',
+    pageDescription:
+      'A tag-first restructuring of my frontend and React Native learning notes and retrospectives, curated on Velog (@diso592).',
+    tab: {
+      tagCloud: 'By tag',
+      timeline: 'By time',
+    },
+    empty: 'No writings collected yet.',
+    lastFetched: 'Collected as of {{when}}',
+    stats: {
+      posts: '{{count}} writings',
+      tags: '{{count}} tags',
+    },
+    skillMap: {
+      count: '{{count}} posts',
+      empty: 'No skill-mapped writings yet. Tag your Velog posts to fill this in.',
+    },
+    tagCloud: {
+      all: 'All',
+      empty: 'No writings for this tag yet.',
+    },
+    relatedPosts: {
+      badgeLabel: '{{count}} related writings',
+      empty: 'No related writings yet.',
+      inlineAria: 'View {{count}} writings for this skill',
+    },
+    activityBadge: {
+      label: 'Real-world link',
+    },
+    recent: {
+      badge: 'NEW',
+    },
+    behindTheScenes: {
+      title: 'How was this page built?',
+      description: 'Velog GraphQL → deployment pipeline → RSC static rendering',
+      cronNote:
+        'A GitHub Actions cron polls the velog RSS and triggers a deploy webhook when a new post is detected.',
+      stack: ['Velog GraphQL', 'Next.js RSC', 'TypeScript', 'GitHub Actions'],
+      steps: {
+        source: 'velog.io/@diso592 posts + tags',
+        fetch: 'GraphQL cursor pagination on deploy',
+        seed: 'committed seed, previous JSON retained on failure',
+        render: 'server fs load, RSC static rendering',
+        output: '/{locale}/writings static HTML',
+      },
+    },
+    nav: {
+      link: 'Writings',
+    },
+    cta: {
+      viewAll: 'View all writings',
+    },
   },
 };

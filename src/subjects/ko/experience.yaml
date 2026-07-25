@@ -1,7 +1,8 @@
 - companyName: (주)원더라운드
   startDate: '2025.04.14'
   activities:
-    - startDate: '2026.02.04'
+    - id: wonder-rn-app-2026
+      startDate: '2026.02.04'
       title: '직무 전환 - React Native (CLI) 기반 자사 모바일 애플리케이션 개발 및 유지보수'
       doneList:
         - subject: 'OTA(무선 코드 배포) 인프라 `hot-updater` 신규 도입 및 운영 체계 구축'
@@ -60,7 +61,8 @@
             - '반복 구현 패턴의 스킬화 — API 추가 / 낙관적 업데이트 뮤테이션 / 화면 진입 최적화 / 다국어 반영 등 정형화된 작업을 재사용 가능한 커맨드로 코드화하여, 컨벤션을 매번 재설명하지 않고도 일관된 산출물을 확보'
             - '작업 복잡도에 따라 모델을 라우팅(경량 조회 → 아키텍처·심층 분석)하고, 프롬프트 캐싱·추론 강도(effort)를 튜닝하여 응답 지연과 토큰 비용을 최적화'
 
-    - startDate: '2025.07.03'
+    - id: wonder-admin-travel-2025
+      startDate: '2025.07.03'
       endDate: '2025.10.16'
       title: 자사 여행 콘텐츠 예약 및 결제 플랫폼의 관리자 페이지 개발
       doneList:
@@ -81,14 +83,16 @@
               solution: '`resourcesToBackend`를 활용해 필요한 언어와 namespace만 동적으로 import하는 lazy loading 방식으로 개선하여 로딩 성능 최적화'
             - problem: zod의 refine 등을 활용한 커스텀 에러 메시지는 React 초기화 시점에 메시지 값이 고정되어, 언어를 변경해도 에러 메시지의 언어가 변경되지 않는 문제에 직면
               solution: 검증 로직에서는 에러 메시지의 번역 키만 저장하고, 화면 렌더링 시점에 번역 로직을 적용하도록 개선하여, 언어 변경 시 기존 에러 메시지도 실시간으로 변경되도록 구현
-    - startDate: '2025.09.24'
+    - id: wonder-wix-migration-2025
+      startDate: '2025.09.24'
       endDate: '2025.10.02'
       title: Wix로 제작된 여행 플랫폼 웹사이트를 Next.js 환경으로 전환
       doneList:
         - subject: '데스크톱, 태블릿, 모바일 환경에 대응하는 반응형 디자인 구현'
         - subject: 'Docker, ECR, GitHub Actions를 이용한 CI/CD 파이프라인 구축'
 
-    - startDate: '2025.04.14'
+    - id: wonder-admin-enhance-2025
+      startDate: '2025.04.14'
       endDate: '2025.07.02'
       title: 자사 애플리케이션 관리자 페이지 시스템 고도화 및 유지보수
       doneList:
@@ -117,7 +121,8 @@
   startDate: '2024.03.11'
   endDate: '2025.03.21'
   activities:
-    - startDate: '2025.01.16'
+    - id: kgkn-admin-site-2025
+      startDate: '2025.01.16'
       endDate: '2025.03.21'
       title: 기존 자사 플랫폼의 전용 관리자 사이트 개발
       doneList:
@@ -133,7 +138,8 @@
           details:
             - 주간 / 월간별 보기 모드 구현
             - 사용자가 특정 연도, 월, 주차를 선택할 수 있는 팝업 컴포넌트 개발
-    - startDate: '2024.11.18'
+    - id: kgkn-external-course-2024
+      startDate: '2024.11.18'
       endDate: '2025.01.15'
       title: 외부 기업 전용 강의 수강 사이트 / 관리자 & 운영자 사이트 개발
       doneList:
@@ -149,7 +155,8 @@
           details:
             - problem: '특정 권한이 필요한 URL에 접근할 때, 접근 전 사용자의 권한을 확인하는 미들웨어를 `React Router Dom`의 `loader`를 이용해 구현했는데, 사용자 정보가 로드되기 전에 실행이 완료되는 문제 발생'
               solution: '권한이 필요한 페이지에 접근할 때 인증된 사용자인지 먼저 확인하는 라우트 가드 컴포넌트를 `React Router Dom`의 `Outlet`과 `Navigate`를 활용해 직접 구현. 권한이 허용되면 자식 라우트를 렌더링하고, 아닐 경우 접근을 차단하도록 처리'
-    - startDate: '2024.10.01'
+    - id: kgkn-platform-enhance-2024
+      startDate: '2024.10.01'
       endDate: '2024.11.15'
       title: 기존 플랫폼의 고도화 및 유지보수
       doneList:
@@ -158,7 +165,8 @@
             - problem: 무한 스크롤에서 각 `row` 높이의 측정값이 일정하지 않아 가상화된 테이블에서 스크롤 시 데이터가 보이지 않거나 UI가 밀리는 문제 발생
               solution: '초기 `row` 높이를 추정하는 `estimateSize` 값을 설정하고, 이후 실제 렌더링된 `row`의 높이를 측정하여 동적으로 업데이트하여 문제 해결'
         - subject: 강의별 학습 진행 상태와 성과를 시각화하여 분석할 수 있는 관리자 페이지 개발
-    - startDate: '2024.08.02'
+    - id: kgkn-coding-test-2024
+      startDate: '2024.08.02'
       endDate: '2024.10.01'
       title: 코딩테스트 전용 플랫폼 개발
       doneList:
@@ -181,13 +189,15 @@
           details:
             - problem: 문제의 상세 내용 / 언어 선택 및 메모리 제한과 시간 제한 선택 / 기본 테스트 케이스를 하나의 폼으로 구성하다 보니 UI가 복잡해지고 유지보수가 어려운 문제 발생
               solution: 관련 항목을 3가지 주요 탭으로 나누고, 각 탭 이동 시 유효성 검사를 사전에 실행하도록 개선. 유효성 검사 로직은 전역 스토어에서 관리하며, 각 탭이 마운트될 때 해당 탭의 검증 함수를 설정하여 일관된 로직을 유지
-    - startDate: '2024.07.10'
+    - id: kgkn-application-site-2024
+      startDate: '2024.07.10'
       endDate: '2024.08.02'
       title: 타사의 소개 및 지원서 사이트 개발
       doneList:
         - subject: 타사의 특장점을 소개하는 정적 페이지 제작
         - subject: 컴포넌트의 네임스페이스 패턴을 기반으로 만든 form을 통해 지원서 양식 개발
-    - startDate: '2024.05.27'
+    - id: kgkn-lms-2024
+      startDate: '2024.05.27'
       endDate: '2024.06.28'
       title: LMS 개발
       doneList:
@@ -199,7 +209,8 @@
           details:
             - problem: '문제를 풀 때, "제출하기" 버튼 하나로 답안지 생성과 선택한 문제 체크까지 API 전송을 한 번에 하면 비효율적이었으며, 시험 도중 네트워크가 끊기면 데이터가 유실되는 문제가 발생'
               solution: '시험 페이지 입장 시 미리 사용자의 답안지를 생성하는 API를 전송하도록 하고, 사용자가 답안을 체크할 때마다 서버에 PATCH 요청을 보내 시험 진행 상황을 실시간으로 저장하도록 개선. 시험 진행 도중 데이터 유실률 약 50건 중 10건 → 0건으로 감소'
-    - startDate: '2024.03.11'
+    - id: kgkn-online-platform-2024
+      startDate: '2024.03.11'
       endDate: '2024.05.24'
       title: 온라인 IT 교육 사이트 자사 플랫폼 개발
       doneList:

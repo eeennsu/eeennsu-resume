@@ -2,12 +2,13 @@ import Markdown from '@shared/components/Markdown';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@shared/shadcn-ui/ui/accordion';
-import { ICompanyExperience } from '@shared/types/subjects';
-import { FC } from 'react';
+import { IActivity } from '@shared/types/subjects';
+import { FC, type ReactNode } from 'react';
 
-type Props = ICompanyExperience['activities'][number] & {
+type Props = IActivity & {
   index: number;
   locale: Locale;
+  children?: ReactNode;
 };
 
 const toYearMonth = (date: string) => {
@@ -22,14 +23,24 @@ const formatPeriod = (inProgressLabel: string, start?: string, end?: string) => 
   return `${toYearMonth(start)} ~ ${end ? toYearMonth(end) : inProgressLabel}`;
 };
 
-const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index, locale }) => {
+const ActivityCard: FC<Props> = ({
+  id,
+  startDate,
+  endDate,
+  title,
+  doneList,
+  index,
+  locale,
+  children,
+}) => {
   const dict = getDictionary(locale);
   const periodText = formatPeriod(dict.experience.activityInProgress, startDate, endDate);
 
   return (
     <AccordionItem
+      id={`experience-${id}`}
       value={`activity-${index}`}
-      className='overflow-hidden rounded-xl border border-gray-200 bg-white px-5 transition-colors hover:border-gray-300 data-[state=open]:border-gray-300 md:px-7 dark:border-gray-800 dark:bg-gray-950/40 dark:hover:border-gray-700 dark:data-[state=open]:border-gray-700'
+      className='scroll-mt-24 overflow-hidden rounded-xl border border-gray-200 bg-white px-5 transition-colors target:ring-2 target:ring-blue-400/60 target:ring-offset-2 hover:border-gray-300 data-[state=open]:border-gray-300 md:px-7 dark:border-gray-800 dark:bg-gray-950/40 dark:target:ring-blue-300/50 dark:target:ring-offset-gray-950 dark:hover:border-gray-700 dark:data-[state=open]:border-gray-700'
     >
       <AccordionTrigger className='cursor-pointer gap-4 py-5 hover:no-underline md:py-6 [&>svg]:size-5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-500'>
         <div className='flex flex-1 flex-col gap-1.5 text-left'>
@@ -51,6 +62,11 @@ const ActivityCard: FC<Props> = ({ startDate, endDate, title, doneList, index, l
 
       <AccordionContent className='pt-0 pb-7 md:pb-9'>
         <div className='border-t border-gray-100 pt-6 md:pt-7 dark:border-gray-800'>
+          {children && (
+            <div className='mb-6 border-b border-gray-100 pb-6 md:mb-7 md:pb-7 dark:border-gray-800'>
+              {children}
+            </div>
+          )}
           <ol className='flex flex-col divide-y divide-gray-100 dark:divide-gray-800'>
             {doneList?.map((done, j) => (
               <li
