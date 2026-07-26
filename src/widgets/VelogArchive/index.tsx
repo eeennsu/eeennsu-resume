@@ -9,7 +9,7 @@ import { isRecentPost } from '@shared/utils/utilIsRecentPost';
 import { loadYaml } from '@shared/utils/utilLoadYaml';
 import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
 import dayjs from 'dayjs';
-import { CalendarClock, ExternalLink, Rss } from 'lucide-react';
+import { ArrowLeft, CalendarClock, ExternalLink, Rss } from 'lucide-react';
 import Link from 'next/link';
 import { type FC } from 'react';
 
@@ -67,6 +67,13 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
   return (
     <main className='flex flex-col gap-12 pt-10 pb-20 md:gap-16 md:pt-16'>
       <header className='flex flex-col gap-5 px-6 md:mx-auto md:max-w-6xl md:px-12'>
+        <Link
+          href={`/${locale}`}
+          className='inline-flex w-fit items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
+        >
+          <ArrowLeft className='size-4' aria-hidden />
+          {t.nav.back}
+        </Link>
         <div className='flex flex-wrap items-center gap-3'>
           <h1 className='font-pretendard text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl dark:text-gray-100'>
             {t.pageTitle}

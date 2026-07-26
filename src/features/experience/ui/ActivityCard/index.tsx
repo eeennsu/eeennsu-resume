@@ -42,18 +42,18 @@ const ActivityCard: FC<Props> = ({
       value={`activity-${index}`}
       className='scroll-mt-24 overflow-hidden rounded-xl border border-gray-200 bg-white px-5 transition-colors target:ring-2 target:ring-blue-400/60 target:ring-offset-2 hover:border-gray-300 data-[state=open]:border-gray-300 md:px-7 dark:border-gray-800 dark:bg-gray-950/40 dark:target:ring-blue-300/50 dark:target:ring-offset-gray-950 dark:hover:border-gray-700 dark:data-[state=open]:border-gray-700'
     >
-      <AccordionTrigger className='cursor-pointer gap-4 py-5 hover:no-underline md:py-6 [&>svg]:size-5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-500'>
+      <AccordionTrigger className='cursor-pointer gap-4 py-5 hover:no-underline motion-safe:active:scale-[0.997] md:py-6 [&>svg]:size-5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-500'>
         <div className='flex flex-1 flex-col gap-1.5 text-left'>
           {periodText && (
-            <p className='text-xs tracking-tight text-gray-500 md:text-[13px] dark:text-gray-400'>
+            <p className='text-xs tracking-tight text-gray-500 tabular-nums md:text-[13px] dark:text-gray-400'>
               {periodText}
             </p>
           )}
-          <div className='flex items-baseline gap-3'>
-            <span className='shrink-0 text-base font-semibold tracking-wider text-blue-500 tabular-nums md:text-lg dark:text-blue-400'>
+          <div className='flex items-baseline gap-4'>
+            <span className='shrink-0 text-base font-semibold tracking-[0.08em] text-blue-500 tabular-nums md:text-xl dark:text-blue-400'>
               {String(index + 1).padStart(2, '0')}
             </span>
-            <span className='text-lg leading-snug font-semibold break-keep text-gray-900 md:text-xl dark:text-gray-100'>
+            <span className='text-lg leading-snug font-semibold text-balance break-keep text-gray-900 md:text-xl dark:text-gray-100'>
               {title}
             </span>
           </div>
@@ -73,7 +73,7 @@ const ActivityCard: FC<Props> = ({
                 key={`${done.subject}-${j}`}
                 className='flex flex-col gap-4 py-7 first:pt-0 last:pb-0 md:py-9'
               >
-                <h4 className='flex items-baseline gap-2.5 text-[15px] font-semibold break-keep text-gray-900 md:text-[17px] dark:text-gray-100'>
+                <h4 className='flex items-baseline gap-2.5 text-[15px] font-semibold text-pretty break-keep text-gray-900 md:text-[17px] dark:text-gray-100'>
                   <span className='shrink-0 text-blue-500/80 tabular-nums dark:text-blue-400/90'>
                     {j + 1}.
                   </span>

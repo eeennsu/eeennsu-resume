@@ -41,17 +41,21 @@ const ExperienceHead: FC<Props> = ({ experience, locale }) => {
         </h3>
         {showNote && (
           <SharedTooltip content={experience.note!.description}>
-            <CircleHelp className='size-4 text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300' />
+            <span className='-m-2 inline-flex cursor-help items-center justify-center p-2 text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'>
+              <CircleHelp className='size-4' aria-hidden />
+            </span>
           </SharedTooltip>
         )}
       </div>
 
       <div className='flex flex-col items-center gap-0.5 md:items-end'>
-        <p className='text-[13px] font-medium text-gray-700 md:text-sm dark:text-gray-300'>
+        <p className='text-[13px] font-medium text-gray-700 tabular-nums md:text-sm dark:text-gray-300'>
           {toYearMonth(experience.startDate)} ~{' '}
           {experience.endDate ? toYearMonth(experience.endDate) : dict.experience.present}
         </p>
-        <span className='text-xs text-gray-500 dark:text-gray-400'>{summaryLabel}</span>
+        <span className='text-[13px] text-gray-500 tabular-nums md:text-sm dark:text-gray-400'>
+          {summaryLabel}
+        </span>
       </div>
     </header>
   );

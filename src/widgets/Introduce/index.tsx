@@ -17,6 +17,7 @@ const IntroduceWidget: FC<Props> = ({ locale }) => {
 
   const age = getKoreanAge(MY_PROFILE.BIRTHDAY);
   const career = getWorkAnniversary(MY_PROFILE.CAREER_START_DATE, locale);
+  const ageLabel = dict.profile.age.replace('{{age}}', String(age));
 
   const introduce =
     raw.map(intro => intro.replace('{{age}}', age.toString()).replace('{{career}}', career)) || [];
@@ -24,7 +25,13 @@ const IntroduceWidget: FC<Props> = ({ locale }) => {
   return (
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.introduce}</SectionTitle>
-      <div className='flex grow flex-col'>
+      <div className='flex grow flex-col gap-5'>
+        <span className='inline-flex w-fit items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[12px] font-semibold tracking-tight text-blue-700 tabular-nums dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200'>
+          <span aria-hidden='true' className='size-1.5 rounded-full bg-blue-500 dark:bg-blue-400' />
+          {ageLabel}
+          {' · '}
+          {career}
+        </span>
         <div className='flex flex-col gap-5 break-keep'>
           {introduce.map((intro, index) => (
             <p

@@ -1,12 +1,15 @@
 'use client';
 
 import ErrorBoundary from '@shared/components/ErrorBoundary';
+import Markdown from '@shared/components/Markdown';
+import SharedTooltip from '@shared/components/Tooltip';
 import type { Locale } from '@shared/i18n/config';
 import type { Dictionary } from '@shared/i18n/dictionaries';
 import { cn } from '@shared/shadcn-ui/utils';
-import { Loader2, MessageCircle, Send, X } from 'lucide-react';
+import { Info, MessageCircle, Send, X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { FC, FormEvent, useRef, useState } from 'react';
+import type { Components } from 'react-markdown';
 
 import Turnstile from '@features/ai-chat/ui/Turnstile';
 
@@ -28,6 +31,23 @@ const newId = () =>
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
 
+// 링크는 새 창으로 안전하게 열도록 커스터마이즈. 나머지 마크다운 요소는 상위 wrapper의
+// Tailwind arbitrary variant 로 스타일한다.
+const markdownComponents: Components = {
+  a({ node, ...props }) {
+    void node;
+
+    return (
+      <a
+        {...props}
+        target='_blank'
+        rel='noreferrer noopener'
+        className='underline underline-offset-2 hover:opacity-80'
+      />
+    );
+  },
+};
+
 const AiChat: FC<Props> = ({ locale, labels }) => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -36,9 +56,12 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [resetSignal, setResetSignal] = useState(0);
 
-  const tokenRef = useRef<string | undefined>(undefined);
+  const [token, setToken] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+
+  // SITE_KEY가 설정된 환경에서만 Turnstile을 강제. 토큰 발급 전에는 전송 UI 비활성.
+  const turnstileBlocked = Boolean(SITE_KEY) && !token;
 
   const scrollToBottom = () => {
     requestAnimationFrame(() => {
@@ -67,11 +90,12 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
         body: JSON.stringify({
           messages: history.map(({ role, content }) => ({ role, content })),
           locale,
-          turnstileToken: tokenRef.current,
+          turnstileToken: token ?? undefined,
         }),
       });
 
-      // 토큰은 단발성 → 다음 메시지용으로 갱신
+      // 토큰은 단발성 → 즉시 무효화 후 위젯 reset(다음 발급 전까지 전송 UI 잠금).
+      setToken(null);
       setResetSignal(signal => signal + 1);
 
       if (res.status === 503) {
@@ -148,7 +172,30 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
           >
             {/* 헤더 */}
             <div className='border-border flex items-center justify-between border-b px-4 py-3'>
-              <span className='text-sm font-semibold'>{labels.title}</span>
+              <div className='flex items-center gap-1.5'>
+                <span className='text-sm font-semibold'>{labels.title}</span>
+                <SharedTooltip
+                  content={
+                    <div className='max-w-xs'>
+                      <p className='mb-1.5 text-xs font-semibold'>{labels.flow.title}</p>
+                      <ol className='space-y-1 pl-4 text-xs leading-relaxed break-keep'>
+                        {labels.flow.steps.map((step, index) => (
+                          <li key={index} className='list-decimal'>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  }
+                >
+                  <span
+                    aria-label={labels.flow.ariaLabel}
+                    className='text-muted-foreground hover:text-foreground -m-1 inline-flex cursor-help items-center justify-center p-1 transition-colors'
+                  >
+                    <Info className='size-3.5' aria-hidden />
+                  </span>
+                </SharedTooltip>
+              </div>
               <button
                 type='button'
                 aria-label={labels.close}
@@ -177,7 +224,8 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
                         key={starter}
                         type='button'
                         onClick={() => void send(starter)}
-                        className='border-border hover:bg-muted rounded-full border px-3 py-1 text-xs transition-colors'
+                        disabled={streaming || turnstileBlocked}
+                        className='border-border hover:bg-muted rounded-full border px-3 py-1 text-xs transition-colors disabled:cursor-not-allowed disabled:opacity-50'
                       >
                         {starter}
                       </button>
@@ -195,18 +243,45 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
                   >
                     <div
                       className={cn(
-                        'max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap',
+                        'max-w-[85%] rounded-2xl px-3 py-2 text-sm',
                         message.role === 'user'
-                          ? 'bg-foreground text-background'
-                          : 'bg-muted text-foreground',
+                          ? 'bg-foreground text-background whitespace-pre-wrap'
+                          : cn(
+                              'bg-muted text-foreground',
+                              // 어시스턴트 마크다운 렌더링 스타일
+                              '[&_p:not(:first-child)]:mt-2',
+                              '[&_ul]:mt-1 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-4',
+                              '[&_ol]:mt-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-4',
+                              '[&_ol_ol]:mt-0 [&_ul_ul]:mt-0',
+                              '[&_li>p]:mt-0',
+                              '[&_strong]:font-semibold',
+                              '[&_em]:italic',
+                              '[&_code]:bg-background/60 [&_code]:rounded [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.85em]',
+                              '[&_pre]:bg-background/60 [&_pre]:my-2 [&_pre]:overflow-x-auto [&_pre]:rounded [&_pre]:p-2',
+                              '[&_hr]:border-border [&_hr]:my-2',
+                              '[&_h1]:mt-2 [&_h1]:mb-1 [&_h1]:text-base [&_h1]:font-semibold',
+                              '[&_h2]:mt-2 [&_h2]:mb-1 [&_h2]:text-sm [&_h2]:font-semibold',
+                              '[&_h3]:mt-2 [&_h3]:mb-1 [&_h3]:text-sm [&_h3]:font-semibold',
+                            ),
                       )}
                     >
-                      {message.content ||
-                        (streaming ? (
-                          <Loader2 className='size-4 animate-spin' aria-label={labels.thinking} />
-                        ) : (
-                          ''
-                        ))}
+                      {message.role === 'user' ? (
+                        message.content
+                      ) : message.content ? (
+                        <Markdown components={markdownComponents}>{message.content}</Markdown>
+                      ) : streaming ? (
+                        <span
+                          role='status'
+                          aria-label={labels.thinking}
+                          className='flex items-center gap-1 py-1'
+                        >
+                          <span className='size-1.5 rounded-full bg-current opacity-60 motion-safe:animate-bounce motion-safe:[animation-delay:-0.32s]' />
+                          <span className='size-1.5 rounded-full bg-current opacity-60 motion-safe:animate-bounce motion-safe:[animation-delay:-0.16s]' />
+                          <span className='size-1.5 rounded-full bg-current opacity-60 motion-safe:animate-bounce' />
+                        </span>
+                      ) : (
+                        ''
+                      )}
                     </div>
                   </div>
                 ))}
@@ -222,36 +297,24 @@ const AiChat: FC<Props> = ({ locale, labels }) => {
                   value={input}
                   onChange={event => setInput(event.target.value)}
                   placeholder={labels.placeholder}
-                  disabled={streaming}
-                  className='border-border bg-background focus:ring-ring flex-1 rounded-full border px-3 py-2 text-sm outline-none focus:ring-1 disabled:opacity-60'
+                  disabled={streaming || turnstileBlocked}
+                  className='border-border bg-background focus:ring-ring flex-1 rounded-full border px-3 py-2 text-sm outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60'
                 />
                 <button
                   type='submit'
                   aria-label={labels.send}
-                  disabled={streaming || !input.trim()}
-                  className='bg-foreground text-background flex size-9 shrink-0 items-center justify-center rounded-full transition-colors hover:opacity-90 disabled:opacity-50'
+                  disabled={streaming || !input.trim() || turnstileBlocked}
+                  className='bg-foreground text-background flex size-9 shrink-0 items-center justify-center rounded-full transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50'
                 >
-                  {streaming ? (
-                    <Loader2 className='size-4 animate-spin' />
-                  ) : (
-                    <Send className='size-4' />
-                  )}
+                  <Send className='size-4 translate-y-px' />
                 </button>
               </div>
 
               {SITE_KEY && (
                 <div className='mt-2'>
-                  <Turnstile
-                    siteKey={SITE_KEY}
-                    onToken={token => {
-                      tokenRef.current = token;
-                    }}
-                    resetSignal={resetSignal}
-                  />
+                  <Turnstile siteKey={SITE_KEY} onToken={setToken} resetSignal={resetSignal} />
                 </div>
               )}
-
-              <p className='text-muted-foreground mt-2 text-[10px]'>{labels.disclaimer}</p>
             </form>
           </motion.div>
         )}

@@ -164,6 +164,14 @@
     @apply scroll-smooth;
   }
 
+  /* Tailwind v4 preflight 회귀: <button>에 cursor:pointer 복원 (v3 기본값과 동일).
+     disabled 요소는 제외해 disabled:cursor-not-allowed 유틸리티와 충돌하지 않게 한다. */
+  button:not(:disabled),
+  [role='button']:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
   a:focus-visible,
   button:focus-visible,
   [role='button']:focus-visible,

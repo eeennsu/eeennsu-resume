@@ -4,7 +4,8 @@ import { and, eq, sql } from 'drizzle-orm';
 
 export type AiFeature = 'chat' | 'jd';
 
-// 기능별 전역 일일 캡. Sonnet(JD)이 비싸 더 타이트.
+// 기능별 전역 일일 캡. 둘 다 Gemini Flash지만 JD는 입력(이력서+JD 전문)과
+// 구조화 JSON 응답이 무거워 토큰 소비가 몇 배 커서 더 타이트.
 const DAILY_CAP: Record<AiFeature, number> = {
   chat: 800,
   jd: 100,
