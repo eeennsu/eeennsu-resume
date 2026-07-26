@@ -26,7 +26,8 @@ declare global {
 
 interface Props {
   siteKey: string;
-  onToken: (token: string) => void;
+  // 발급 성공 시 토큰, 실패/만료 시 null. 부모는 이 값으로 전송 가능 여부를 판단.
+  onToken: (token: string | null) => void;
   // 값이 바뀔 때마다 위젯을 reset 해 새 토큰을 발급받는다(토큰은 단발성).
   resetSignal: number;
 }
@@ -38,9 +39,11 @@ const Turnstile: FC<Props> = ({ siteKey, onToken, resetSignal }) => {
   const render = () => {
     if (!window.turnstile || !containerRef.current || widgetIdRef.current) return;
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
-      sitekey: siteKey,
-      size: 'flexible',
-      callback: onToken,
+      'sitekey': siteKey,
+      'size': 'flexible',
+      'callback': onToken,
+      'error-callback': () => onToken(null),
+      'expired-callback': () => onToken(null),
     });
   };
 

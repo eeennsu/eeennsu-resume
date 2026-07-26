@@ -110,8 +110,18 @@ export const en: Dictionary = {
     thinking: 'Typing…',
     error: 'Something went wrong. Please try again in a moment.',
     limit: "Today's usage limit has been reached. Please try again tomorrow.",
-    disclaimer: 'Answers are AI-generated based on the resume.',
     starters: ['Main projects?', 'React experience?', 'Biggest strengths?'],
+    flow: {
+      ariaLabel: 'View chatbot implementation flow',
+      title: 'How was this built?',
+      steps: [
+        'Cloudflare Turnstile blocks bot requests.',
+        'A global daily cap prevents free-tier abuse.',
+        'YAML resume data is assembled into a system prompt.',
+        'Gemini Flash streams the reply, falling back to another model on overload.',
+        'Responses are rendered as markdown.',
+      ],
+    },
   },
   jdMatch: {
     sectionTitle: 'JD Match',
@@ -136,8 +146,17 @@ export const en: Dictionary = {
     gaps: 'Gaps',
     pitch: 'Pitch points',
     relevantExperience: 'Relevant experience',
-    modelNote:
-      'Gemini 3.5 Flash compares my résumé data with the job description you paste to analyze fit, strengths, and gaps.',
+    flow: {
+      ariaLabel: 'View JD Match flow',
+      title: 'How was this built?',
+      steps: [
+        'Cloudflare Turnstile blocks bot requests.',
+        'A global daily cap prevents free-tier abuse.',
+        'Resume YAML and your pasted JD are assembled into a system prompt together.',
+        'Gemini Flash responds with structured JSON (fit score, matches, gaps, pitch, experience).',
+        'Results render as a score band and tag lists.',
+      ],
+    },
     empty: 'Please enter a job description.',
     error: 'Analysis failed. Please try again in a moment.',
     limit: "Today's analysis limit has been reached. Please try again tomorrow.",
@@ -192,6 +211,7 @@ export const en: Dictionary = {
     },
     nav: {
       link: 'Writings',
+      back: 'Back to resume',
     },
     cta: {
       viewAll: 'View all writings',

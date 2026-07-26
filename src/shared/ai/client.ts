@@ -17,16 +17,18 @@ export const getGemini = (): GoogleGenAI => {
 };
 
 // 챗봇·JD 분석 모두 무료 티어 Gemini Flash. JD는 구조화(JSON) 출력.
-// (gemini-2.5-flash는 신규 계정 generateContent 차단 → 3.5-flash 사용)
-export const CHAT_MODEL = 'gemini-3.5-flash';
-export const JD_MODEL = 'gemini-3.5-flash';
+export const CHAT_MODEL = 'gemini-3.6-flash';
+export const JD_MODEL = 'gemini-3.6-flash';
 
 // 기본 모델이 과부하(503)일 때의 폴백. auto-current 별칭.
 export const FALLBACK_MODEL = 'gemini-flash-latest';
 
-// thinkingBudget:0은 gemini-3.5-flash에서만 허용(타 모델은 400) → 모델별로 결정.
+// thinkingBudget:0은 3.5-flash에서만 허용(타 모델은 400) → 모델별로 결정.
+// 3.6-flash는 400을 반환해 제외 (thinking 기본값으로 동작).
+const THINKING_OFF_ALLOWED = new Set(['gemini-3.5-flash']);
+
 export const thinkingConfigFor = (model: string): { thinkingBudget: number } | undefined =>
-  model === 'gemini-3.5-flash' ? { thinkingBudget: 0 } : undefined;
+  THINKING_OFF_ALLOWED.has(model) ? { thinkingBudget: 0 } : undefined;
 
 const RETRYABLE_STATUS = new Set([429, 500, 503]);
 

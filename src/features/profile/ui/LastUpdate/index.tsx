@@ -46,7 +46,7 @@ const LastUpdate: FC = () => {
       : dict.lastUpdate.dDayZero;
 
   return (
-    <div className='flex h-fit flex-col items-center rounded-md text-base md:mt-14 md:items-end md:px-4 md:py-2 md:text-sm'>
+    <div className='flex h-fit flex-col items-center rounded-md text-base md:items-end md:text-sm'>
       <p className='text-muted-foreground text-sm md:text-right md:text-xs'>
         {dict.lastUpdate.label}
       </p>

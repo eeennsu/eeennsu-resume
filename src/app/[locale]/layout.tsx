@@ -17,6 +17,9 @@ import { notFound } from 'next/navigation';
 
 import AiChat from '@widgets/AiChat';
 import Footer from '@widgets/Footer';
+import JdMatch from '@widgets/JdMatch';
+
+import { JdMatchProvider } from '@features/jd-match/model/JdMatchContext';
 
 import '../globals.css';
 
@@ -168,13 +171,16 @@ export default async function RootLayout({
         />
         <ThemeProvider>
           <TooltipProvider>
-            <div className='flex min-h-screen flex-col'>
-              <div className='3xl:max-w-[1500px] mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
-                {children}
+            <JdMatchProvider>
+              <div className='flex min-h-screen flex-col'>
+                <div className='3xl:max-w-[1500px] mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
+                  {children}
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
-            <AiChat locale={locale} labels={dict.aiChat} />
+              <AiChat locale={locale} labels={dict.aiChat} />
+              <JdMatch locale={locale} labels={dict.jdMatch} />
+            </JdMatchProvider>
           </TooltipProvider>
         </ThemeProvider>
       </body>

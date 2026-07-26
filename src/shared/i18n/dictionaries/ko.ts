@@ -110,8 +110,18 @@ export const ko = {
     thinking: '작성 중…',
     error: '일시적인 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
     limit: '오늘의 이용량을 초과했어요. 내일 다시 시도해주세요.',
-    disclaimer: 'AI가 이력서 내용을 바탕으로 답변합니다.',
     starters: ['주요 프로젝트는?', 'React 경험은?', '가장 큰 강점은?'],
+    flow: {
+      ariaLabel: '챗봇 구현 플로우 보기',
+      title: '어떻게 만들어졌나요?',
+      steps: [
+        'Cloudflare Turnstile로 봇 요청을 차단합니다.',
+        '전역 일일 캡으로 무료 티어 남용을 방지합니다.',
+        'YAML 이력서 데이터를 시스템 프롬프트로 조립합니다.',
+        'Gemini Flash로 답변을 스트리밍하고, 과부하 시 폴백 모델로 재시도합니다.',
+        '답변은 마크다운으로 렌더링됩니다.',
+      ],
+    },
   },
   jdMatch: {
     sectionTitle: 'JD Match',
@@ -136,8 +146,17 @@ export const ko = {
     gaps: '보완할 점',
     pitch: '어필 포인트',
     relevantExperience: '관련 경력',
-    modelNote:
-      'Gemini 3.5 Flash 모델이 제 이력서 데이터와 입력하신 JD를 비교해 적합도·강점·보완점을 분석합니다.',
+    flow: {
+      ariaLabel: 'JD Match 작동 플로우 보기',
+      title: '어떻게 만들어졌나요?',
+      steps: [
+        'Cloudflare Turnstile로 봇 요청을 차단합니다.',
+        '전역 일일 캡으로 무료 티어 남용을 방지합니다.',
+        'YAML 이력서 데이터와 입력 JD를 함께 시스템 프롬프트로 조립합니다.',
+        'Gemini Flash가 구조화된 JSON(적합도·매칭·갭·어필·경력)으로 응답합니다.',
+        '결과는 점수 밴드·태그 리스트로 시각화됩니다.',
+      ],
+    },
     empty: 'JD를 입력해주세요.',
     error: '분석에 실패했어요. 잠시 후 다시 시도해주세요.',
     limit: '오늘의 분석 이용량을 초과했어요. 내일 다시 시도해주세요.',
@@ -191,6 +210,7 @@ export const ko = {
     },
     nav: {
       link: 'Writings',
+      back: '이력서로 돌아가기',
     },
     cta: {
       viewAll: '전체 정리 글 보기',

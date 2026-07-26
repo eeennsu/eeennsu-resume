@@ -1,8 +1,7 @@
 'use client';
 
-import AnimatedSection from '@shared/components/AnimatedSection';
 import ErrorBoundary from '@shared/components/ErrorBoundary';
-import SectionTitle from '@shared/components/SectionTitle';
+import SharedTooltip from '@shared/components/Tooltip';
 import type { Locale } from '@shared/i18n/config';
 import type { Dictionary } from '@shared/i18n/dictionaries';
 import {
@@ -14,11 +13,11 @@ import {
 } from '@shared/shadcn-ui/ui/dialog';
 import { cn } from '@shared/shadcn-ui/utils';
 import {
-  ArrowRight,
   Briefcase,
   CircleAlert,
   CircleCheck,
   Info,
+  Loader2,
   Sparkles,
   type LucideIcon,
 } from 'lucide-react';
@@ -26,6 +25,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { FC, FormEvent, ReactNode, useEffect, useRef, useState } from 'react';
 
 import Turnstile from '@features/ai-chat/ui/Turnstile';
+import { useJdMatch } from '@features/jd-match/model/JdMatchContext';
 
 interface JdResult {
   fitScore: number;
@@ -91,13 +91,18 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
   const [result, setResult] = useState<JdResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [modalError, setModalError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
   const [resetSignal, setResetSignal] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
 
-  const tokenRef = useRef<string | undefined>(undefined);
+  const [token, setToken] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+
+  const { open, setOpen } = useJdMatch();
+
+  // SITE_KEY가 설정된 환경에서만 Turnstile을 강제. 토큰 발급 전에는 전송 UI 비활성.
+  const turnstileBlocked = Boolean(SITE_KEY) && !token;
 
   // 로딩 중 분석 단계 문구를 순환시켜 "AI가 분석 중"인 느낌을 준다.
   useEffect(() => {
@@ -108,6 +113,15 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
     }, 1600);
     return () => clearInterval(id);
   }, [loading, labels.analyzingSteps.length]);
+
+  // 결과 도착 시 결과 섹션으로 부드럽게 스크롤 (form 아래 새 컨텐츠 인지 유도).
+  useEffect(() => {
+    if (!result) return;
+    const id = requestAnimationFrame(() => {
+      resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [result]);
 
   const analyze = async () => {
     const trimmed = jd.trim();
@@ -126,10 +140,11 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
       const res = await fetch('/api/jd-match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jd: trimmed, locale, turnstileToken: tokenRef.current }),
+        body: JSON.stringify({ jd: trimmed, locale, turnstileToken: token ?? undefined }),
       });
 
-      // 토큰은 단발성 → 다음 분석용으로 갱신
+      // 토큰은 단발성 → 즉시 무효화 후 위젯 reset(다음 발급 전까지 전송 UI 잠금).
+      setToken(null);
       setResetSignal(signal => signal + 1);
 
       if (res.status === 503) {
@@ -155,50 +170,44 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
   };
 
   return (
-    <AnimatedSection id='jd-match' className='flex w-full max-md:flex-col max-md:gap-4'>
-      <SectionTitle>{labels.sectionTitle}</SectionTitle>
-      <div className='flex grow flex-col gap-4'>
-        {/* 기능 진입 CTA 카드 — 클릭 시 모달에서 입력·분석·결과 */}
-        <button
-          type='button'
-          onClick={() => setOpen(true)}
-          className='group border-border bg-muted/30 hover:bg-muted/50 flex cursor-pointer items-center gap-3.5 rounded-2xl border p-4 text-left transition-[background-color,border-color] duration-150 ease-out hover:border-blue-500/40 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
-        >
-          <span className='border-border bg-background flex size-10 shrink-0 items-center justify-center rounded-xl border'>
-            <Sparkles className='size-4.5 text-blue-500 dark:text-blue-400' />
-          </span>
-          <span className='flex grow flex-col gap-0.5'>
-            <span className='text-[15px] font-semibold text-pretty'>{labels.title}</span>
-            <span className='text-muted-foreground text-[13px] text-pretty break-keep'>
-              {labels.description}
-            </span>
-          </span>
-          <span className='text-muted-foreground group-hover:text-foreground flex shrink-0 items-center gap-1 text-sm font-medium transition-colors'>
-            <span className='max-sm:hidden'>{labels.cta}</span>
-            <ArrowRight
-              className='size-4 transition-transform duration-150 ease-out group-hover:translate-x-0.5'
-              aria-hidden
-            />
-          </span>
-        </button>
-      </div>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent
+        className='flex max-h-[85vh] max-w-[92vw] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl'
+        onOpenAutoFocus={event => {
+          event.preventDefault();
+          textareaRef.current?.focus();
+        }}
+      >
+        <DialogHeader className='border-border/70 shrink-0 space-y-1.5 border-b px-5 py-4 pr-12 sm:px-6 sm:pr-14'>
+          <DialogTitle className='flex items-center gap-2'>
+            <Sparkles className='size-5 text-blue-500 dark:text-blue-400' />
+            <span className='leading-none'>{labels.title}</span>
+            <SharedTooltip
+              content={
+                <div className='max-w-xs'>
+                  <p className='mb-1.5 text-xs font-semibold'>{labels.flow.title}</p>
+                  <ol className='space-y-1 pl-4 text-xs leading-relaxed break-keep'>
+                    {labels.flow.steps.map((step, index) => (
+                      <li key={index} className='list-decimal'>
+                        {step}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              }
+            >
+              <span
+                aria-label={labels.flow.ariaLabel}
+                className='text-muted-foreground hover:text-foreground -m-1 inline-flex cursor-help items-center justify-center p-1 transition-colors'
+              >
+                <Info className='size-3.5' aria-hidden />
+              </span>
+            </SharedTooltip>
+          </DialogTitle>
+          <DialogDescription>{labels.description}</DialogDescription>
+        </DialogHeader>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className='max-h-[85vh] max-w-[92vw] overflow-y-auto sm:max-w-3xl'
-          onOpenAutoFocus={event => {
-            event.preventDefault();
-            textareaRef.current?.focus();
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle className='flex items-center gap-2'>
-              <Sparkles className='size-5 text-blue-500 dark:text-blue-400' />
-              {labels.title}
-            </DialogTitle>
-            <DialogDescription>{labels.description}</DialogDescription>
-          </DialogHeader>
-
+        <div className='flex flex-1 flex-col gap-4 overflow-y-auto scroll-smooth px-5 py-5 sm:px-6'>
           {/* 입력 */}
           <form onSubmit={onSubmit} className='flex flex-col gap-3'>
             <textarea
@@ -214,31 +223,19 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
 
             <div className='flex items-center justify-between gap-3'>
               {SITE_KEY ? (
-                <Turnstile
-                  siteKey={SITE_KEY}
-                  onToken={token => {
-                    tokenRef.current = token;
-                  }}
-                  resetSignal={resetSignal}
-                />
+                <Turnstile siteKey={SITE_KEY} onToken={setToken} resetSignal={resetSignal} />
               ) : (
                 <span />
               )}
               <button
                 type='submit'
-                disabled={loading || !jd.trim()}
-                className='bg-foreground text-background flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-colors hover:opacity-90 disabled:opacity-50'
+                disabled={loading || !jd.trim() || turnstileBlocked}
+                className='bg-foreground text-background flex shrink-0 cursor-pointer items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50'
               >
                 {loading ? labels.analyzing : labels.analyze}
               </button>
             </div>
           </form>
-
-          {/* 작동 방식 안내 */}
-          <p className='text-muted-foreground flex items-start gap-1.5 text-xs leading-relaxed break-keep'>
-            <Info className='mt-0.5 size-3.5 shrink-0' />
-            <span>{labels.modelNote}</span>
-          </p>
 
           {errorMsg && <p className='text-destructive text-sm'>{errorMsg}</p>}
 
@@ -247,7 +244,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
             <div className='flex flex-col gap-5'>
               {/* AI 상태 라인 */}
               <div className='flex items-center gap-2'>
-                <Sparkles className='size-4 shrink-0 animate-pulse text-blue-500 dark:text-blue-400' />
+                <Loader2 className='size-4 shrink-0 animate-spin text-blue-500 dark:text-blue-400' />
                 <div className='flex h-5 items-center overflow-hidden text-sm'>
                   {reduceMotion ? (
                     <span className='text-muted-foreground'>
@@ -304,7 +301,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
               <button
                 type='button'
                 onClick={() => void analyze()}
-                className='bg-foreground text-background rounded-full px-5 py-2 text-sm font-medium transition-colors hover:opacity-90'
+                className='bg-foreground text-background cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-colors hover:opacity-90'
               >
                 {labels.analyze}
               </button>
@@ -314,7 +311,7 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
           {/* 결과 */}
           {!loading && !modalError && result && (
             <ErrorBoundary fallback={<p className='text-destructive text-sm'>{labels.error}</p>}>
-              <div className='flex flex-col gap-8'>
+              <div ref={resultRef} className='flex flex-col gap-8'>
                 {/* 적합도 — 헤드라인 패널 */}
                 <div className='bg-muted/40 flex flex-col gap-3 rounded-xl p-5'>
                   <div className='flex items-baseline justify-between'>
@@ -394,9 +391,9 @@ const JdMatch: FC<Props> = ({ locale, labels }) => {
               </div>
             </ErrorBoundary>
           )}
-        </DialogContent>
-      </Dialog>
-    </AnimatedSection>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -4,6 +4,7 @@ import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { ICertification } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
+import { BadgeCheck } from 'lucide-react';
 import type { FC } from 'react';
 
 interface Props {
@@ -30,15 +31,19 @@ const CertificationsWidget: FC<Props> = ({ locale }) => {
           {certifications.map((certification, index) => (
             <li
               key={index}
-              className='flex flex-col gap-1 py-3.5 first:pt-0 last:pb-0 md:flex-row md:items-baseline md:justify-between md:gap-6 md:py-4'
+              className='flex items-center gap-3 py-3.5 first:pt-0 last:pb-0 md:gap-4 md:py-4'
             >
-              <span className='text-[15px] font-medium text-gray-900 md:text-base dark:text-gray-100'>
+              <BadgeCheck
+                aria-hidden='true'
+                className='size-4 shrink-0 text-blue-500 md:size-[18px] dark:text-blue-400'
+              />
+              <span className='flex-1 text-[15px] font-medium text-gray-900 md:text-base dark:text-gray-100'>
                 {certification.title}
               </span>
               {certification.detail && (
-                <span className='text-[13px] text-gray-500 tabular-nums md:text-sm dark:text-gray-400'>
+                <time className='text-[13px] text-gray-500 tabular-nums md:text-sm dark:text-gray-400'>
                   {certification.detail}
-                </span>
+                </time>
               )}
             </li>
           ))}

@@ -11,20 +11,23 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import type { FC } from 'react';
 
+import { useJdMatch } from '@features/jd-match/model/JdMatchContext';
+
 interface Props {
   isHeaderVisible: boolean;
   isNewVelogPost: boolean;
 }
 
 const iconButtonClass =
-  'inline-flex size-9 items-center justify-center rounded-md text-gray-700 transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950';
+  'inline-flex size-9 cursor-pointer items-center justify-center rounded-md text-gray-700 transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950';
 
 const navLinkClass =
-  'relative inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950';
+  'relative cursor-pointer inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950';
 
 const Header: FC<Props> = ({ isHeaderVisible, isNewVelogPost }) => {
   const { locale } = useParams<{ locale: string }>();
   const { dict } = resolveDictionary(locale);
+  const { openModal: openJdMatch } = useJdMatch();
 
   return (
     <header
@@ -62,10 +65,10 @@ const Header: FC<Props> = ({ isHeaderVisible, isNewVelogPost }) => {
             {isNewVelogPost && <span className='sr-only'>{dict.writings.recent.badge}</span>}
           </Link>
 
-          <Link href={`/${locale}/#jd-match`} className={navLinkClass}>
+          <button type='button' onClick={openJdMatch} className={navLinkClass}>
             <Sparkles aria-hidden='true' className='size-3.5 text-blue-500 dark:text-blue-400' />
             {dict.header.jdMatchLink}
-          </Link>
+          </button>
 
           <div className='h-4 w-px bg-gray-300 dark:bg-gray-600' />
 
@@ -73,17 +76,16 @@ const Header: FC<Props> = ({ isHeaderVisible, isNewVelogPost }) => {
             <PopoverTrigger aria-label={dict.header.settingsAriaLabel} className={iconButtonClass}>
               <Settings size={18} aria-hidden='true' />
             </PopoverTrigger>
-            <PopoverContent align='end' className='w-56'>
-              <div className='flex flex-col gap-1'>
-                <div className='flex items-center justify-between gap-3 px-2 py-1.5'>
-                  <span className='text-xs font-medium text-gray-500 dark:text-gray-400'>
+            <PopoverContent align='end' className='w-64'>
+              <div className='flex flex-col gap-3 p-1'>
+                <div className='flex flex-col gap-1.5'>
+                  <span className='px-1 text-[11px] font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400'>
                     {dict.header.settingsLanguage}
                   </span>
                   <LanguageToggle />
                 </div>
-                <div className='h-px bg-gray-200 dark:bg-gray-800' />
-                <div className='flex items-center justify-between gap-3 px-2 py-1.5'>
-                  <span className='text-xs font-medium text-gray-500 dark:text-gray-400'>
+                <div className='flex flex-col gap-1.5'>
+                  <span className='px-1 text-[11px] font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400'>
                     {dict.header.settingsTheme}
                   </span>
                   <ThemeToggle />

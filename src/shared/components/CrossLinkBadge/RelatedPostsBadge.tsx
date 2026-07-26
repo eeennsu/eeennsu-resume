@@ -32,7 +32,7 @@ const RelatedPostsBadge: FC<Props> = ({ posts, label, emptyLabel }) => {
               href={`${VELOG_BASE_URL}/${post.urlSlug}`}
               target='_blank'
               rel='noopener noreferrer'
-              className='text-[12.5px] text-gray-700 underline-offset-2 hover:text-blue-600 hover:underline dark:text-gray-300 dark:hover:text-blue-300'
+              className='rounded-sm text-[12.5px] text-gray-700 underline-offset-2 transition-colors duration-150 ease-out hover:text-blue-600 hover:underline focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-300 dark:hover:text-blue-300'
             >
               {post.title}
             </a>

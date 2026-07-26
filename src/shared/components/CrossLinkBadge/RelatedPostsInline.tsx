@@ -16,7 +16,7 @@ const RelatedPostsInline: FC<Props> = ({ count, skillId, locale, ariaLabel }) =>
     <Link
       href={`/${locale}/writings?view=skill&skill=${skillId}`}
       aria-label={ariaLabel.replace('{{count}}', String(count))}
-      className='ml-1 inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10.5px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200 dark:hover:bg-blue-500/20'
+      className='ml-1 inline-flex items-center rounded-full border border-blue-300 bg-transparent px-1.5 py-0.5 text-[10.5px] font-semibold text-blue-600 transition-colors hover:border-blue-400 hover:bg-blue-50 dark:border-blue-500/40 dark:text-blue-300 dark:hover:border-blue-400/60 dark:hover:bg-blue-500/10'
     >
       +{count}
     </Link>
