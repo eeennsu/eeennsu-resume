@@ -13,8 +13,7 @@ import { ArrowLeft, CalendarClock, ExternalLink, Rss } from 'lucide-react';
 import Link from 'next/link';
 import { type FC } from 'react';
 
-import BehindTheScenes from '@widgets/BehindTheScenes';
-
+import BehindTheScenes from '@features/velog/ui/BehindTheScenes';
 import SkillMap from '@features/velog/ui/SkillMap';
 import TabTriggers, { type WritingsView } from '@features/velog/ui/TabTriggers';
 import TagCloud from '@features/velog/ui/TagCloud';

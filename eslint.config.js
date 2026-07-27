@@ -24,9 +24,26 @@ export default [
       'prettier': prettier,
     },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
       'react-refresh/only-export-components': 'off',
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    },
+  },
+  {
+    files: ['src/widgets/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@widgets/*'],
+              message:
+                'FSD: widgets끼리 import 금지. shared로 이동하거나 상위 레이어에서 조합하세요.',
+            },
+          ],
+        },
+      ],
     },
   },
   {

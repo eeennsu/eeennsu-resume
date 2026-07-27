@@ -104,15 +104,11 @@ bun run db:studio     # Drizzle Studio 실행
 bun run build
 ```
 
-린트 → 포맷팅 → Next.js 빌드 순서로 실행됩니다.
+velog fetch → lint → prettier → Next.js 빌드 순서로 실행됩니다.
 
-### 배포 (GitHub Pages)
+### 배포 (Vercel)
 
-```bash
-bun run deploy
-```
-
-`gh-pages` 패키지를 사용하여 빌드 결과물(`out/`)을 GitHub Pages에 배포합니다. `predeploy` 스크립트가 배포 전 자동으로 빌드를 수행합니다.
+`main` 브랜치에 push하면 [Vercel Git 통합](https://vercel.com/docs/deployments/git)이 자동으로 프로덕션 배포를 수행합니다. PR 브랜치에는 미리보기 배포가 자동 생성되며, CI 검증(`.github/workflows/ci.yml`)은 lint / typecheck / next build를 별도로 실행합니다.
 
 ---
 
