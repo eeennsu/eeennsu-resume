@@ -13,15 +13,10 @@
             - problem: 'In certain situations the app fell into a force-update (`force update`) infinite loop, making normal entry itself impossible — a critical failure.'
               solution: 'Added rollback instrumentation that makes the boot-failure loop observable (current bundle id === minimum bundle id → confirmed boot failure), and secured a manual kill switch recoverable immediately via console/DB to establish a failure-response path.'
 
-        - subject: Separated and controlled platform-native HTTP cache policy
-          details:
-            - problem: 'The default URL response cache in the iOS / Android native layer returned stale responses for some `GET` requests, conflicting with app-level server-state freshness control (`TanStack Query`) and causing cases where the latest data was not reflected to the user.'
-              solution: 'Separated and controlled the native request cache per platform, and disabled the native cache path for freshness-critical `GET` requests. Unified single ownership of the cache policy at the app level (`staleTime`-based queries) to eliminate data inconsistency from dual native/app caching.'
-
         - subject: Introduced a staged-mount pattern to optimize entry performance on key screens
           details:
             - problem: 'On heavy screens that accumulate many `hooks` and API calls (lists / map / detail), every widget mounts at the same time on entry, which makes the navigation animation stutter and delays the appearance of the `skeleton`.'
-              solution: 'Split the screen into entry point and body in two stages — show the `skeleton` immediately right after the navigation transition, and detect the end of the transition with `setImmediate` so the body only mounts after the animation finishes. This minimizes the cost of the first paint and shortens perceived entry time.'
+              solution: 'Split the screen into entry point and body in two stages — show the `skeleton` immediately right after the navigation transition, and detect the end of the transition with `setImmediate` so the body only mounts after the animation finishes. Shortened perceived entry lag from ~700–800ms to ~200–300ms.'
             - 'Pre-warmed data shown at the top of the screen with a separate `prefetch` hook so that it is already cache-hit by the time the body mounts.'
             - Introduced a shared hook that handles scroll event handlers in a JS-thread non-blocking way, so other interactions are not delayed during scrolling.
         - subject: Built push notification and deep link entry flows
@@ -32,22 +27,9 @@
               solution: 'Instead of a plain `navigate` call, I composed the `navigation state` directly to `reset` it into a structure where `BottomTabs` is the base route and a `Stack` (related underlay screen + webview) is stacked on top. This guarantees a natural back flow: webview → related screen → `BottomTabs`.'
             - Added a normalization layer for the notification list response to match the updated push-sending API schema on the backend.
             - 'Implemented a deep link handler that parses the push payload and branches across cold-start / background / foreground entry cases.'
-        - subject: 'Introduced and standardized an optimistic-update pattern with `Tanstack Query`'
+        - subject: 'Introduced and standardized an optimistic-update pattern with `TanStack Query`'
           details:
-            - problem: 'For toggle-like `mutations` such as bookmark / like, the UI was not updated until the server response, so users repeatedly tapped the same button across multiple screens.'
-              solution: 'Applied the standard `cancel → snapshot → cache update → rollback` flow to reflect the change in the UI immediately. On failure, the `onError` step rolls back from the `snapshot` and shows a `toast` so the flow stays consistent.'
-            - 'Patched related screen caches directly with `setQueryData` to remove unnecessary network round-trips caused by `invalidate`, and to keep state consistent across screens.'
-        - subject: Implemented a Naver Map–based store discovery screen and optimized search/render
-          details:
-            - problem: 'Code-driven camera moves (region filter selection, initial camera setup) were treated identically to user gestures, which caused the result-list API to be called multiple times.'
-              solution: 'Tracked code-driven camera moves with a separate ref to distinguish them from real user gestures, and toggled a re-search-enabled flag so re-search is only triggered on meaningful user actions.'
-            - 'Built a util that derives the southwest/northeast bounds of the visible area from the map camera center and lat/lng deltas, and passes them as the search range to the result-list API. This way, only results that match exactly what the user is looking at on the map are fetched.'
-        - subject: 'Implemented a custom pull-to-refresh in a layout where a `BottomSheet` stays partially visible above a fixed top area'
-          details:
-            - problem: 'A composite layout where a `BottomSheet` is partially visible above a fixed top area (banner, etc.), with the `BottomSheet` `snapPoint` fixed to the bottom of that area so it is always visible. In this setup, binding a standard `RefreshControl` to the list inside the `BottomSheet` does not detect a `pull` gesture in the fixed top area, so pull-to-refresh does not work on either iOS or Android.'
-              solution: 'Wrapped the entire screen with a `GestureDetector`, detected the `pull` gesture directly via `Pan Gesture`, and synced the indicator position / rotation / `opacity` to the pull distance with `Reanimated worklet`. Triggered the refresh once the threshold was crossed and held the indicator until the response completed — designing the state flow myself.'
-            - 'Resolved conflicts between scroll gestures inside the `BottomSheet` and the screen-wide `Pan Gesture` by adjusting gesture priorities with `waitFor`, so pull in the fixed top area and scroll inside the `BottomSheet` were cleanly separated.'
-            - 'Branched the indicator look / position per platform to follow iOS and Android guidelines.'
+            - 'Standardized a `cancel → snapshot → cache update → rollback` flow for toggle-like `mutations` (bookmark / like) to establish immediate optimistic UI reflection and consistent rollback across the team. Direct `setQueryData` cache patching also removes unnecessary `invalidate` round-trips.'
         - subject: Built a Claude Code–based development productivity infrastructure
           details:
             - With the prior RN app developer leaving and domain knowledge handover broken, I had to maintain the app and ship new features alone with limited RN experience. To cut the learning cost and keep domain context always accessible, I designed and built a Claude Code–based assist infrastructure myself.
@@ -63,7 +45,7 @@
       doneList:
         - subject: 'Built the create / edit form pages for products and packages'
           details:
-            - 'Combined the `tiptap` editor with `react-hook-form` `FormField` to allow per-language tabs for separately entering title / description / images (Korean, English, Japanese, Simplified Chinese, Traditional Chinese).'
+            - 'Combined the `Tiptap` editor with `react-hook-form` `FormField` to allow per-language tabs for separately entering title / description / images (Korean, English, Japanese, Simplified Chinese, Traditional Chinese).'
             - Built a form for managing data per date range, with the ability to bulk-edit data by selecting specific dates or holidays.
             - 'Managed product/package form data with `zustand` and persisted it to `localStorage`, building a temporary save feature so users can recover after leaving the page. `JSON` parsing is validated with a `Zod` schema for stability.'
             - problem: 'In data managed by `react-hook-form` `useFieldArray`, the server-provided `id` collided with the `useFieldArray` internal `id` key, making it impossible to distinguish existing data from newly added data — risking sending wrong data.'
@@ -83,8 +65,7 @@
       endDate: '2025.10.02'
       title: Migrated a Wix-built travel platform website to a Next.js environment
       doneList:
-        - subject: 'Implemented responsive design for desktop, tablet, and mobile environments'
-        - subject: 'Built a CI/CD pipeline using Docker, ECR, and GitHub Actions'
+        - subject: 'Implemented responsive design (desktop / tablet / mobile) and built a CI/CD pipeline with Docker / ECR / GitHub Actions'
 
     - id: wonder-admin-enhance-2025
       startDate: '2025.04.14'
@@ -109,7 +90,7 @@
         - subject: 'Adopted `vitest` and wrote TDD test code for general admin page features'
           details:
             - problem: 'Existing `React Router`-based components did not render or navigate properly in the test environment (`Vitest` + `JSDOM`).'
-              solution: 'Built a custom render util including `MemoryRouter` and `Tanstack Query Provider`. Designed nested routing and routing state via `mock` so the test environment closely mirrors the actual runtime.'
+              solution: 'Built a custom render util including `MemoryRouter` and `TanStack Query Provider`. Designed nested routing and routing state via `mock` so the test environment closely mirrors the actual runtime.'
             - problem: 'Components using `Portal` (e.g., `Dropdown`, `Modal`) did not detect trigger element click events in the test environment, rendering differently from the real UI flow.'
               solution: 'Resolved this by introducing `userEvent`, which triggers test-environment screen flows smoothly, like a real user.'
 - companyName: Korea Global Knowledge Network Inc.
@@ -123,16 +104,11 @@
       doneList:
         - subject: Built question bank management features needed for quizzes
           details:
-            - problem: When changing the order of choices, the API request needed each choice ID — but during add / edit / delete, it was hard to distinguish new choices from existing ones.
-              solution: 'After adding/editing/deleting a choice, kept the question data fresh by leveraging `Tanstack Query` `invalidateQueries` to auto-refresh. Then sorted based on the latest choice data and called the order-change API for accuracy.'
+            - 'Refreshed question data with `TanStack Query` `invalidateQueries` after choice add/edit/delete, then sorted by the latest choice data and called the order-change API for accuracy.'
         - subject: Built management features for course composition units (chapters / sections / VOD / quiz / hands-on)
           details:
             - problem: Configuration values required for hands-on, VOD, etc. differed, so providing a single consistent form was hard, and UI complexity grew.
               solution: Built independent forms per content type and rendered them dynamically based on the selected type, easing UI complexity and improving usability.
-        - subject: Built an attendance calendar component & a feature that shows attendance status by selected year, month, and week
-          details:
-            - Implemented weekly / monthly view modes
-            - Built a popup component letting users select a specific year, month, and week
     - id: kgkn-external-course-2024
       startDate: '2024.11.18'
       endDate: '2025.01.15'
@@ -148,8 +124,8 @@
               solution: 'Applied exponential backoff to reconnection attempts and added jitter (randomness) to spread concurrent requests, minimizing server load. Maximum simultaneous reconnection requests dropped from ~1500 (live meeting attendees, ~1500) → ~1/10 (~150).'
         - subject: Designed UI separating features and permissions appropriate for admin and operator roles
           details:
-            - problem: 'When accessing URLs requiring specific permissions, the middleware that checks permissions before access was implemented using `React Router Dom` `loader`, but it completed execution before the user info was loaded.'
-              solution: 'Built a route guard component directly using `React Router Dom` `Outlet` and `Navigate` to check authenticated users first when accessing protected pages. If allowed, render child routes; otherwise block access.'
+            - problem: 'When accessing URLs requiring specific permissions, the middleware that checks permissions before access was implemented using `React Router DOM` `loader`, but it completed execution before the user info was loaded.'
+              solution: 'Built a route guard component directly using `React Router DOM` `Outlet` and `Navigate` to check authenticated users first when accessing protected pages. If allowed, render child routes; otherwise block access.'
     - id: kgkn-platform-enhance-2024
       startDate: '2024.10.01'
       endDate: '2024.11.15'
@@ -159,7 +135,6 @@
           details:
             - problem: The measured height of each `row` in infinite scroll was inconsistent, so virtualized table scroll caused data not to appear or the UI to shift.
               solution: 'Set an `estimateSize` value to estimate initial `row` height, then dynamically updated based on the actual rendered `row` height to resolve the issue.'
-        - subject: Built an admin page that visualizes per-course learning progress and performance for analysis
     - id: kgkn-coding-test-2024
       startDate: '2024.08.02'
       endDate: '2024.10.01'
@@ -176,21 +151,10 @@
               solution: 'Used the problem `id` as the object `key`, nested per language, and stored user code as a `JSON` string. To minimize storage, kept only the latest 10 problems.'
             - problem: Submitted problems took long to grade, degrading UX.
               solution: Showed a skeleton UI during the wait so users could perceive that processing was in progress.
-        - subject: Built a custom test case feature users can manage freely
-          details:
-            - problem: 'Test cases entered by users sometimes did not match the data type defined by the problem (`int`, `float`, `boolean`, nested arrays, etc.) or used invalid quotes for `JSON` format, causing runtime errors.'
-              solution: 'Applied a pre-validation layer that checks input matches the data type defined by the problem, and rejects input with a warning when single quotes are included in `JSON` strings. This blocks errors at the input stage and minimizes unexpected data type errors at runtime.'
         - subject: Built an admin page to manage problems using React Hook Form and Zod
           details:
             - problem: Combining the problem details / language and memory/time-limit selection / default test cases into one form made the UI complex and hard to maintain.
               solution: Split the related items into 3 main tabs and pre-validated when moving between tabs. Validation logic is managed in a global store, and each tab sets its validation function on mount to keep the logic consistent.
-    - id: kgkn-application-site-2024
-      startDate: '2024.07.10'
-      endDate: '2024.08.02'
-      title: Built an introduction and application site for an external company
-      doneList:
-        - subject: Built static pages introducing the external company's strengths
-        - subject: Built an application form using a namespace-pattern-based component composition
     - id: kgkn-lms-2024
       startDate: '2024.05.27'
       endDate: '2024.06.28'
@@ -209,14 +173,10 @@
       endDate: '2024.05.24'
       title: Built the in-house platform for an online IT education site
       doneList:
-        - subject: Project design, common layout/component structuring
-        - subject: Built course list, my page, QnA board, and quiz pages
-        - subject: Integrated payment via Toss Payments
-        - subject: Customized a text editor using the tiptap library
+        - subject: Customized a text editor using the Tiptap library
           details:
             - problem: The Framer Motion library introduced for comment-area animation caused unintended layout changes when the animated element overlapped with other UI elements.
               solution: 'Resolved by injecting the animation state into the component `key` or wrapping the component with `AnimatePresence` so layout changes are detected.'
-        - subject: 'Adopted `jest` for frontend testing and wrote per-page test code'
   note:
     reasonForLeaving: 'Left due to commute difficulties after a workplace relocation (Incheon ↔ Gasan Digital Complex changed to Incheon ↔ Gangnam)'
     description: Formerly Coding Hub, acquired and merged into Korea Global Knowledge

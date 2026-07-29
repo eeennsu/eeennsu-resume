@@ -10,8 +10,8 @@
     - Neon
     - Drizzle
     - Zustand
-    - Tanstack Query
-    - Framer motion
+    - TanStack Query
+    - Framer Motion
 
 - name: Eunsutory
   descriptionList:
@@ -45,7 +45,7 @@
     - Express.js
     - Tailwind CSS
     - Zustand
-    - Tanstack Query
+    - TanStack Query
 
 - name: Eunimation
   descriptionList:
