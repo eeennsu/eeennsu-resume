@@ -17,7 +17,7 @@
   descriptionList:
     - Personal retrospective & introduction blog
   githubLink: https://github.com/eeennsu/eunstory
-  siteLink: https://eunstory.eunsu.kr
+  siteLink: https://eunstory.eunsu.pro
   tools:
     - Next.js
     - TypeScript
@@ -28,7 +28,7 @@
   descriptionList:
     - Amazon web scraping site
   githubLink: https://github.com/eeennsu/scrama
-  siteLink: https://scrama.eunsu.kr
+  siteLink: https://scrama.eunsu.pro
   tools:
     - Next.js
     - TypeScript
@@ -51,7 +51,7 @@
   descriptionList:
     - Animation recommendation site
   githubLink: https://github.com/eeennsu/nextjs-animation-app
-  siteLink: https://eunimation.eunsu.kr/
+  siteLink: https://eunimation.eunsu.pro/
   tools:
     - Next.js
     - TypeScript

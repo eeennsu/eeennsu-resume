@@ -17,7 +17,7 @@
   descriptionList:
     - 개인 회고 & 소개 블로그
   githubLink: https://github.com/eeennsu/eunstory
-  siteLink: https://eunstory.eunsu.kr
+  siteLink: https://eunstory.eunsu.pro
   tools:
     - Next.js
     - TypeScript
@@ -28,7 +28,7 @@
   descriptionList:
     - 아마존 웹 스크레핑 사이트
   githubLink: https://github.com/eeennsu/scrama
-  siteLink: https://scrama.eunsu.kr
+  siteLink: https://scrama.eunsu.pro
   tools:
     - Next.js
     - TypeScript
@@ -51,7 +51,7 @@
   descriptionList:
     - 애니메이션 추천 사이트
   githubLink: https://github.com/eeennsu/nextjs-animation-app
-  siteLink: https://eunimation.eunsu.kr/
+  siteLink: https://eunimation.eunsu.pro/
   tools:
     - Next.js
     - TypeScript

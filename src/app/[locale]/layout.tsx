@@ -150,7 +150,7 @@ export default async function RootLayout({
     'sameAs': [
       'https://github.com/eeennsu',
       'https://velog.io/@diso592/posts',
-      'https://eunstory.eunsu.kr',
+      'https://eunstory.eunsu.pro',
     ],
     'knowsAbout': ['TypeScript', 'React.js', 'Next.js', 'React Native', 'JavaScript'],
   };

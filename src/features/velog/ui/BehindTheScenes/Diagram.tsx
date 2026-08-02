@@ -1,4 +1,5 @@
-import { type FC } from 'react';
+import { ChevronRight } from 'lucide-react';
+import { Fragment, type FC } from 'react';
 
 interface DiagramLabels {
   steps: {
@@ -15,12 +16,6 @@ interface Props {
   labels: DiagramLabels;
 }
 
-const NODE_WIDTH = 220;
-const NODE_HEIGHT = 56;
-const GAP = 24;
-const START_X = 60;
-const START_Y = 40;
-
 const nodes = [
   { key: 'source', title: 'Velog @diso592', sub: 'GraphQL API' },
   { key: 'fetch', title: 'scripts/fetch-velog.ts', sub: 'try/catch + exit(0)' },
@@ -30,76 +25,32 @@ const nodes = [
 ] as const;
 
 const Diagram: FC<Props> = ({ labels }) => (
-  <figure className='w-full overflow-x-auto'>
-    <svg
-      role='img'
-      aria-label='Velog fetch pipeline diagram'
-      viewBox={`0 0 ${START_X + nodes.length * (NODE_WIDTH + GAP)} 200`}
-      className='w-full min-w-[900px] text-gray-800 dark:text-gray-200'
-    >
-      <defs>
-        <marker
-          id='writings-diagram-arrow'
-          viewBox='0 0 10 10'
-          refX='9'
-          refY='5'
-          markerWidth='8'
-          markerHeight='8'
-          orient='auto-start-reverse'
-        >
-          <path d='M0 0 L10 5 L0 10 z' fill='currentColor' />
-        </marker>
-      </defs>
-
-      {nodes.map((node, index) => {
-        const x = START_X + index * (NODE_WIDTH + GAP);
-        return (
-          <g key={node.key}>
-            <rect
-              x={x}
-              y={START_Y}
-              width={NODE_WIDTH}
-              height={NODE_HEIGHT}
-              rx={12}
-              className='fill-white stroke-gray-300 dark:fill-gray-950 dark:stroke-gray-700'
-            />
-            <text
-              x={x + NODE_WIDTH / 2}
-              y={START_Y + 22}
-              textAnchor='middle'
-              className='fill-current text-[12px] font-semibold'
-            >
+  <figure className='w-full'>
+    <div className='flex flex-col items-stretch gap-3 md:flex-row md:items-stretch md:gap-2'>
+      {nodes.map((node, index) => (
+        <Fragment key={node.key}>
+          <div className='flex flex-1 flex-col items-center justify-center gap-1 rounded-xl border border-gray-300 bg-white px-3 py-4 text-center dark:border-gray-700 dark:bg-gray-950'>
+            <p className='text-[14px] leading-tight font-semibold text-gray-900 md:text-[15px] dark:text-gray-100'>
               {node.title}
-            </text>
-            <text
-              x={x + NODE_WIDTH / 2}
-              y={START_Y + 40}
-              textAnchor='middle'
-              className='fill-current text-[10.5px] opacity-70'
-            >
+            </p>
+            <p className='text-[12px] leading-tight text-gray-500 md:text-[13px] dark:text-gray-400'>
               {node.sub}
-            </text>
-            {index < nodes.length - 1 && (
-              <line
-                x1={x + NODE_WIDTH}
-                y1={START_Y + NODE_HEIGHT / 2}
-                x2={x + NODE_WIDTH + GAP}
-                y2={START_Y + NODE_HEIGHT / 2}
-                className='stroke-gray-400 dark:stroke-gray-600'
-                strokeWidth={1.5}
-                markerEnd='url(#writings-diagram-arrow)'
+            </p>
+          </div>
+          {index < nodes.length - 1 && (
+            <div className='flex items-center justify-center md:px-0.5'>
+              <ChevronRight
+                className='hidden size-5 shrink-0 text-gray-400 md:block dark:text-gray-600'
+                aria-hidden
               />
-            )}
-          </g>
-        );
-      })}
-
-      <text x={START_X} y={160} className='fill-current text-[11px] opacity-70'>
-        {labels.cronNote}
-      </text>
-    </svg>
-
-    <figcaption className='mt-4 grid grid-cols-2 gap-3 text-[12px] text-gray-600 md:grid-cols-5 dark:text-gray-400'>
+              <div className='h-px w-full bg-gray-300 md:hidden dark:bg-gray-700' aria-hidden />
+            </div>
+          )}
+        </Fragment>
+      ))}
+    </div>
+    <p className='mt-4 text-[13px] text-gray-500 dark:text-gray-400'>{labels.cronNote}</p>
+    <figcaption className='mt-4 grid grid-cols-2 gap-3 text-[13px] text-gray-600 md:grid-cols-5 dark:text-gray-400'>
       {(Object.keys(labels.steps) as Array<keyof DiagramLabels['steps']>).map(step => (
         <div
           key={step}
