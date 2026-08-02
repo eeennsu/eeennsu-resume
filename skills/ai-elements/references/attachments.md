@@ -20,11 +20,11 @@ Display user-uploaded files in chat messages or input areas.
 'use client';
 
 import {
-  Attachments,
   Attachment,
-  AttachmentPreview,
   AttachmentInfo,
+  AttachmentPreview,
   AttachmentRemove,
+  Attachments,
 } from '@/components/ai-elements/attachments';
 import type { FileUIPart } from 'ai';
 

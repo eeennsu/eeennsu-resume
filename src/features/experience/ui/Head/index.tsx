@@ -1,11 +1,12 @@
+import dayjs from 'dayjs';
+import { CircleHelp } from 'lucide-react';
+import type { FC } from 'react';
+
 import SharedTooltip from '@shared/components/Tooltip';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { getCompanyServiceDuration } from '@shared/libs/date';
 import { ICompanyExperience } from '@shared/types/subjects';
-import dayjs from 'dayjs';
-import { CircleHelp } from 'lucide-react';
-import type { FC } from 'react';
 
 type Props = {
   experience: ICompanyExperience;

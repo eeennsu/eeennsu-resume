@@ -13,7 +13,7 @@ The simplest possible chatbot implementation.
 ```typescript
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -40,9 +40,9 @@ import { Message, MessageContent, MessageResponse } from '@/components/ai-elemen
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
 import { useChat } from '@ai-sdk/react';
@@ -110,7 +110,7 @@ Chatbot with reasoning, sources, and file attachments.
 ```typescript
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -155,22 +155,22 @@ import {
 import { Loader } from '@/components/ai-elements/loader';
 import {
   Message,
+  MessageAttachment,
   MessageContent,
   MessageResponse,
-  MessageAttachment,
 } from '@/components/ai-elements/message';
 import {
   PromptInput,
+  PromptInputAttachments,
   PromptInputBody,
-  PromptInputTextarea,
+  PromptInputFileDropdown,
   PromptInputFooter,
   PromptInputSubmit,
-  PromptInputFileDropdown,
-  PromptInputAttachments,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
-import { Reasoning, ReasoningTrigger, ReasoningContent } from '@/components/ai-elements/reasoning';
-import { Sources, SourcesTrigger, SourcesContent, Source } from '@/components/ai-elements/sources';
+import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
+import { Source, Sources, SourcesContent, SourcesTrigger } from '@/components/ai-elements/sources';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { useState } from 'react';
@@ -291,7 +291,7 @@ An agent that can search the web and perform calculations.
 ```typescript
 // ai/assistant.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const assistantAgent = new ToolLoopAgent({
@@ -383,15 +383,15 @@ import { Message, MessageContent, MessageResponse } from '@/components/ai-elemen
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
 import {
   Tool,
-  ToolHeader,
   ToolContent,
+  ToolHeader,
   ToolInput,
   ToolOutput,
 } from '@/components/ai-elements/tool';
@@ -482,7 +482,7 @@ Switch between specialized agents.
 ```typescript
 // ai/research.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const researchAgent = new ToolLoopAgent({
@@ -504,7 +504,7 @@ export const researchAgent = new ToolLoopAgent({
 ```typescript
 // ai/code.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const codeAgent = new ToolLoopAgent({
@@ -529,7 +529,7 @@ export const codeAgent = new ToolLoopAgent({
 ```typescript
 // ai/writing.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, stepCountIs } from 'ai';
+import { stepCountIs, ToolLoopAgent } from 'ai';
 
 export const writingAgent = new ToolLoopAgent({
   model: anthropic('claude-sonnet-4-6'),

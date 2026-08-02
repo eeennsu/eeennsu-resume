@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
 ```tsx
 import { logUserAction } from '@/app/utils';
-import { headers, cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { after } from 'next/server';
 
 export async function POST(request: Request) {

@@ -1,12 +1,13 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { type FC } from 'react';
+
 import { cn } from '@shared/shadcn-ui/utils';
 import type { IVelogTagStat } from '@shared/types/velog';
 import { getPaletteForSkill } from '@shared/utils/tagColor';
 import { mapTagToSkillId } from '@shared/utils/utilMapTagToSkill';
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { type FC } from 'react';
 
 interface Props {
   tagStats: IVelogTagStat[];

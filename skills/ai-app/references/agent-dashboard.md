@@ -9,7 +9,7 @@ Templates for building agent-based AI applications with tool visualization.
 ```typescript
 // ai/assistant.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const assistantAgent = new ToolLoopAgent({
@@ -95,16 +95,16 @@ import { Message, MessageContent, MessageResponse } from '@/components/ai-elemen
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
-import { Reasoning, ReasoningTrigger, ReasoningContent } from '@/components/ai-elements/reasoning';
+import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
 import {
   Tool,
-  ToolHeader,
   ToolContent,
+  ToolHeader,
   ToolInput,
   ToolOutput,
 } from '@/components/ai-elements/tool';
@@ -222,7 +222,7 @@ export default function AgentDashboard() {
 ```typescript
 // ai/research.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const researchAgent = new ToolLoopAgent({
@@ -242,7 +242,7 @@ export const researchAgent = new ToolLoopAgent({
 ```typescript
 // ai/code.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const codeAgent = new ToolLoopAgent({
@@ -264,7 +264,7 @@ export const codeAgent = new ToolLoopAgent({
 ```typescript
 // ai/writing.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, stepCountIs } from 'ai';
+import { stepCountIs, ToolLoopAgent } from 'ai';
 
 export const writingAgent = new ToolLoopAgent({
   model: anthropic('claude-sonnet-4-6'),
@@ -343,7 +343,7 @@ In AI SDK, tools requiring approval **omit the `execute` function**. The agent l
 ```typescript
 // ai/admin-agent.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 export const adminAgent = new ToolLoopAgent({
@@ -377,16 +377,16 @@ export const adminAgent = new ToolLoopAgent({
 ### Approval UI
 
 ```tsx
-import { useChat } from '@ai-sdk/react';
 import {
   Confirmation,
-  ConfirmationTitle,
-  ConfirmationRequest,
   ConfirmationAccepted,
-  ConfirmationRejected,
-  ConfirmationActions,
   ConfirmationAction,
+  ConfirmationActions,
+  ConfirmationRejected,
+  ConfirmationRequest,
+  ConfirmationTitle,
 } from '@/components/ai-elements/confirmation';
+import { useChat } from '@ai-sdk/react';
 
 // In your component:
 const { messages, sendMessage, addToolOutput } = useChat({
@@ -401,12 +401,10 @@ if (part.type === 'tool-invocation' && part.state === 'input-available') {
         Tool <code>{part.toolName}</code> requires approval
       </ConfirmationTitle>
       <ConfirmationRequest>
-        <p className="text-sm text-muted-foreground">
-          Input: {JSON.stringify(part.input)}
-        </p>
+        <p className='text-muted-foreground text-sm'>Input: {JSON.stringify(part.input)}</p>
         <ConfirmationActions>
           <ConfirmationAction
-            variant="outline"
+            variant='outline'
             onClick={() => {
               addToolOutput({
                 toolCallId: part.toolCallId,
@@ -423,7 +421,7 @@ if (part.type === 'tool-invocation' && part.state === 'input-available') {
               const result = await fetch('/api/delete-file', {
                 method: 'POST',
                 body: JSON.stringify({ path: part.input.path }),
-              }).then((r) => r.json());
+              }).then(r => r.json());
 
               addToolOutput({
                 toolCallId: part.toolCallId,
@@ -437,10 +435,10 @@ if (part.type === 'tool-invocation' && part.state === 'input-available') {
         </ConfirmationActions>
       </ConfirmationRequest>
       <ConfirmationAccepted>
-        <p className="text-sm text-green-600">Approved</p>
+        <p className='text-sm text-green-600'>Approved</p>
       </ConfirmationAccepted>
       <ConfirmationRejected>
-        <p className="text-sm text-red-600">Denied</p>
+        <p className='text-sm text-red-600'>Denied</p>
       </ConfirmationRejected>
     </Confirmation>
   );

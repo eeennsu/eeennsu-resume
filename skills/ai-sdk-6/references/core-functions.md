@@ -206,7 +206,7 @@ const { output } = await generateText({
 ### Streaming Structured Output
 
 ```typescript
-import { streamText, Output } from 'ai';
+import { Output, streamText } from 'ai';
 import { z } from 'zod';
 
 const result = streamText({

@@ -70,18 +70,18 @@ When `useChat<AgentUIMessage>()` is wired up (see `/ai-sdk` type-safe-agents), `
 // Inside renderToolPart() in chat-message.tsx
 // message: AgentUIMessage  (from useChat<AgentUIMessage>)
 
-if (part.type === "tool-searchServices") {
+if (part.type === 'tool-searchServices') {
   // part.output, part.state, part.errorText are all fully typed here
   return renderToolState(
     {
       state: part.state,
-      output: part.state === "output-available" ? part.output : undefined,
-      errorText: part.state === "output-error" ? part.errorText : undefined,
-      loadingMessage: "Searching services…",
-      errorPrefix: "Error searching services",
-      isEmpty: (o) => o.services.length === 0,
-      render: (o) => <ServiceList services={o.services} total={o.total} />,
-      collapsibleLabel: (o) => `${o.total} service${o.total !== 1 ? "s" : ""} found`,
+      output: part.state === 'output-available' ? part.output : undefined,
+      errorText: part.state === 'output-error' ? part.errorText : undefined,
+      loadingMessage: 'Searching services…',
+      errorPrefix: 'Error searching services',
+      isEmpty: o => o.services.length === 0,
+      render: o => <ServiceList services={o.services} total={o.total} />,
+      collapsibleLabel: o => `${o.total} service${o.total !== 1 ? 's' : ''} found`,
     },
     index,
   );
@@ -141,7 +141,7 @@ Define output types in a shared file so the UI component and tool stay in sync:
 
 ```ts
 // Used in chat-message.tsx imports:
-import type { SearchServicesOutput, GetContactOutput } from '@/lib/ai/tools/types';
+import type { GetContactOutput, SearchServicesOutput } from '@/lib/ai/tools/types';
 
 // lib/ai/tools/types.ts
 export type SearchServicesOutput = {

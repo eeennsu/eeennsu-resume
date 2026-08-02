@@ -12,23 +12,23 @@ Client components **cannot** be async functions. Only Server Components can be a
 
 ```tsx
 // Bad: async client component
-'use client'
+'use client';
 export default async function UserProfile() {
-  const user = await getUser() // Cannot await in client component
-  return <div>{user.name}</div>
+  const user = await getUser(); // Cannot await in client component
+  return <div>{user.name}</div>;
 }
 
 // Good: Remove async, fetch data in parent server component
 // page.tsx (server component - no 'use client')
 export default async function Page() {
-  const user = await getUser()
-  return <UserProfile user={user} />
+  const user = await getUser();
+  return <UserProfile user={user} />;
 }
 
 // UserProfile.tsx (client component)
-'use client'
+('use client');
 export function UserProfile({ user }: { user: User }) {
-  return <div>{user.name}</div>
+  return <div>{user.name}</div>;
 }
 ```
 
@@ -77,28 +77,28 @@ export function ClientButton() {
 // Bad: Date object (silently becomes string, then crashes)
 // page.tsx (server)
 export default async function Page() {
-  const post = await getPost()
-  return <PostCard createdAt={post.createdAt} /> // Date object
+  const post = await getPost();
+  return <PostCard createdAt={post.createdAt} />; // Date object
 }
 
 // PostCard.tsx (client) - will crash on .getFullYear()
-'use client'
+('use client');
 export function PostCard({ createdAt }: { createdAt: Date }) {
-  return <span>{createdAt.getFullYear()}</span> // Runtime error!
+  return <span>{createdAt.getFullYear()}</span>; // Runtime error!
 }
 
 // Good: Serialize to string on server
 // page.tsx (server)
 export default async function Page() {
-  const post = await getPost()
-  return <PostCard createdAt={post.createdAt.toISOString()} />
+  const post = await getPost();
+  return <PostCard createdAt={post.createdAt.toISOString()} />;
 }
 
 // PostCard.tsx (client)
-'use client'
+('use client');
 export function PostCard({ createdAt }: { createdAt: string }) {
-  const date = new Date(createdAt)
-  return <span>{date.getFullYear()}</span>
+  const date = new Date(createdAt);
+  return <span>{date.getFullYear()}</span>;
 }
 ```
 

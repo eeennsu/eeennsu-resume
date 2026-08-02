@@ -1,6 +1,7 @@
-import type { IVelogArchive } from '@shared/types/velog';
 import dayjs from 'dayjs';
 import { type FC } from 'react';
+
+import type { IVelogArchive } from '@shared/types/velog';
 
 import Diagram from './Diagram';
 import FadeInWrapper from './FadeInWrapper';

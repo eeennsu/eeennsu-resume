@@ -35,7 +35,7 @@ Floating action button with Lottie callout for first-time visitors.
 
 import { MessageCircle, X } from 'lucide-react';
 import { motion } from 'motion/react';
-import { memo, useState, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { ChatCallout } from './chat-callout';
 
@@ -193,7 +193,7 @@ bun add lottie-react
 
 import Lottie from 'lottie-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import arrowAnimation from './animations/arrow-right.json';
 

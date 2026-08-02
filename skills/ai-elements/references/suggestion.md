@@ -23,8 +23,8 @@ Add the following component to your frontend:
 
 import {
   Input,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import { Suggestion, Suggestions } from '@/components/ai-elements/suggestion';
 import { useChat } from '@ai-sdk/react';

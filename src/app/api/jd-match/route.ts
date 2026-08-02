@@ -1,4 +1,6 @@
 import { Type } from '@google/genai';
+import { z } from 'zod';
+
 import { incrementAndCheck, recordTokens, refund } from '@shared/ai/cap';
 import {
   FALLBACK_MODEL,
@@ -11,7 +13,6 @@ import {
 import { buildJdSystemPrompt } from '@shared/ai/prompts';
 import { checkOrigin, verifyTurnstile, wrapUntrusted } from '@shared/ai/security';
 import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
-import { z } from 'zod';
 
 // fs(이력서 로드) + dotenv(db) 때문에 Edge 불가. 원샷 분석 여유.
 export const runtime = 'nodejs';

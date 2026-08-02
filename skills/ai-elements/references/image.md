@@ -30,8 +30,8 @@ Add the following component to your frontend:
 import { Image } from '@/components/ai-elements/image';
 import {
   Input,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import { Spinner } from '@/components/ui/spinner';
 import { useState } from 'react';

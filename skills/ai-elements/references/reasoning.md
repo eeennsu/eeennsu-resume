@@ -31,8 +31,8 @@ import {
 import { Message, MessageContent, MessageResponse } from '@/components/ai-elements/message';
 import {
   PromptInput,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
 import { Spinner } from '@/components/ui/spinner';
@@ -134,7 +134,7 @@ export default ReasoningDemo;
 Add the following route to your backend:
 
 ```ts title="app/api/chat/route.ts"
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

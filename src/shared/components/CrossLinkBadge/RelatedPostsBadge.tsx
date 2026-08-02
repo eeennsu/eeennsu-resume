@@ -1,7 +1,8 @@
-import { VELOG_BASE_URL } from '@shared/consts/velog';
-import type { IVelogPost } from '@shared/types/velog';
 import { NotebookText } from 'lucide-react';
 import { type FC } from 'react';
+
+import { VELOG_BASE_URL } from '@shared/consts/velog';
+import type { IVelogPost } from '@shared/types/velog';
 
 interface Props {
   posts: IVelogPost[];

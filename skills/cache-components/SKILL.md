@@ -342,13 +342,13 @@ With Cache Components enabled:
 ```tsx
 // ❌ ERROR with Cache Components
 export function generateStaticParams() {
-  return [] // Build error: must provide at least one param
+  return []; // Build error: must provide at least one param
 }
 
 // ✅ CORRECT: Provide real params
 export async function generateStaticParams() {
-  const products = await getPopularProducts()
-  return products.map(({ category, slug }) => ({ category, slug }))
+  const products = await getPopularProducts();
+  return products.map(({ category, slug }) => ({ category, slug }));
 }
 ```
 

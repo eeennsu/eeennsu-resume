@@ -86,26 +86,22 @@ function updateElementStyles(element: HTMLElement) {
 ```tsx
 // Incorrect: interleaving style changes with layout queries
 function Box({ isHighlighted }: { isHighlighted: boolean }) {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current && isHighlighted) {
-      ref.current.style.width = '100px'
-      const width = ref.current.offsetWidth // Forces layout
-      ref.current.style.height = '200px'
+      ref.current.style.width = '100px';
+      const width = ref.current.offsetWidth; // Forces layout
+      ref.current.style.height = '200px';
     }
-  }, [isHighlighted])
+  }, [isHighlighted]);
 
-  return <div ref={ref}>Content</div>
+  return <div ref={ref}>Content</div>;
 }
 
 // Correct: toggle class
 function Box({ isHighlighted }: { isHighlighted: boolean }) {
-  return (
-    <div className={isHighlighted ? 'highlighted-box' : ''}>
-      Content
-    </div>
-  )
+  return <div className={isHighlighted ? 'highlighted-box' : ''}>Content</div>;
 }
 ```
 

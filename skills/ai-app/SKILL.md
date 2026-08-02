@@ -110,7 +110,7 @@ See [references/project-structure.md](references/project-structure.md) for detai
 ```typescript
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -146,9 +146,9 @@ import { Message, MessageContent, MessageResponse } from '@/components/ai-elemen
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
 import { useChat } from '@ai-sdk/react';

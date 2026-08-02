@@ -292,7 +292,7 @@ When the corpus is non-English (Finnish, German, French, Spanish, etc.):
 const { data } = await supabase.rpc('match_documents', {
   query_embedding: embedding,
   match_threshold: 0.7,
-  match_count: 10
+  match_count: 10,
 });
 
 // Hybrid search
@@ -301,7 +301,7 @@ const { data } = await supabase.rpc('hybrid_search_fts', {
   query_text: userQuery,
   match_count: 10,
   rrf_k: 60,
-  fts_language: 'simple'
+  fts_language: 'simple',
 });
 ```
 

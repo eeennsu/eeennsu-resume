@@ -1,3 +1,7 @@
+import type { FC } from 'react';
+
+import SkillCard, { type SkillLabelInfo } from '@features/skill/ui/Card';
+
 import AnimatedSection from '@shared/components/AnimatedSection';
 import SectionTitle from '@shared/components/SectionTitle';
 import { type SkillId } from '@shared/consts/skills';
@@ -7,9 +11,6 @@ import { ISkill } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
 import { mapLabelToSkillId, mapTagToSkillId } from '@shared/utils/utilMapTagToSkill';
-import type { FC } from 'react';
-
-import SkillCard, { type SkillLabelInfo } from '@features/skill/ui/Card';
 
 interface Props {
   locale: Locale;

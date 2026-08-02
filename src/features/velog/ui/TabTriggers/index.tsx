@@ -1,9 +1,10 @@
 'use client';
 
-import { cn } from '@shared/shadcn-ui/utils';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { type FC } from 'react';
+
+import { cn } from '@shared/shadcn-ui/utils';
 
 export type WritingsView = 'tag' | 'timeline';
 

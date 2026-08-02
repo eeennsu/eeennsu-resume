@@ -67,8 +67,7 @@ Ensure users see their changes immediately:
 ```tsx
 // components/posts.tsx
 import { createPost } from '@/actions/posts';
-import { cacheTag, cacheLife } from 'next/cache';
-import { updateTag } from 'next/cache';
+import { cacheLife, cacheTag, updateTag } from 'next/cache';
 import { useTransition } from 'react';
 
 async function PostsList() {
@@ -194,7 +193,7 @@ Create reusable cached data fetchers:
 
 ```tsx
 // lib/data.ts
-import { cacheTag, cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 
 export async function getUser(userId: string) {
   'use cache';
@@ -361,7 +360,7 @@ Complete example for e-commerce:
 
 ```tsx
 // app/products/[id]/page.tsx
-import { cacheTag, cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import { Suspense } from 'react';
 
 // Cached product details (changes rarely)
@@ -748,17 +747,17 @@ async function ProductReviews({ productId }: { productId: string }) {
 ```tsx
 // BAD: Same cache for all users
 async function UserProfile() {
-  'use cache'
-  const user = await getCurrentUser() // Different per user!
-  return <Profile user={user} />
+  'use cache';
+  const user = await getCurrentUser(); // Different per user!
+  return <Profile user={user} />;
 }
 
 // GOOD: User ID as parameter (becomes cache key)
 async function UserProfile({ userId }: { userId: string }) {
-  'use cache'
-  cacheTag(`user-${userId}`)
-  const user = await db.users.findUnique({ where: { id: userId } })
-  return <Profile user={user} />
+  'use cache';
+  cacheTag(`user-${userId}`);
+  const user = await db.users.findUnique({ where: { id: userId } });
+  return <Profile user={user} />;
 }
 ```
 
@@ -767,21 +766,21 @@ async function UserProfile({ userId }: { userId: string }) {
 ```tsx
 // BAD: Caching real-time data
 async function StockPrice({ symbol }: { symbol: string }) {
-  'use cache'
-  cacheLife('hours') // Stale prices!
-  return await fetchStockPrice(symbol)
+  'use cache';
+  cacheLife('hours'); // Stale prices!
+  return await fetchStockPrice(symbol);
 }
 
 // GOOD: Don't cache, or use very short cache
 async function StockPrice({ symbol }: { symbol: string }) {
-  'use cache'
-  cacheLife('seconds') // 1 second max
-  return await fetchStockPrice(symbol)
+  'use cache';
+  cacheLife('seconds'); // 1 second max
+  return await fetchStockPrice(symbol);
 }
 
 // BETTER: No cache for truly real-time
 async function StockPrice({ symbol }: { symbol: string }) {
-  return await fetchStockPrice(symbol)
+  return await fetchStockPrice(symbol);
 }
 ```
 
@@ -795,7 +794,7 @@ export default async function Page() {
       <CachedHeader />
       <DynamicContent /> {/* Dynamic - NEEDS Suspense */}
     </>
-  )
+  );
 }
 
 // GOOD: Proper Suspense boundary for dynamic content
@@ -807,20 +806,20 @@ export default async function Page() {
         <DynamicContent />
       </Suspense>
     </>
-  )
+  );
 }
 
 // ALSO GOOD: Cached content without Suspense (optional for long-lived caches)
 export default async function Page() {
   return (
     <>
-      <CachedHeader />       {/* 'use cache' - no Suspense needed */}
-      <CachedSidebar />      {/* 'use cache' - no Suspense needed */}
+      <CachedHeader /> {/* 'use cache' - no Suspense needed */}
+      <CachedSidebar /> {/* 'use cache' - no Suspense needed */}
       <Suspense fallback={<ContentSkeleton />}>
-        <DynamicContent />   {/* Dynamic - Suspense required */}
+        <DynamicContent /> {/* Dynamic - Suspense required */}
       </Suspense>
     </>
-  )
+  );
 }
 ```
 

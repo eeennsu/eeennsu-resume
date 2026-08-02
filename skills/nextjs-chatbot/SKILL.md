@@ -84,7 +84,7 @@ Inject per-request context (e.g., a saved document for edit mode) from the clien
 ```ts
 // Simple: body function on DefaultChatTransport
 const transport = new DefaultChatTransport({
-  api: "/api/chat",
+  api: '/api/chat',
   body: () => ({ documentContext: activeDocRef.current }),
 });
 

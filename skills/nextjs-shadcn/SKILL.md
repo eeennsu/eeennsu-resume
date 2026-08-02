@@ -126,24 +126,24 @@ export default async function Page({
 
 ```tsx
 // ❌ WRONG: Server Action for data fetching
-"use server"
+'use server';
 export async function getUsers() {
-  return await db.users.findMany()
+  return await db.users.findMany();
 }
 
 // ✅ CORRECT: Data function with caching
 // data/users.ts
 export async function getUsers() {
-  "use cache"
-  cacheTag("users")
-  cacheLife("hours")
-  return await db.users.findMany()
+  'use cache';
+  cacheTag('users');
+  cacheLife('hours');
+  return await db.users.findMany();
 }
 
 // ✅ CORRECT: Read cookies in Server Component directly
 export default async function Page() {
-  const theme = (await cookies()).get("theme")?.value ?? "light"
-  return <App theme={theme} />
+  const theme = (await cookies()).get('theme')?.value ?? 'light';
+  return <App theme={theme} />;
 }
 ```
 
@@ -152,7 +152,7 @@ export default async function Page() {
 ```tsx
 'use cache';
 
-import { cacheTag, cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 
 export async function getProducts() {
   cacheTag('products');
@@ -166,7 +166,7 @@ export async function getProducts() {
 ```tsx
 'use server';
 
-import { updateTag, revalidateTag } from 'next/cache';
+import { revalidateTag, updateTag } from 'next/cache';
 import { z } from 'zod';
 
 const schema = z.object({

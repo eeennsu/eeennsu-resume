@@ -8,7 +8,7 @@ The `ToolLoopAgent` class encapsulates LLM configuration, tools, and behavior in
 
 ```typescript
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 const codeAgent = new ToolLoopAgent({
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
 ### Stop Conditions
 
 ```typescript
-import { ToolLoopAgent, stepCountIs, hasToolCall } from 'ai';
+import { hasToolCall, stepCountIs, ToolLoopAgent } from 'ai';
 
 const agent = new ToolLoopAgent({
   model: anthropic('claude-sonnet-4-6'),
@@ -263,7 +263,7 @@ console.log(output.sentiment); // Type-safe access
 ## Type-Safe UIMessage
 
 ```typescript
-import { ToolLoopAgent, InferAgentUIMessage } from 'ai';
+import { InferAgentUIMessage, ToolLoopAgent } from 'ai';
 
 const myAgent = new ToolLoopAgent({
   /* config */

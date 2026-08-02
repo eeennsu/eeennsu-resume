@@ -52,7 +52,7 @@ Output types: `Output.object()`, `Output.array()`, `Output.choice()`, `Output.js
 
 ```typescript
 import { anthropic } from '@ai-sdk/anthropic';
-import { ToolLoopAgent, tool, stepCountIs } from 'ai';
+import { stepCountIs, tool, ToolLoopAgent } from 'ai';
 import { z } from 'zod';
 
 const myAgent = new ToolLoopAgent({
@@ -97,14 +97,14 @@ export async function POST(request: Request) {
 ### Smooth Streaming
 
 ```typescript
-import { createAgentUIStreamResponse, smoothStream } from "ai";
+import { createAgentUIStreamResponse, smoothStream } from 'ai';
 
 return createAgentUIStreamResponse({
   agent: myAgent,
   uiMessages: messages,
   experimental_transform: smoothStream({
     delayInMs: 15,
-    chunking: "word", // "word" | "line" | "none"
+    chunking: 'word', // "word" | "line" | "none"
   }),
 });
 ```

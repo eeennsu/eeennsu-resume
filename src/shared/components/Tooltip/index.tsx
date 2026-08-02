@@ -1,5 +1,6 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from '@shared/shadcn-ui/ui/tooltip';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
+
+import { Tooltip, TooltipContent, TooltipTrigger } from '@shared/shadcn-ui/ui/tooltip';
 
 interface IProps {
   content: ReactNode;

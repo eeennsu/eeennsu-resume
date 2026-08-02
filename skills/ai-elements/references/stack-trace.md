@@ -23,15 +23,15 @@ Add the following component to your frontend:
 
 import {
   StackTrace,
-  StackTraceHeader,
-  StackTraceError,
-  StackTraceErrorType,
-  StackTraceErrorMessage,
   StackTraceActions,
-  StackTraceCopyButton,
-  StackTraceExpandButton,
   StackTraceContent,
+  StackTraceCopyButton,
+  StackTraceError,
+  StackTraceErrorMessage,
+  StackTraceErrorType,
+  StackTraceExpandButton,
   StackTraceFrames,
+  StackTraceHeader,
 } from '@/components/ai-elements/stack-trace';
 import { useChat } from '@ai-sdk/react';
 

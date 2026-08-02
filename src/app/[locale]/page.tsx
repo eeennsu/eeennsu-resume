@@ -1,4 +1,3 @@
-import { isLocale } from '@shared/i18n/config';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
@@ -11,6 +10,8 @@ import PortfolioWidget from '@widgets/Portfolio';
 import ProfileWidget from '@widgets/Profile';
 import RecentWritings from '@widgets/RecentWritings';
 import SkillsWidget from '@widgets/Skill';
+
+import { isLocale } from '@shared/i18n/config';
 
 interface Props {
   params: Promise<{ locale: string }>;

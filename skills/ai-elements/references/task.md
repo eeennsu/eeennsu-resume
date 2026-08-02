@@ -24,21 +24,21 @@ Add the following component to your frontend:
 import { tasksSchema } from '@/app/api/task/route';
 import {
   Task,
+  TaskContent,
   TaskItem,
   TaskItemFile,
   TaskTrigger,
-  TaskContent,
 } from '@/components/ai-elements/task';
 import { Button } from '@/components/ui/button';
 import { experimental_useObject as useObject } from '@ai-sdk/react';
 import {
-  SiReact,
-  SiTypescript,
-  SiJavascript,
   SiCss,
   SiHtml5,
+  SiJavascript,
   SiJson,
   SiMarkdown,
+  SiReact,
+  SiTypescript,
 } from '@icons-pack/react-simple-icons';
 
 const iconMap = {

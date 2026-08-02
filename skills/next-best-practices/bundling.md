@@ -21,21 +21,21 @@ If the package is only needed on client:
 
 ```tsx
 // Bad: Fails - package uses window
-import SomeChart from 'some-chart-library'
-
-export default function Page() {
-  return <SomeChart />
-}
 
 // Good: Use dynamic import with ssr: false
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
+import SomeChart from 'some-chart-library';
+
+export default function Page() {
+  return <SomeChart />;
+}
 
 const SomeChart = dynamic(() => import('some-chart-library'), {
   ssr: false,
-})
+});
 
 export default function Page() {
-  return <SomeChart />
+  return <SomeChart />;
 }
 ```
 

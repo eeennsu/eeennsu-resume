@@ -39,18 +39,21 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from '@/components/ai-elements/conversation';
-import { MessageActions, MessageAction } from '@/components/ai-elements/message';
-import { Message, MessageContent } from '@/components/ai-elements/message';
-import { MessageResponse } from '@/components/ai-elements/message';
+import {
+  Message,
+  MessageAction,
+  MessageActions,
+  MessageContent,
+  MessageResponse,
+} from '@/components/ai-elements/message';
 import {
   Input,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import { useChat } from '@ai-sdk/react';
-import { RefreshCcwIcon, CopyIcon } from 'lucide-react';
-import { useState } from 'react';
-import { Fragment } from 'react';
+import { CopyIcon, RefreshCcwIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
 
 const ActionsDemo = () => {
   const [input, setInput] = useState('');

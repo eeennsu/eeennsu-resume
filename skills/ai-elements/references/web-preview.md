@@ -29,8 +29,8 @@ Add the following component to your frontend:
 
 import {
   Input,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import {
   WebPreview,

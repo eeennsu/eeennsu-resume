@@ -16,7 +16,7 @@ In development, click the hydration error to see the server/client diff.
 ### Browser-only APIs
 
 ```tsx
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Bad: Causes mismatch - window doesn't exist on server
 <div>{window.innerWidth}</div>;

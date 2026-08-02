@@ -202,7 +202,7 @@ If content is unstructured prose (documents, FAQs, long text), use embeddings + 
 
 ```ts
 // lib/db/schema/embeddings.ts
-import { pgTable, text, vector, index } from 'drizzle-orm/pg-core';
+import { index, pgTable, text, vector } from 'drizzle-orm/pg-core';
 
 export const embeddings = pgTable(
   'embeddings',

@@ -26,6 +26,9 @@ const result = await generateText({
 ## `maxSteps` → `stopWhen: stepCountIs(n)`
 
 ```typescript
+// ✅ Correct
+import { generateText, stepCountIs } from 'ai';
+
 // ❌ Incorrect
 const result = await generateText({
   model: 'anthropic/claude-opus-4-6',
@@ -33,9 +36,6 @@ const result = await generateText({
   maxSteps: 5, // deprecated: use `stopWhen: stepCountIs(n)` instead
   prompt: 'What is the weather in NYC?',
 });
-
-// ✅ Correct
-import { generateText, stepCountIs } from 'ai';
 
 const result = await generateText({
   model: 'anthropic/claude-opus-4-6',
@@ -74,7 +74,8 @@ const weatherTool = tool({
 
 ```typescript
 // ❌ Deprecated
-import { generateObject } from 'ai'; // deprecated: use `generateText` with `output` instead
+// ✅ Correct
+import { generateObject, generateText, Output } from 'ai'; // deprecated: use `generateText` with `output` instead
 
 const result = await generateObject({
   // deprecated function
@@ -88,9 +89,6 @@ const result = await generateObject({
   }),
   prompt: 'Generate a recipe for chocolate cake',
 });
-
-// ✅ Correct
-import { generateText, Output } from 'ai';
 
 const result = await generateText({
   model: 'anthropic/claude-opus-4-6',
@@ -111,6 +109,9 @@ console.log(result.output); // typed object
 ## Manual JSON parsing → `generateText` with `output`
 
 ```typescript
+// ✅ Correct
+import { generateText, Output } from 'ai';
+
 // ❌ Incorrect
 const result = await generateText({
   model: 'anthropic/claude-opus-4-6',
@@ -119,9 +120,6 @@ const result = await generateText({
   Input: John is 25 years old`,
 });
 const parsed = JSON.parse(result.text);
-
-// ✅ Correct
-import { generateText, Output } from 'ai';
 
 const result = await generateText({
   model: 'anthropic/claude-opus-4-6',
@@ -195,7 +193,10 @@ The `useChat` hook no longer manages input state internally. You must now manage
 
 ```tsx
 // ❌ Deprecated
-import { useChat } from '@ai-sdk/react';
+// ✅ Correct
+import { useChat, useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
+import { useState } from 'react';
 
 export default function Page() {
   const {
@@ -209,15 +210,10 @@ export default function Page() {
   return (
     <form onSubmit={handleSubmit}>
       <input value={input} onChange={handleInputChange} />
-      <button type="submit">Send</button>
+      <button type='submit'>Send</button>
     </form>
   );
 }
-
-// ✅ Correct
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
-import { useState } from 'react';
 
 export default function Page() {
   const [input, setInput] = useState('');
@@ -234,7 +230,7 @@ export default function Page() {
   return (
     <form onSubmit={handleSubmit}>
       <input value={input} onChange={e => setInput(e.target.value)} />
-      <button type="submit">Send</button>
+      <button type='submit'>Send</button>
     </form>
   );
 }

@@ -20,7 +20,7 @@ Popular icon and component libraries can have **up to 10,000 re-exports** in the
 // Runtime cost: 200-800ms on every cold start
 
 import { Button, TextField } from '@mui/material';
-import { Check, X, Menu } from 'lucide-react';
+import { Check, Menu, X } from 'lucide-react';
 
 // Loads 2,225 modules, takes ~4.2s extra in dev
 ```
@@ -38,7 +38,7 @@ module.exports = {
 
 ```tsx
 // Keep the standard imports - Next.js transforms them to direct imports
-import { Check, X, Menu } from 'lucide-react';
+import { Check, Menu, X } from 'lucide-react';
 
 // Full TypeScript support, no manual path wrangling
 ```

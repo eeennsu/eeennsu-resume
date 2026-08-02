@@ -31,8 +31,8 @@ import {
 import { Message, MessageContent, MessageResponse } from '@/components/ai-elements/message';
 import {
   Input,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import { useChat } from '@ai-sdk/react';
 import { MessageSquare } from 'lucide-react';
@@ -110,7 +110,7 @@ export default ConversationDemo;
 Add the following route to your backend:
 
 ```tsx title="api/chat/route.ts"
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

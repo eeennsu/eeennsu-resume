@@ -111,7 +111,7 @@ Switch on `part.type` to render appropriate components:
 ```typescript
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 

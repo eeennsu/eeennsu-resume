@@ -15,7 +15,7 @@ Language model middleware for intercepting and modifying model behavior.
 ### Extract Reasoning
 
 ```typescript
-import { wrapLanguageModel, extractReasoningMiddleware } from 'ai';
+import { extractReasoningMiddleware, wrapLanguageModel } from 'ai';
 
 const model = wrapLanguageModel({
   model: anthropic('claude-sonnet-4-6'),
@@ -26,7 +26,7 @@ const model = wrapLanguageModel({
 ### Simulate Streaming
 
 ```typescript
-import { wrapLanguageModel, simulateStreamingMiddleware } from 'ai';
+import { simulateStreamingMiddleware, wrapLanguageModel } from 'ai';
 
 const model = wrapLanguageModel({
   model: yourModel,
@@ -37,7 +37,7 @@ const model = wrapLanguageModel({
 ### Default Settings
 
 ```typescript
-import { wrapLanguageModel, defaultSettingsMiddleware } from 'ai';
+import { defaultSettingsMiddleware, wrapLanguageModel } from 'ai';
 
 const model = wrapLanguageModel({
   model: anthropic('claude-sonnet-4-6'),

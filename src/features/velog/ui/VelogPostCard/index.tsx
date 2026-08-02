@@ -1,10 +1,11 @@
+import dayjs from 'dayjs';
+import Link from 'next/link';
+import { type FC, type ReactNode } from 'react';
+
 import TagChip from '@shared/components/TagChip';
 import { VELOG_BASE_URL } from '@shared/consts/velog';
 import type { IVelogPost } from '@shared/types/velog';
 import { mapTagToSkillId } from '@shared/utils/utilMapTagToSkill';
-import dayjs from 'dayjs';
-import Link from 'next/link';
-import { type FC, type ReactNode } from 'react';
 
 interface Props {
   post: IVelogPost;

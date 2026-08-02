@@ -1,8 +1,9 @@
-import { DEFAULT_LOCALE } from '@shared/i18n/config';
-import { getDictionary } from '@shared/i18n/dictionaries';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { FC } from 'react';
+
+import { DEFAULT_LOCALE } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
 
 const dict = getDictionary(DEFAULT_LOCALE);
 

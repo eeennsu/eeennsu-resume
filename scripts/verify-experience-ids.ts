@@ -1,6 +1,7 @@
-import yaml from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+
+import yaml from 'js-yaml';
 
 interface ActivityShape {
   id?: string;

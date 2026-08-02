@@ -278,10 +278,10 @@ Tool call streaming is **enabled by default** in AI SDK v6:
 ### Server-Side Multi-Step
 
 ```typescript
-import { streamText, stepCountIs } from "ai";
+import { stepCountIs, streamText } from 'ai';
 
 const result = streamText({
-  model: anthropic("claude-sonnet-4-6"),
+  model: anthropic('claude-sonnet-4-6'),
   messages: await convertToModelMessages(messages),
   tools: {
     search: searchTool,
@@ -361,9 +361,9 @@ async onToolCall({ toolCall }) {
 
 ```typescript
 return result.toUIMessageStreamResponse({
-  onError: (error) => {
-    if (error == null) return "Unknown error";
-    if (typeof error === "string") return error;
+  onError: error => {
+    if (error == null) return 'Unknown error';
+    if (typeof error === 'string') return error;
     if (error instanceof Error) return error.message;
     return JSON.stringify(error);
   },

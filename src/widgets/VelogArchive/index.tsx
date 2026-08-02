@@ -1,13 +1,3 @@
-import ActivityBadge from '@shared/components/CrossLinkBadge/ActivityBadge';
-import { VELOG_BASE_URL, VELOG_RSS_URL } from '@shared/consts/velog';
-import type { Locale } from '@shared/i18n/config';
-import { getDictionary } from '@shared/i18n/dictionaries';
-import type { IActivity, IActivityVelogMapping, ICompanyExperience } from '@shared/types/subjects';
-import { loadSubjects } from '@shared/utils/utilFetchSubjects';
-import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
-import { isRecentPost } from '@shared/utils/utilIsRecentPost';
-import { loadYaml } from '@shared/utils/utilLoadYaml';
-import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
 import dayjs from 'dayjs';
 import { ArrowLeft, CalendarClock, ExternalLink, Rss } from 'lucide-react';
 import Link from 'next/link';
@@ -18,6 +8,17 @@ import SkillMap from '@features/velog/ui/SkillMap';
 import TabTriggers, { type WritingsView } from '@features/velog/ui/TabTriggers';
 import TagCloud from '@features/velog/ui/TagCloud';
 import Timeline from '@features/velog/ui/Timeline';
+
+import ActivityBadge from '@shared/components/CrossLinkBadge/ActivityBadge';
+import { VELOG_BASE_URL, VELOG_RSS_URL } from '@shared/consts/velog';
+import type { Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
+import type { IActivity, IActivityVelogMapping, ICompanyExperience } from '@shared/types/subjects';
+import { loadSubjects } from '@shared/utils/utilFetchSubjects';
+import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
+import { isRecentPost } from '@shared/utils/utilIsRecentPost';
+import { loadYaml } from '@shared/utils/utilLoadYaml';
+import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
 
 interface Props {
   locale: Locale;

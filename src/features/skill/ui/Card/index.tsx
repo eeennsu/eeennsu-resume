@@ -1,10 +1,11 @@
+import { FC } from 'react';
+
+import SkillBadge from '@features/skill/ui/SkillBadge';
+
 import RelatedPostsInline from '@shared/components/CrossLinkBadge/RelatedPostsInline';
 import { CORE_SKILL_IDS, type SkillId } from '@shared/consts/skills';
 import type { Locale } from '@shared/i18n/config';
 import { mapLabelToSkillId } from '@shared/utils/utilMapTagToSkill';
-import { FC } from 'react';
-
-import SkillBadge from '@features/skill/ui/SkillBadge';
 
 export interface SkillLabelInfo {
   count: number;

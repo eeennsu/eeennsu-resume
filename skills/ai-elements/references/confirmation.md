@@ -23,11 +23,11 @@ Add the following component to your frontend:
 
 import {
   Confirmation,
-  ConfirmationRequest,
   ConfirmationAccepted,
-  ConfirmationRejected,
-  ConfirmationActions,
   ConfirmationAction,
+  ConfirmationActions,
+  ConfirmationRejected,
+  ConfirmationRequest,
 } from '@/components/ai-elements/confirmation';
 import { MessageResponse } from '@/components/ai-elements/message';
 import { Button } from '@/components/ui/button';
@@ -131,7 +131,7 @@ export default Example;
 Add the following route to your backend:
 
 ```ts title="app/api/chat/route.tsx"
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 import { z } from 'zod';
 
 // Allow streaming responses up to 30 seconds

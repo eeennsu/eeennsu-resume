@@ -1,10 +1,11 @@
 'use client';
 
-import { resolveDictionary } from '@shared/i18n/dictionaries';
 import { useParams } from 'next/navigation';
 import { useEffect, useState, type FC } from 'react';
 
 import apiGetLatestTag from '@features/github/apis/getLatestTag';
+
+import { resolveDictionary } from '@shared/i18n/dictionaries';
 
 const DEFAULT_VERSION = 'v.2.2.4';
 

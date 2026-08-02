@@ -182,35 +182,35 @@ async function handleRequest(userId: string, skipProcessing: boolean) {
 ```typescript
 // Incorrect: always fetches permissions
 async function updateResource(resourceId: string, userId: string) {
-  const permissions = await fetchPermissions(userId)
-  const resource = await getResource(resourceId)
+  const permissions = await fetchPermissions(userId);
+  const resource = await getResource(resourceId);
 
   if (!resource) {
-    return { error: 'Not found' }
+    return { error: 'Not found' };
   }
 
   if (!permissions.canEdit) {
-    return { error: 'Forbidden' }
+    return { error: 'Forbidden' };
   }
 
-  return await updateResourceData(resource, permissions)
+  return await updateResourceData(resource, permissions);
 }
 
 // Correct: fetches only when needed
 async function updateResource(resourceId: string, userId: string) {
-  const resource = await getResource(resourceId)
+  const resource = await getResource(resourceId);
 
   if (!resource) {
-    return { error: 'Not found' }
+    return { error: 'Not found' };
   }
 
-  const permissions = await fetchPermissions(userId)
+  const permissions = await fetchPermissions(userId);
 
   if (!permissions.canEdit) {
-    return { error: 'Forbidden' }
+    return { error: 'Forbidden' };
   }
 
-  return await updateResourceData(resource, permissions)
+  return await updateResourceData(resource, permissions);
 }
 ```
 
@@ -436,7 +436,7 @@ Popular icon and component libraries can have **up to 10,000 re-exports** in the
 // Runtime cost: 200-800ms on every cold start
 
 import { Button, TextField } from '@mui/material';
-import { Check, X, Menu } from 'lucide-react';
+import { Check, Menu, X } from 'lucide-react';
 
 // Loads 2,225 modules, takes ~4.2s extra in dev
 ```
@@ -445,7 +445,7 @@ import { Check, X, Menu } from 'lucide-react';
 
 ```tsx
 // Keep the standard imports - Next.js transforms them to direct imports
-import { Check, X, Menu } from 'lucide-react';
+import { Check, Menu, X } from 'lucide-react';
 
 // Full TypeScript support, no manual path wrangling
 ```
@@ -1297,7 +1297,7 @@ export async function POST(request: Request) {
 
 ```tsx
 import { logUserAction } from '@/app/utils';
-import { headers, cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { after } from 'next/server';
 
 export async function POST(request: Request) {
@@ -2659,7 +2659,7 @@ export default function App() {
 **Example: preload critical fonts and styles**
 
 ```tsx
-import { preload, preinit } from 'react-dom';
+import { preinit, preload } from 'react-dom';
 
 export default function RootLayout({ children }) {
   // Preload font file
@@ -2679,7 +2679,7 @@ export default function RootLayout({ children }) {
 **Example: preload modules for code-split routes**
 
 ```tsx
-import { preloadModule, preinitModule } from 'react-dom';
+import { preinitModule, preloadModule } from 'react-dom';
 
 function Navigation() {
   const preloadDashboard = () => {
@@ -2751,7 +2751,7 @@ function SearchResults() {
 **Correct: useTransition with built-in pending state**
 
 ```tsx
-import { useTransition, useState } from 'react';
+import { useState, useTransition } from 'react';
 
 function SearchResults() {
   const [query, setQuery] = useState('');
@@ -2859,26 +2859,22 @@ function updateElementStyles(element: HTMLElement) {
 ```tsx
 // Incorrect: interleaving style changes with layout queries
 function Box({ isHighlighted }: { isHighlighted: boolean }) {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current && isHighlighted) {
-      ref.current.style.width = '100px'
-      const width = ref.current.offsetWidth // Forces layout
-      ref.current.style.height = '200px'
+      ref.current.style.width = '100px';
+      const width = ref.current.offsetWidth; // Forces layout
+      ref.current.style.height = '200px';
     }
-  }, [isHighlighted])
+  }, [isHighlighted]);
 
-  return <div ref={ref}>Content</div>
+  return <div ref={ref}>Content</div>;
 }
 
 // Correct: toggle class
 function Box({ isHighlighted }: { isHighlighted: boolean }) {
-  return (
-    <div className={isHighlighted ? 'highlighted-box' : ''}>
-      Content
-    </div>
-  )
+  return <div className={isHighlighted ? 'highlighted-box' : ''}>Content</div>;
 }
 ```
 
@@ -3375,26 +3371,20 @@ const userNames = users.flatMap(user => (user.isActive ? [user.name] : []));
 ```typescript
 // Extract valid emails from responses
 // Before
-const emails = responses
-  .map(r => r.success ? r.data.email : null)
-  .filter(Boolean)
+const emails = responses.map(r => (r.success ? r.data.email : null)).filter(Boolean);
 
 // After
-const emails = responses.flatMap(r =>
-  r.success ? [r.data.email] : []
-)
+const emails = responses.flatMap(r => (r.success ? [r.data.email] : []));
 
 // Parse and filter valid numbers
 // Before
-const numbers = strings
-  .map(s => parseInt(s, 10))
-  .filter(n => !isNaN(n))
+const numbers = strings.map(s => parseInt(s, 10)).filter(n => !isNaN(n));
 
 // After
 const numbers = strings.flatMap(s => {
-  const n = parseInt(s, 10)
-  return isNaN(n) ? [] : [n]
-})
+  const n = parseInt(s, 10);
+  return isNaN(n) ? [] : [n];
+});
 ```
 
 **When to use:**

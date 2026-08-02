@@ -193,7 +193,7 @@ bun add motion
 ```tsx
 'use client';
 
-import { motion, HTMLMotionProps } from 'motion/react';
+import { HTMLMotionProps, motion } from 'motion/react';
 
 interface FadeInProps extends HTMLMotionProps<'div'> {
   delay?: number;

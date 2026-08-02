@@ -1,11 +1,12 @@
 'use client';
 
-import { DEFAULT_LOCALE, LOCALES, LOCALE_LABELS, type Locale, isLocale } from '@shared/i18n/config';
-import { resolveDictionary } from '@shared/i18n/dictionaries';
-import { cn } from '@shared/shadcn-ui/utils';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import type { FC } from 'react';
+
+import { DEFAULT_LOCALE, isLocale, LOCALE_LABELS, LOCALES, type Locale } from '@shared/i18n/config';
+import { resolveDictionary } from '@shared/i18n/dictionaries';
+import { cn } from '@shared/shadcn-ui/utils';
 
 const LOCALE_SHORT: Record<Locale, string> = {
   ko: 'KO',

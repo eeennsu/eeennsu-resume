@@ -1,17 +1,18 @@
 'use client';
 
-import ErrorBoundary from '@shared/components/ErrorBoundary';
-import Markdown from '@shared/components/Markdown';
-import SharedTooltip from '@shared/components/Tooltip';
-import type { Locale } from '@shared/i18n/config';
-import type { Dictionary } from '@shared/i18n/dictionaries';
-import { cn } from '@shared/shadcn-ui/utils';
 import { Info, MessageCircle, Send, X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { FC, FormEvent, useRef, useState } from 'react';
 import type { Components } from 'react-markdown';
 
 import Turnstile from '@features/ai-chat/ui/Turnstile';
+
+import ErrorBoundary from '@shared/components/ErrorBoundary';
+import Markdown from '@shared/components/Markdown';
+import SharedTooltip from '@shared/components/Tooltip';
+import type { Locale } from '@shared/i18n/config';
+import type { Dictionary } from '@shared/i18n/dictionaries';
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface ChatMessage {
   id: string;

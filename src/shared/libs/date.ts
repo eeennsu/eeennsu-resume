@@ -1,5 +1,6 @@
-import type { Locale } from '@shared/i18n/config';
 import dayjs from 'dayjs';
+
+import type { Locale } from '@shared/i18n/config';
 
 const DURATION_LABELS = {
   ko: { y: '년', m: '개월', d: '일', w: '주', zero: '0개월' },

@@ -566,7 +566,7 @@ Here's a decision guide:
 ```tsx
 'use server';
 
-import { updateTag, revalidateTag } from 'next/cache';
+import { revalidateTag, updateTag } from 'next/cache';
 
 // When USER adds to cart → updateTag (they need accurate count)
 export async function addToCart(productId: string, userId: string) {
@@ -821,13 +821,13 @@ export async function generateStaticParams() {
 ```tsx
 // ❌ BUILD ERROR: Empty array not allowed
 export function generateStaticParams() {
-  return []
+  return [];
 }
 
 // ✅ CORRECT: Provide at least one param set
 export async function generateStaticParams() {
-  const products = await getProducts({ limit: 100 })
-  return products.map((p) => ({ category: p.category, slug: p.slug }))
+  const products = await getProducts({ limit: 100 });
+  return products.map(p => ({ category: p.category, slug: p.slug }));
 }
 ```
 
@@ -894,17 +894,17 @@ export async function GET() {
 ```tsx
 // Dynamic GET handler (reads request headers)
 export async function GET(request: Request) {
-  const authHeader = request.headers.get('authorization')
-  const data = await fetchProtectedData(authHeader)
-  return Response.json(data)
+  const authHeader = request.headers.get('authorization');
+  const data = await fetchProtectedData(authHeader);
+  return Response.json(data);
 }
 
 // Static GET handler with cache (no dynamic APIs)
 export async function GET() {
-  'use cache'
-  cacheLife('days')
-  const sitemap = await generateSitemapData()
-  return Response.json(sitemap)
+  'use cache';
+  cacheLife('days');
+  const sitemap = await generateSitemapData();
+  return Response.json(sitemap);
 }
 ```
 
@@ -1144,9 +1144,8 @@ export async function POST(request: Request) {
 
 ```tsx
 // lib/posts.ts
-import { cacheTag, cacheLife } from 'next/cache';
 // app/api/revalidate/route.ts
-import { revalidatePath } from 'next/cache';
+import { cacheLife, cacheTag, revalidatePath } from 'next/cache';
 
 export async function getPost(slug: string) {
   'use cache';

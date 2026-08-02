@@ -1,8 +1,9 @@
-import type { Locale } from '@shared/i18n/config';
-import type { IActivity } from '@shared/types/subjects';
 import { Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import { type FC } from 'react';
+
+import type { Locale } from '@shared/i18n/config';
+import type { IActivity } from '@shared/types/subjects';
 
 interface Props {
   activity: IActivity;

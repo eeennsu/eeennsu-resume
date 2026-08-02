@@ -62,35 +62,35 @@ code {
 const inter = Inter({
   subsets: ['latin'],
   weight: '400',
-})
+});
 
 // Multiple weights
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
-})
+});
 
 // Variable font (recommended) - includes all weights
 const inter = Inter({
   subsets: ['latin'],
   // No weight needed - variable fonts support all weights
-})
+});
 
 // With italic
 const inter = Inter({
   subsets: ['latin'],
   style: ['normal', 'italic'],
-})
+});
 ```
 
 ## Local Fonts
 
 ```tsx
-import localFont from 'next/font/local'
+import localFont from 'next/font/local';
 
 const myFont = localFont({
   src: './fonts/MyFont.woff2',
-})
+});
 
 // Multiple files for different weights
 const myFont = localFont({
@@ -106,13 +106,13 @@ const myFont = localFont({
       style: 'normal',
     },
   ],
-})
+});
 
 // Variable font
 const myFont = localFont({
   src: './fonts/MyFont-Variable.woff2',
   variable: '--font-my-font',
-})
+});
 ```
 
 ## Tailwind CSS Integration
@@ -154,10 +154,10 @@ Only load needed character subsets:
 
 ```tsx
 // Latin only (most common)
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 // Multiple subsets
-const inter = Inter({ subsets: ['latin', 'latin-ext', 'cyrillic'] })
+const inter = Inter({ subsets: ['latin', 'latin-ext', 'cyrillic'] });
 ```
 
 ## Display Strategy
@@ -232,15 +232,15 @@ const inter = Inter({ subsets: ['latin'] })
 ```tsx
 // For component-specific fonts, export from a shared file
 // lib/fonts.ts
-import { Inter, Playfair_Display } from 'next/font/google'
-
-export const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-export const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 // components/Heading.tsx
-import { playfair } from '@/lib/fonts'
+import { playfair } from '@/lib/fonts';
+import { Inter, Playfair_Display } from 'next/font/google';
+
+export const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+export const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
 
 export function Heading({ children }) {
-  return <h1 className={playfair.className}>{children}</h1>
+  return <h1 className={playfair.className}>{children}</h1>;
 }
 ```

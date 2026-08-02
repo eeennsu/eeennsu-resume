@@ -1,7 +1,8 @@
 'use client';
 
-import { cn } from '@shared/shadcn-ui/utils';
 import { useEffect, useRef, useState, type FC, type ReactNode } from 'react';
+
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface Props {
   children: ReactNode;

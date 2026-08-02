@@ -24,19 +24,19 @@ Add the following component to your frontend:
 import { citationSchema } from '@/app/api/citation/route';
 import {
   InlineCitation,
-  InlineCitationText,
   InlineCitationCard,
-  InlineCitationCardTrigger,
   InlineCitationCardBody,
+  InlineCitationCardTrigger,
   InlineCitationCarousel,
   InlineCitationCarouselContent,
-  InlineCitationCarouselItem,
   InlineCitationCarouselHeader,
   InlineCitationCarouselIndex,
-  InlineCitationCarouselPrev,
+  InlineCitationCarouselItem,
   InlineCitationCarouselNext,
-  InlineCitationSource,
+  InlineCitationCarouselPrev,
   InlineCitationQuote,
+  InlineCitationSource,
+  InlineCitationText,
 } from '@/components/ai-elements/inline-citation';
 import { Button } from '@/components/ui/button';
 import { experimental_useObject as useObject } from '@ai-sdk/react';

@@ -80,7 +80,7 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 
-import { NAV_GROUPS, FOOTER_NAV_ITEMS } from './nav';
+import { FOOTER_NAV_ITEMS, NAV_GROUPS } from './nav';
 
 export function AppSidebar() {
   return (
@@ -149,7 +149,7 @@ Separate navigation data from component:
 
 ```tsx
 // components/layout/nav.ts
-import { Home, Settings, Users, HelpCircle } from 'lucide-react';
+import { HelpCircle, Home, Settings, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface NavItem {

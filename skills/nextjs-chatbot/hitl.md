@@ -62,7 +62,7 @@ output-error                       →  error message
 
 ```tsx
 // components/chat-message.tsx — inside renderToolPart()
-if (part.type === "tool-myApprovalTool") {
+if (part.type === 'tool-myApprovalTool') {
   const toolPart = part as typeof part & {
     state: string;
     input?: { topic?: string };
@@ -72,22 +72,28 @@ if (part.type === "tool-myApprovalTool") {
   };
 
   // Loading
-  if (toolPart.state === "input-streaming" || toolPart.state === "input-available") {
+  if (toolPart.state === 'input-streaming' || toolPart.state === 'input-available') {
     return <Shimmer>Finding options...</Shimmer>;
   }
 
   // Approve / deny prompt
-  if (toolPart.state === "approval-requested" && toolPart.approval) {
+  if (toolPart.state === 'approval-requested' && toolPart.approval) {
     return (
-      <div className="rounded-lg border p-4 space-y-3">
-        <p className="text-sm font-medium">
+      <div className='space-y-3 rounded-lg border p-4'>
+        <p className='text-sm font-medium'>
           Open a contact form about <strong>{toolPart.input?.topic}</strong>?
         </p>
-        <div className="flex gap-2">
-          <button onClick={() => addToolApprovalResponse?.({ id: toolPart.approval!.id, approved: true })}>
+        <div className='flex gap-2'>
+          <button
+            onClick={() => addToolApprovalResponse?.({ id: toolPart.approval!.id, approved: true })}
+          >
             Approve
           </button>
-          <button onClick={() => addToolApprovalResponse?.({ id: toolPart.approval!.id, approved: false })}>
+          <button
+            onClick={() =>
+              addToolApprovalResponse?.({ id: toolPart.approval!.id, approved: false })
+            }
+          >
             Deny
           </button>
         </div>
@@ -96,23 +102,23 @@ if (part.type === "tool-myApprovalTool") {
   }
 
   // Waiting for tool to execute
-  if (toolPart.state === "approval-responded") {
+  if (toolPart.state === 'approval-responded') {
     return <Shimmer>Preparing form...</Shimmer>;
   }
 
   // Tool executed successfully
-  if (toolPart.state === "output-available" && toolPart.output) {
+  if (toolPart.state === 'output-available' && toolPart.output) {
     return <MyResultComponent output={toolPart.output} />;
   }
 
   // User denied
-  if (toolPart.state === "output-denied") {
-    return <div className="text-muted-foreground text-sm">Request cancelled.</div>;
+  if (toolPart.state === 'output-denied') {
+    return <div className='text-muted-foreground text-sm'>Request cancelled.</div>;
   }
 
   // Tool error
-  if (toolPart.state === "output-error") {
-    return <div className="text-destructive text-sm">Error: {toolPart.errorText}</div>;
+  if (toolPart.state === 'output-error') {
+    return <div className='text-destructive text-sm'>Error: {toolPart.errorText}</div>;
   }
 
   return null;

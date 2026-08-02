@@ -46,12 +46,12 @@ Single message with role-based styling.
 ```tsx
 import {
   Message,
-  MessageContent,
-  MessageResponse,
-  MessageActions,
   MessageAction,
+  MessageActions,
   MessageAttachment,
   MessageAttachments,
+  MessageContent,
+  MessageResponse,
 } from '@/components/ai-elements/message';
 
 <Message from='assistant'>
@@ -89,10 +89,10 @@ For multiple response variations (e.g., regenerated responses):
 import {
   MessageBranch,
   MessageBranchContent,
-  MessageBranchSelector,
-  MessageBranchPrevious,
   MessageBranchNext,
   MessageBranchPage,
+  MessageBranchPrevious,
+  MessageBranchSelector,
 } from '@/components/ai-elements/message';
 
 <MessageBranch defaultBranch={0} onBranchChange={i => console.log(i)}>
@@ -119,9 +119,9 @@ Rich input with file attachments, model picker, and action menu.
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
 
@@ -147,25 +147,25 @@ const handleSubmit = (message: PromptInputMessage) => {
 ```tsx
 import {
   PromptInput,
-  PromptInputHeader,
-  PromptInputBody,
-  PromptInputFooter,
-  PromptInputTextarea,
-  PromptInputTools,
-  PromptInputButton,
-  PromptInputSubmit,
-  PromptInputAttachments,
-  PromptInputAttachment,
-  PromptInputActionMenu,
-  PromptInputActionMenuTrigger,
-  PromptInputActionMenuContent,
   PromptInputActionAddAttachments,
+  PromptInputActionMenu,
+  PromptInputActionMenuContent,
+  PromptInputActionMenuTrigger,
+  PromptInputAttachment,
+  PromptInputAttachments,
+  PromptInputBody,
+  PromptInputButton,
+  PromptInputFooter,
+  PromptInputHeader,
   PromptInputSelect,
-  PromptInputSelectTrigger,
-  PromptInputSelectValue,
   PromptInputSelectContent,
   PromptInputSelectItem,
+  PromptInputSelectTrigger,
+  PromptInputSelectValue,
   PromptInputSpeechButton,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputTools,
 } from '@/components/ai-elements/prompt-input';
 
 <PromptInput
@@ -265,7 +265,7 @@ type PromptInputMessage = {
 Collapsible thinking/reasoning display with auto-collapse.
 
 ```tsx
-import { Reasoning, ReasoningTrigger, ReasoningContent } from '@/components/ai-elements/reasoning';
+import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
 
 <Reasoning
   isStreaming={status === 'streaming'}
@@ -302,7 +302,7 @@ import { Reasoning, ReasoningTrigger, ReasoningContent } from '@/components/ai-e
 Collapsible citation/reference display.
 
 ```tsx
-import { Sources, SourcesTrigger, SourcesContent, Source } from '@/components/ai-elements/sources';
+import { Source, Sources, SourcesContent, SourcesTrigger } from '@/components/ai-elements/sources';
 
 const sourceUrls = message.parts.filter(p => p.type === 'source-url');
 
@@ -334,8 +334,8 @@ Tool execution visualization with status indicators.
 ```tsx
 import {
   Tool,
-  ToolHeader,
   ToolContent,
+  ToolHeader,
   ToolInput,
   ToolOutput,
 } from '@/components/ai-elements/tool';
@@ -372,11 +372,11 @@ Step-by-step reasoning breakdown.
 ```tsx
 import {
   ChainOfThought,
-  ChainOfThoughtHeader,
   ChainOfThoughtContent,
-  ChainOfThoughtStep,
-  ChainOfThoughtSearchResults,
+  ChainOfThoughtHeader,
   ChainOfThoughtImage,
+  ChainOfThoughtSearchResults,
+  ChainOfThoughtStep,
 } from '@/components/ai-elements/chain-of-thought';
 
 <ChainOfThought defaultOpen={false}>
@@ -423,19 +423,19 @@ Inline citation badge with hover card and carousel for multiple sources.
 ```tsx
 import {
   InlineCitation,
-  InlineCitationText,
   InlineCitationCard,
-  InlineCitationCardTrigger,
   InlineCitationCardBody,
+  InlineCitationCardTrigger,
   InlineCitationCarousel,
-  InlineCitationCarouselHeader,
-  InlineCitationCarouselPrev,
-  InlineCitationCarouselIndex,
-  InlineCitationCarouselNext,
   InlineCitationCarouselContent,
+  InlineCitationCarouselHeader,
+  InlineCitationCarouselIndex,
   InlineCitationCarouselItem,
-  InlineCitationSource,
+  InlineCitationCarouselNext,
+  InlineCitationCarouselPrev,
   InlineCitationQuote,
+  InlineCitationSource,
+  InlineCitationText,
 } from '@/components/ai-elements/inline-citation';
 
 <InlineCitation>
@@ -479,12 +479,12 @@ Collapsible plan card with streaming shimmer effect on title/description.
 ```tsx
 import {
   Plan,
-  PlanHeader,
-  PlanTitle,
-  PlanDescription,
   PlanAction,
   PlanContent,
+  PlanDescription,
   PlanFooter,
+  PlanHeader,
+  PlanTitle,
   PlanTrigger,
 } from '@/components/ai-elements/plan';
 
@@ -525,10 +525,10 @@ Collapsible task breakdown display with file references.
 ```tsx
 import {
   Task,
-  TaskTrigger,
   TaskContent,
   TaskItem,
   TaskItemFile,
+  TaskTrigger,
 } from '@/components/ai-elements/task';
 
 <Task defaultOpen>
@@ -558,20 +558,20 @@ Todo/message queue display with sections for pending and completed items.
 ```tsx
 import {
   Queue,
-  QueueSection,
-  QueueSectionTrigger,
-  QueueSectionLabel,
-  QueueSectionContent,
-  QueueList,
   QueueItem,
-  QueueItemIndicator,
+  QueueItemAction,
+  QueueItemActions,
+  QueueItemAttachment,
   QueueItemContent,
   QueueItemDescription,
-  QueueItemActions,
-  QueueItemAction,
-  QueueItemAttachment,
-  QueueItemImage,
   QueueItemFile,
+  QueueItemImage,
+  QueueItemIndicator,
+  QueueList,
+  QueueSection,
+  QueueSectionContent,
+  QueueSectionLabel,
+  QueueSectionTrigger,
 } from '@/components/ai-elements/queue';
 
 <Queue>

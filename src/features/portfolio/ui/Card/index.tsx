@@ -1,9 +1,10 @@
-import type { Locale } from '@shared/i18n/config';
-import { getDictionary } from '@shared/i18n/dictionaries';
-import { cn } from '@shared/shadcn-ui/utils';
 import { ArrowUpRight, Github } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
+
+import type { Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface Props {
   name: string;

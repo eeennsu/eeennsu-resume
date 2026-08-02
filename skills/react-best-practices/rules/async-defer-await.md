@@ -45,35 +45,35 @@ async function handleRequest(userId: string, skipProcessing: boolean) {
 ```typescript
 // Incorrect: always fetches permissions
 async function updateResource(resourceId: string, userId: string) {
-  const permissions = await fetchPermissions(userId)
-  const resource = await getResource(resourceId)
+  const permissions = await fetchPermissions(userId);
+  const resource = await getResource(resourceId);
 
   if (!resource) {
-    return { error: 'Not found' }
+    return { error: 'Not found' };
   }
 
   if (!permissions.canEdit) {
-    return { error: 'Forbidden' }
+    return { error: 'Forbidden' };
   }
 
-  return await updateResourceData(resource, permissions)
+  return await updateResourceData(resource, permissions);
 }
 
 // Correct: fetches only when needed
 async function updateResource(resourceId: string, userId: string) {
-  const resource = await getResource(resourceId)
+  const resource = await getResource(resourceId);
 
   if (!resource) {
-    return { error: 'Not found' }
+    return { error: 'Not found' };
   }
 
-  const permissions = await fetchPermissions(userId)
+  const permissions = await fetchPermissions(userId);
 
   if (!permissions.canEdit) {
-    return { error: 'Forbidden' }
+    return { error: 'Forbidden' };
   }
 
-  return await updateResourceData(resource, permissions)
+  return await updateResourceData(resource, permissions);
 }
 ```
 

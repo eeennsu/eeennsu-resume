@@ -1,6 +1,7 @@
-import { Locale } from '@shared/i18n/config';
 import fs from 'fs';
 import path from 'path';
+
+import { Locale } from '@shared/i18n/config';
 
 // 이력서를 구성하는 subject YAML 파일들 (읽는 순서 = 문서 순서)
 const SUBJECTS = [

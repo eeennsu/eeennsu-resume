@@ -400,7 +400,7 @@ By default, `streamText` uses backpressure - when client disconnects (browser ta
 ```typescript
 // app/api/chat/route.ts
 import { saveChat } from '@/lib/chat-storage';
-import { streamText, convertToModelMessages, UIMessage } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export async function POST(req: Request) {
   const { messages, chatId }: { messages: UIMessage[]; chatId: string } = await req.json();
@@ -430,10 +430,10 @@ export async function POST(req: Request) {
 
 ```typescript
 import {
+  convertToModelMessages,
   createUIMessageStream,
   createUIMessageStreamResponse,
   streamText,
-  convertToModelMessages,
 } from 'ai';
 
 export async function POST(req: Request) {
@@ -516,7 +516,7 @@ export async function POST(req: Request) {
 ### Validating Messages
 
 ```typescript
-import { validateUIMessages, TypeValidationError } from 'ai';
+import { TypeValidationError, validateUIMessages } from 'ai';
 
 export async function POST(req: Request) {
   const { message, id } = await req.json();
@@ -552,10 +552,10 @@ export async function POST(req: Request) {
 ```typescript
 return result.toUIMessageStreamResponse({
   messageMetadata: ({ part }) => {
-    if (part.type === "start") {
-      return { createdAt: Date.now(), model: "gpt-5-mini" };
+    if (part.type === 'start') {
+      return { createdAt: Date.now(), model: 'gpt-5-mini' };
     }
-    if (part.type === "finish") {
+    if (part.type === 'finish') {
       return { totalTokens: part.totalUsage.totalTokens };
     }
   },
@@ -599,9 +599,9 @@ return result.toUIMessageStreamResponse({
 
 ```typescript
 return result.toUIMessageStreamResponse({
-  onError: (error) => {
+  onError: error => {
     if (error instanceof Error) return error.message;
-    return "An error occurred";
+    return 'An error occurred';
   },
 });
 ```
@@ -609,7 +609,7 @@ return result.toUIMessageStreamResponse({
 ## Type Inference for Tools
 
 ```typescript
-import { InferUITools, UIMessage, UIDataTypes, ToolSet } from 'ai';
+import { InferUITools, ToolSet, UIDataTypes, UIMessage } from 'ai';
 
 const tools = {
   weather: tool({

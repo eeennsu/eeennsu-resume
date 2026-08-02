@@ -1,5 +1,6 @@
-import { DEFAULT_LOCALE, LOCALES, isLocale } from '@shared/i18n/config';
 import { NextResponse, type NextRequest } from 'next/server';
+
+import { DEFAULT_LOCALE, isLocale, LOCALES } from '@shared/i18n/config';
 
 const detectLocaleFromHeader = (acceptLanguage: string | null) => {
   if (!acceptLanguage) return DEFAULT_LOCALE;

@@ -9,7 +9,7 @@ Complete templates for building AI chatbots.
 ```typescript
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -38,9 +38,9 @@ import { Message, MessageContent, MessageResponse } from '@/components/ai-elemen
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
+  PromptInputTextarea,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
 import { useChat } from '@ai-sdk/react';
@@ -107,7 +107,7 @@ With reasoning, sources, file attachments, model selector, and message actions.
 ```typescript
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -147,34 +147,34 @@ import {
 import { Loader } from '@/components/ai-elements/loader';
 import {
   Message,
+  MessageAction,
+  MessageActions,
   MessageContent,
   MessageResponse,
-  MessageActions,
-  MessageAction,
 } from '@/components/ai-elements/message';
 import {
   PromptInput,
-  PromptInputHeader,
-  PromptInputBody,
-  PromptInputTextarea,
-  PromptInputFooter,
-  PromptInputTools,
-  PromptInputSubmit,
-  PromptInputAttachments,
-  PromptInputAttachment,
-  PromptInputActionMenu,
-  PromptInputActionMenuTrigger,
-  PromptInputActionMenuContent,
   PromptInputActionAddAttachments,
+  PromptInputActionMenu,
+  PromptInputActionMenuContent,
+  PromptInputActionMenuTrigger,
+  PromptInputAttachment,
+  PromptInputAttachments,
+  PromptInputBody,
+  PromptInputFooter,
+  PromptInputHeader,
   PromptInputSelect,
-  PromptInputSelectTrigger,
-  PromptInputSelectValue,
   PromptInputSelectContent,
   PromptInputSelectItem,
+  PromptInputSelectTrigger,
+  PromptInputSelectValue,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputTools,
   type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
-import { Reasoning, ReasoningTrigger, ReasoningContent } from '@/components/ai-elements/reasoning';
-import { Sources, SourcesTrigger, SourcesContent, Source } from '@/components/ai-elements/sources';
+import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
+import { Source, Sources, SourcesContent, SourcesTrigger } from '@/components/ai-elements/sources';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { CopyIcon, RefreshCcwIcon } from 'lucide-react';
@@ -322,7 +322,7 @@ With Perplexity integration for web search. Perplexity has built-in web search a
 // app/api/chat/route.ts
 import { anthropic } from '@ai-sdk/anthropic';
 import { perplexity } from '@ai-sdk/perplexity';
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -359,8 +359,10 @@ If already using OpenAI, use the built-in web search tool with an agent instead:
 
 ```typescript
 // ai/assistant.ts
-import { ToolLoopAgent, stepCountIs } from 'ai';
+import { searchAgent } from '@/ai/assistant';
 import { openai } from '@ai-sdk/openai';
+// app/api/chat/route.ts
+import { createAgentUIStreamResponse, stepCountIs, ToolLoopAgent } from 'ai';
 
 export const searchAgent = new ToolLoopAgent({
   model: openai('gpt-5.4'),
@@ -372,10 +374,6 @@ export const searchAgent = new ToolLoopAgent({
   },
   stopWhen: stepCountIs(5),
 });
-
-// app/api/chat/route.ts
-import { createAgentUIStreamResponse } from 'ai';
-import { searchAgent } from '@/ai/assistant';
 
 export async function POST(req: Request) {
   const { messages } = await req.json();

@@ -1,11 +1,12 @@
 'use client';
 
-import { useTheme, type Theme } from '@shared/components/ThemeProvider';
-import { resolveDictionary } from '@shared/i18n/dictionaries';
-import { cn } from '@shared/shadcn-ui/utils';
 import { Monitor, Moon, Sun, type LucideIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState, type FC } from 'react';
+
+import { useTheme, type Theme } from '@shared/components/ThemeProvider';
+import { resolveDictionary } from '@shared/i18n/dictionaries';
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface Option {
   value: Theme;

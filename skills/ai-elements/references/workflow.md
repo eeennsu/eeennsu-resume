@@ -51,12 +51,12 @@ Card-based workflow node with handles.
 ```tsx
 import {
   Node,
+  NodeAction,
+  NodeContent,
+  NodeDescription,
+  NodeFooter,
   NodeHeader,
   NodeTitle,
-  NodeDescription,
-  NodeContent,
-  NodeFooter,
-  NodeAction,
 } from '@/components/ai-elements/node';
 
 // Define custom node component
@@ -186,15 +186,15 @@ Token usage tracking display with cost calculation.
 ```tsx
 import {
   Context,
-  ContextTrigger,
+  ContextCacheUsage,
   ContextContent,
-  ContextContentHeader,
   ContextContentBody,
   ContextContentFooter,
+  ContextContentHeader,
   ContextInputUsage,
   ContextOutputUsage,
   ContextReasoningUsage,
-  ContextCacheUsage,
+  ContextTrigger,
 } from '@/components/ai-elements/context';
 
 <Context
@@ -247,10 +247,10 @@ import {
 import { Canvas } from '@/components/ai-elements/canvas';
 import { Controls } from '@/components/ai-elements/controls';
 import { Edge } from '@/components/ai-elements/edge';
-import { Node, NodeHeader, NodeTitle, NodeContent } from '@/components/ai-elements/node';
+import { Node, NodeContent, NodeHeader, NodeTitle } from '@/components/ai-elements/node';
 import { Panel } from '@/components/ai-elements/panel';
-import { useNodesState, useEdgesState, addEdge, type Connection } from '@xyflow/react';
-import { useState, useCallback } from 'react';
+import { addEdge, useEdgesState, useNodesState, type Connection } from '@xyflow/react';
+import { useCallback, useState } from 'react';
 
 function AgentNode({ data }) {
   return (

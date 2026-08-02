@@ -1,5 +1,6 @@
-import { cn } from '@shared/shadcn-ui/utils';
 import type { FC, ReactNode } from 'react';
+
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface Props {
   label: string;

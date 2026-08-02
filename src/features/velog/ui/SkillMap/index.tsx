@@ -1,12 +1,13 @@
+import { ChevronDown } from 'lucide-react';
+import Link from 'next/link';
+import { type FC } from 'react';
+
 import { SKILL_KEYS, type SkillId } from '@shared/consts/skills';
 import { VELOG_BASE_URL } from '@shared/consts/velog';
 import { cn } from '@shared/shadcn-ui/utils';
 import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
 import { getPaletteForSkill } from '@shared/utils/tagColor';
 import { mapTagToSkillId } from '@shared/utils/utilMapTagToSkill';
-import { ChevronDown } from 'lucide-react';
-import Link from 'next/link';
-import { type FC } from 'react';
 
 interface Props {
   archive: IVelogArchive;

@@ -1,11 +1,12 @@
+import { BadgeCheck } from 'lucide-react';
+import type { FC } from 'react';
+
 import AnimatedSection from '@shared/components/AnimatedSection';
 import SectionTitle from '@shared/components/SectionTitle';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { ICertification } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
-import { BadgeCheck } from 'lucide-react';
-import type { FC } from 'react';
 
 interface Props {
   locale: Locale;

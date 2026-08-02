@@ -41,8 +41,8 @@ import {
   PromptInputActionMenuTrigger,
   PromptInputBody,
   PromptInputButton,
+  PromptInputFooter,
   PromptInputHeader,
-  type PromptInputMessage,
   PromptInputSelect,
   PromptInputSelectContent,
   PromptInputSelectItem,
@@ -50,9 +50,9 @@ import {
   PromptInputSelectValue,
   PromptInputSubmit,
   PromptInputTextarea,
-  PromptInputFooter,
   PromptInputTools,
   usePromptInputAttachments,
+  type PromptInputMessage,
 } from '@/components/ai-elements/prompt-input';
 import { useChat } from '@ai-sdk/react';
 import { GlobeIcon } from 'lucide-react';
@@ -196,7 +196,7 @@ export default InputDemo;
 Add the following route to your backend:
 
 ```ts title="app/api/chat/route.ts"
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, UIMessage } from 'ai';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

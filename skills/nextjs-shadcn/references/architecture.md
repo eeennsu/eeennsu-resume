@@ -478,7 +478,7 @@ export const config = {
 All request APIs are async in Next.js 16:
 
 ```tsx
-import { cookies, headers, draftMode } from 'next/headers';
+import { cookies, draftMode, headers } from 'next/headers';
 
 export default async function Page() {
   const cookieStore = await cookies();

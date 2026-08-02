@@ -29,8 +29,8 @@ import {
 import { Message, MessageContent, MessageResponse } from '@/components/ai-elements/message';
 import {
   Input,
-  PromptInputTextarea,
   PromptInputSubmit,
+  PromptInputTextarea,
 } from '@/components/ai-elements/prompt-input';
 import { Source, Sources, SourcesContent, SourcesTrigger } from '@/components/ai-elements/sources';
 import { useChat } from '@ai-sdk/react';

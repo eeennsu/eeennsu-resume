@@ -1,7 +1,8 @@
-import { type SkillId } from '@shared/consts/skills';
-import type { Locale } from '@shared/i18n/config';
 import Link from 'next/link';
 import { type FC } from 'react';
+
+import { type SkillId } from '@shared/consts/skills';
+import type { Locale } from '@shared/i18n/config';
 
 interface Props {
   count: number;

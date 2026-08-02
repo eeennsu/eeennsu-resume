@@ -105,7 +105,7 @@ import { Shimmer } from '@/components/ai-elements/shimmer';
 Quick action chips for suggested prompts.
 
 ```tsx
-import { Suggestions, Suggestion } from '@/components/ai-elements/suggestion';
+import { Suggestion, Suggestions } from '@/components/ai-elements/suggestion';
 
 const suggestions = [
   'What are the latest trends in AI?',
@@ -152,12 +152,12 @@ Tool confirmation dialog for user approval.
 ```tsx
 import {
   Confirmation,
-  ConfirmationTitle,
-  ConfirmationRequest,
   ConfirmationAccepted,
-  ConfirmationRejected,
-  ConfirmationActions,
   ConfirmationAction,
+  ConfirmationActions,
+  ConfirmationRejected,
+  ConfirmationRequest,
+  ConfirmationTitle,
 } from '@/components/ai-elements/confirmation';
 
 <Confirmation approval={{ id: 'tool-1', approved: undefined }} state='approval-requested'>
@@ -208,13 +208,13 @@ Container for AI-generated content (code, documents, etc.).
 ```tsx
 import {
   Artifact,
-  ArtifactHeader,
-  ArtifactTitle,
-  ArtifactDescription,
-  ArtifactActions,
   ArtifactAction,
+  ArtifactActions,
   ArtifactClose,
   ArtifactContent,
+  ArtifactDescription,
+  ArtifactHeader,
+  ArtifactTitle,
 } from '@/components/ai-elements/artifact';
 
 <Artifact>
@@ -269,18 +269,18 @@ Model picker dialog with searchable list and provider logos.
 ```tsx
 import {
   ModelSelector,
-  ModelSelectorTrigger,
   ModelSelectorContent,
-  ModelSelectorInput,
-  ModelSelectorList,
   ModelSelectorEmpty,
   ModelSelectorGroup,
+  ModelSelectorInput,
   ModelSelectorItem,
+  ModelSelectorList,
   ModelSelectorLogo,
   ModelSelectorLogoGroup,
   ModelSelectorName,
-  ModelSelectorShortcut,
   ModelSelectorSeparator,
+  ModelSelectorShortcut,
+  ModelSelectorTrigger,
 } from '@/components/ai-elements/model-selector';
 
 <ModelSelector open={open} onOpenChange={setOpen}>
@@ -326,16 +326,16 @@ Dropdown menu to open a query in external chat providers.
 ```tsx
 import {
   OpenIn,
-  OpenInTrigger,
-  OpenInContent,
-  OpenInLabel,
-  OpenInSeparator,
   OpenInChatGPT,
   OpenInClaude,
-  OpenInScira,
-  OpenInT3,
-  OpenInv0,
+  OpenInContent,
   OpenInCursor,
+  OpenInLabel,
+  OpenInScira,
+  OpenInSeparator,
+  OpenInT3,
+  OpenInTrigger,
+  OpenInv0,
 } from '@/components/ai-elements/open-in-chat';
 
 <OpenIn query='How do I implement authentication?'>
@@ -371,11 +371,11 @@ Iframe preview with URL navigation bar and console output.
 ```tsx
 import {
   WebPreview,
+  WebPreviewBody,
+  WebPreviewConsole,
   WebPreviewNavigation,
   WebPreviewNavigationButton,
   WebPreviewUrl,
-  WebPreviewBody,
-  WebPreviewConsole,
 } from '@/components/ai-elements/web-preview';
 
 const [logs, setLogs] = useState([]);

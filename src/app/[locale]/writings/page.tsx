@@ -1,6 +1,3 @@
-import { SITE_URL } from '@shared/consts/commons';
-import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from '@shared/i18n/config';
-import { getDictionary } from '@shared/i18n/dictionaries';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { type FC } from 'react';
@@ -8,6 +5,10 @@ import { type FC } from 'react';
 import VelogArchiveWidget from '@widgets/VelogArchive';
 
 import type { WritingsView } from '@features/velog/ui/TabTriggers';
+
+import { SITE_URL } from '@shared/consts/commons';
+import { DEFAULT_LOCALE, isLocale, LOCALES, type Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
 
 interface Props {
   params: Promise<{ locale: string }>;

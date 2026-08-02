@@ -1,7 +1,8 @@
-import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
 import { type FC, type ReactNode } from 'react';
 
 import VelogPostCard from '@features/velog/ui/VelogPostCard';
+
+import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
 
 import TagCloudFilter from './TagCloudFilter';
 

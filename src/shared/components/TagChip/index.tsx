@@ -1,7 +1,8 @@
+import { type FC } from 'react';
+
 import { type SkillId } from '@shared/consts/skills';
 import { cn } from '@shared/shadcn-ui/utils';
 import { getPaletteForSkill } from '@shared/utils/tagColor';
-import { type FC } from 'react';
 
 interface Props {
   label: string;

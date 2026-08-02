@@ -1,17 +1,18 @@
 'use client';
 
-import LanguageToggle from '@shared/components/LanguageToggle';
-import ThemeToggle from '@shared/components/ThemeToggle';
-import { MY_PROFILE } from '@shared/consts/commons';
-import { resolveDictionary } from '@shared/i18n/dictionaries';
-import { Popover, PopoverContent, PopoverTrigger } from '@shared/shadcn-ui/ui/popover';
-import { cn } from '@shared/shadcn-ui/utils';
 import { Github, Settings, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import type { FC } from 'react';
 
 import { useJdMatch } from '@features/jd-match/model/JdMatchContext';
+
+import LanguageToggle from '@shared/components/LanguageToggle';
+import ThemeToggle from '@shared/components/ThemeToggle';
+import { MY_PROFILE } from '@shared/consts/commons';
+import { resolveDictionary } from '@shared/i18n/dictionaries';
+import { Popover, PopoverContent, PopoverTrigger } from '@shared/shadcn-ui/ui/popover';
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface Props {
   isHeaderVisible: boolean;

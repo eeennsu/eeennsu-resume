@@ -40,7 +40,7 @@ export const weatherTool = tool({
 
 ```ts
 // lib/agents/my-agent.ts
-import { ToolLoopAgent, InferAgentUIMessage } from 'ai';
+import { InferAgentUIMessage, ToolLoopAgent } from 'ai';
 
 import { calculatorTool } from '../tools/calculator-tool';
 import { weatherTool } from '../tools/weather-tool';

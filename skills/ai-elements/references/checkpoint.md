@@ -35,7 +35,7 @@ import { Checkpoint, CheckpointIcon, CheckpointTrigger } from '@/components/ai-e
 import { Conversation, ConversationContent } from '@/components/ai-elements/conversation';
 import { Message, MessageContent, MessageResponse } from '@/components/ai-elements/message';
 import { useChat } from '@ai-sdk/react';
-import { useState, Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 type CheckpointType = {
   id: string;
