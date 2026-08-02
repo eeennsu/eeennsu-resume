@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/api/chat': ['./src/subjects/**'],
     '/api/jd-match': ['./src/subjects/**'],
+    '/[locale]/writings': ['./src/subjects/**', './src/data/**'],
   },
   async redirects() {
     return [

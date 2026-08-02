@@ -1,25 +1,7 @@
-import 'server-only';
-
-import fs from 'fs';
-import path from 'path';
-
 import type { IVelogArchive } from '@shared/types/velog';
 
-const ARCHIVE_PATH = path.join(process.cwd(), 'src', 'data', 'velog-posts.json');
+import archiveJson from '../../data/velog-posts.json';
 
-const buildEmptyArchive = (): IVelogArchive => ({
-  fetchedAt: new Date(0).toISOString(),
-  posts: [],
-  tagStats: [],
-});
+const archive = archiveJson as IVelogArchive;
 
-export const fetchVelogArchive = (): IVelogArchive => {
-  try {
-    if (!fs.existsSync(ARCHIVE_PATH)) return buildEmptyArchive();
-    const raw = fs.readFileSync(ARCHIVE_PATH, 'utf8');
-    return JSON.parse(raw) as IVelogArchive;
-  } catch (err) {
-    console.error(`Failed to load velog archive from ${ARCHIVE_PATH}`, err);
-    return buildEmptyArchive();
-  }
-};
+export const fetchVelogArchive = (): IVelogArchive => archive;
