@@ -1,0 +1,44 @@
+{
+  "version": "1-7ce3af091ea292b8",
+  "stack": "next",
+  "declared": {
+    "safetyBoundaries": false
+  },
+  "fsd": {
+    "publicApi": "open",
+    "sliceCoupling": "isolated",
+    "routingRoot": "src/app",
+    "routingImports": ["widgets", "features", "shared"],
+    "extraRoots": ["data", "db", "subjects"]
+  },
+  "alias": {
+    "source": "tsconfig.json",
+    "count": 5
+  },
+  "files": [
+    {
+      "path": "eslint.config.mjs",
+      "sha256": "1a0c9b1963da621d"
+    },
+    {
+      "path": "eslint.config.boundaries.mjs",
+      "sha256": "e5975441a046a535"
+    },
+    {
+      "path": "prettier.config.mjs",
+      "sha256": "26971c6e728679ed"
+    },
+    {
+      "path": ".claude/skills/verification/SKILL.md",
+      "sha256": "8e74b8634dd01483"
+    },
+    {
+      "path": ".claude/harness/check.mjs",
+      "sha256": "7b1ded62dd7fbf9d"
+    },
+    {
+      "path": ".claude/harness/rules.principles.json",
+      "sha256": "2557473c304a87db"
+    }
+  ]
+}

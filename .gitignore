@@ -41,13 +41,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# AGENTS
-CLAUDE.md
-/.claude
-/skills
-AGENTS.md
-/agents
-LICENSE
-
 # oh-my-claudecode (운영 아티팩트)
 /.omc
