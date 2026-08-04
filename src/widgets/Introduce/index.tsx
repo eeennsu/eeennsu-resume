@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import AnimatedSection from '@shared/components/AnimatedSection';
 import SectionTitle from '@shared/components/SectionTitle';
 import { MY_PROFILE } from '@shared/consts/commons';
@@ -5,7 +7,6 @@ import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { getKoreanAge, getWorkAnniversary } from '@shared/libs/date';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
-import type { FC } from 'react';
 
 interface Props {
   locale: Locale;

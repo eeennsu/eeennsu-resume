@@ -1,16 +1,3 @@
-import ThemeProvider, { THEME_STORAGE_KEY } from '@shared/components/ThemeProvider';
-import { SITE_URL } from '@shared/consts/commons';
-import { pretendard } from '@shared/font/fonts';
-import {
-  DEFAULT_LOCALE,
-  HTML_LANG,
-  LOCALES,
-  OG_LOCALE,
-  isLocale,
-  type Locale,
-} from '@shared/i18n/config';
-import { getDictionary } from '@shared/i18n/dictionaries';
-import { TooltipProvider } from '@shared/shadcn-ui/ui/tooltip';
 import type { Metadata, Viewport } from 'next';
 import { Open_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
@@ -20,6 +7,20 @@ import Footer from '@widgets/Footer';
 import JdMatch from '@widgets/JdMatch';
 
 import { JdMatchProvider } from '@features/jd-match/model/JdMatchContext';
+
+import ThemeProvider, { THEME_STORAGE_KEY } from '@shared/components/ThemeProvider';
+import { SITE_URL } from '@shared/consts/commons';
+import { pretendard } from '@shared/font/fonts';
+import {
+  DEFAULT_LOCALE,
+  HTML_LANG,
+  isLocale,
+  LOCALES,
+  OG_LOCALE,
+  type Locale,
+} from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
+import { TooltipProvider } from '@shared/shadcn-ui/ui/tooltip';
 
 import '../globals.css';
 
@@ -150,7 +151,7 @@ export default async function RootLayout({
     'sameAs': [
       'https://github.com/eeennsu',
       'https://velog.io/@diso592/posts',
-      'https://eunstory.eunsu.kr',
+      'https://eunstory.eunsu.pro',
     ],
     'knowsAbout': ['TypeScript', 'React.js', 'Next.js', 'React Native', 'JavaScript'],
   };

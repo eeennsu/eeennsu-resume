@@ -1,9 +1,10 @@
-import type { Locale } from '@shared/i18n/config';
-import { getDictionary } from '@shared/i18n/dictionaries';
-import { ProfileIconType } from '@shared/types/subjects';
 import { Github, Mail, Notebook, NotebookPen } from 'lucide-react';
 import Link from 'next/link';
 import type { FC, ReactNode } from 'react';
+
+import type { Locale } from '@shared/i18n/config';
+import { getDictionary } from '@shared/i18n/dictionaries';
+import { ProfileIconType } from '@shared/types/subjects';
 
 const Icon: Record<ProfileIconType, ReactNode> = {
   'email': <Mail className='size-[18px]' aria-hidden='true' />,

@@ -1,7 +1,9 @@
-import { Locale } from '@shared/i18n/config';
 import fs from 'fs';
-import yaml from 'js-yaml';
 import path from 'path';
+
+import yaml from 'js-yaml';
+
+import { Locale } from '@shared/i18n/config';
 
 export const loadSubjects = <T>(relativePath: string, locale: Locale) => {
   try {

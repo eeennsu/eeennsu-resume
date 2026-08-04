@@ -1,3 +1,10 @@
+import Image from 'next/image';
+import { type FC } from 'react';
+
+import ProfileHeader from '@features/portfolio/ui/Header';
+import ProfileItem from '@features/profile/ui/Item';
+import LastUpdate from '@features/profile/ui/LastUpdate';
+
 import AnimatedSection from '@shared/components/AnimatedSection';
 import { MY_PROFILE } from '@shared/consts/commons';
 import type { Locale } from '@shared/i18n/config';
@@ -7,12 +14,6 @@ import { IProfile } from '@shared/types/subjects';
 import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
 import { isRecentPost } from '@shared/utils/utilIsRecentPost';
-import Image from 'next/image';
-import { type FC } from 'react';
-
-import ProfileHeader from '@features/portfolio/ui/Header';
-import ProfileItem from '@features/profile/ui/Item';
-import LastUpdate from '@features/profile/ui/LastUpdate';
 
 interface Props {
   locale: Locale;

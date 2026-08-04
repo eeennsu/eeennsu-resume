@@ -1,7 +1,8 @@
 'use client';
 
-import useGetIp from '@shared/hooks/useGetIp';
 import { FC } from 'react';
+
+import useGetIp from '@shared/hooks/useGetIp';
 
 const CheckingWidget: FC = () => {
   useGetIp();

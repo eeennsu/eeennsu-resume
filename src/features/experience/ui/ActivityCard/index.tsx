@@ -1,9 +1,10 @@
+import { FC, type ReactNode } from 'react';
+
 import Markdown from '@shared/components/Markdown';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@shared/shadcn-ui/ui/accordion';
 import { IActivity } from '@shared/types/subjects';
-import { FC, type ReactNode } from 'react';
 
 type Props = IActivity & {
   index: number;

@@ -1,14 +1,15 @@
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import type { FC } from 'react';
+
+import VelogPostMiniCard from '@features/velog/ui/VelogPostMiniCard';
+
 import AnimatedSection from '@shared/components/AnimatedSection';
 import SectionTitle from '@shared/components/SectionTitle';
 import type { Locale } from '@shared/i18n/config';
 import { getDictionary } from '@shared/i18n/dictionaries';
 import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
 import { isRecentPost } from '@shared/utils/utilIsRecentPost';
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import type { FC } from 'react';
-
-import VelogPostMiniCard from '@features/velog/ui/VelogPostMiniCard';
 
 interface Props {
   locale: Locale;

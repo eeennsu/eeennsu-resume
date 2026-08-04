@@ -1,10 +1,11 @@
 'use client';
 
-import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
-import { resolveDictionary } from '@shared/i18n/dictionaries';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { FC, useEffect } from 'react';
+
+import { DEFAULT_LOCALE, isLocale } from '@shared/i18n/config';
+import { resolveDictionary } from '@shared/i18n/dictionaries';
 
 interface Props {
   error: Error & { digest?: string };

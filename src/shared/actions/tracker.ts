@@ -1,9 +1,10 @@
 'use server';
 
-import db from '@db/index';
-import { visitors, visits } from '@db/schema';
 // import notifySlack from '@shared/api/slack';
 import { eq } from 'drizzle-orm';
+
+import db from '@db/index';
+import { visitors, visits } from '@db/schema';
 
 export async function trackVisitor(
   ip?: string | null,

@@ -1,11 +1,12 @@
 'use client';
 
-import { resolveDictionary } from '@shared/i18n/dictionaries';
 import dayjs, { Dayjs } from 'dayjs';
 import { useParams } from 'next/navigation';
 import { useEffect, useState, type FC } from 'react';
 
 import apiGetBranchCommitDate from '@features/github/apis/getBranchCommitDate';
+
+import { resolveDictionary } from '@shared/i18n/dictionaries';
 
 const LastUpdate: FC = () => {
   const { locale } = useParams<{ locale: string }>();

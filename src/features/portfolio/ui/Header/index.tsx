@@ -1,9 +1,10 @@
 'use client';
 
-import useVisibilityObserver from '@shared/hooks/useVisibilityObserver';
 import { type FC } from 'react';
 
 import Header from '@widgets/Header';
+
+import useVisibilityObserver from '@shared/hooks/useVisibilityObserver';
 
 interface Props {
   isNewVelogPost: boolean;

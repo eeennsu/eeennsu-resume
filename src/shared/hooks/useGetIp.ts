@@ -1,7 +1,8 @@
 'use client';
 
-import { trackVisitor } from '@shared/actions/tracker';
 import { useEffect } from 'react';
+
+import { trackVisitor } from '@shared/actions/tracker';
 
 const useGetIp = () => {
   useEffect(() => {

@@ -1,0 +1,55 @@
+{
+  "env": {
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "MAX_THINKING_TOKENS": "16000",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "60",
+    "ENABLE_PROMPT_CACHING_1H": "1"
+  },
+  "attribution": {
+    "commit": ""
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Agent",
+      "TodoWrite",
+      "WebFetch",
+      "WebSearch",
+      "Edit(/.claude/skills/critical-review/**)"
+    ],
+    "deny": [
+      "Bash(rm *)",
+      "Bash(rm -rf *)",
+      "Bash(git reset*)",
+      "Bash(git push*)",
+      "Bash(npm publish*)",
+      "Bash(npx pod-install*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "model": "claude-opus-4-7",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const j=JSON.parse(d);const f=j.tool_input?.file_path||j.tool_response?.filePath||'';if(/\\.(ts|tsx)$/.test(f)){process.exit(0)}else{process.exit(1)}})\" && npx tsc --noEmit --pretty 2>&1 | head -30",
+            "timeout": 5000,
+            "statusMessage": "TypeScript type checking..."
+          }
+        ]
+      }
+    ]
+  },
+  "language": "korean"
+}

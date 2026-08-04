@@ -1,3 +1,8 @@
+import type { FC } from 'react';
+
+import ActivityCard from '@features/experience/ui/ActivityCard';
+import ExperienceHead from '@features/experience/ui/Head';
+
 import AnimatedSection from '@shared/components/AnimatedSection';
 import RelatedPostsBadge from '@shared/components/CrossLinkBadge/RelatedPostsBadge';
 import SectionTitle from '@shared/components/SectionTitle';
@@ -9,10 +14,6 @@ import { loadSubjects } from '@shared/utils/utilFetchSubjects';
 import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
 import { loadYaml } from '@shared/utils/utilLoadYaml';
 import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
-import type { FC } from 'react';
-
-import ActivityCard from '@features/experience/ui/ActivityCard';
-import ExperienceHead from '@features/experience/ui/Head';
 
 interface Props {
   locale: Locale;

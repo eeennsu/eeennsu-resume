@@ -1,8 +1,9 @@
-import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
 import dayjs from 'dayjs';
 import { type FC, type ReactNode } from 'react';
 
 import VelogPostCard from '@features/velog/ui/VelogPostCard';
+
+import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
 
 interface Props {
   archive: IVelogArchive;

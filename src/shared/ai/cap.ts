@@ -1,6 +1,7 @@
+import { and, eq, sql } from 'drizzle-orm';
+
 import db from '@db/index';
 import { aiUsage } from '@db/schema';
-import { and, eq, sql } from 'drizzle-orm';
 
 export type AiFeature = 'chat' | 'jd';
 

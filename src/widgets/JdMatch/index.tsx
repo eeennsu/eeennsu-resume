@@ -1,17 +1,5 @@
 'use client';
 
-import ErrorBoundary from '@shared/components/ErrorBoundary';
-import SharedTooltip from '@shared/components/Tooltip';
-import type { Locale } from '@shared/i18n/config';
-import type { Dictionary } from '@shared/i18n/dictionaries';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@shared/shadcn-ui/ui/dialog';
-import { cn } from '@shared/shadcn-ui/utils';
 import {
   Briefcase,
   CircleAlert,
@@ -26,6 +14,19 @@ import { FC, FormEvent, ReactNode, useEffect, useRef, useState } from 'react';
 
 import Turnstile from '@features/ai-chat/ui/Turnstile';
 import { useJdMatch } from '@features/jd-match/model/JdMatchContext';
+
+import ErrorBoundary from '@shared/components/ErrorBoundary';
+import SharedTooltip from '@shared/components/Tooltip';
+import type { Locale } from '@shared/i18n/config';
+import type { Dictionary } from '@shared/i18n/dictionaries';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@shared/shadcn-ui/ui/dialog';
+import { cn } from '@shared/shadcn-ui/utils';
 
 interface JdResult {
   fitScore: number;

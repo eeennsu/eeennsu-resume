@@ -1,3 +1,14 @@
+import dayjs from 'dayjs';
+import { ArrowLeft, CalendarClock, ExternalLink, Rss } from 'lucide-react';
+import Link from 'next/link';
+import { type FC } from 'react';
+
+import BehindTheScenes from '@features/velog/ui/BehindTheScenes';
+import SkillMap from '@features/velog/ui/SkillMap';
+import TabTriggers, { type WritingsView } from '@features/velog/ui/TabTriggers';
+import TagCloud from '@features/velog/ui/TagCloud';
+import Timeline from '@features/velog/ui/Timeline';
+
 import ActivityBadge from '@shared/components/CrossLinkBadge/ActivityBadge';
 import { VELOG_BASE_URL, VELOG_RSS_URL } from '@shared/consts/velog';
 import type { Locale } from '@shared/i18n/config';
@@ -8,17 +19,6 @@ import { fetchVelogArchive } from '@shared/utils/utilFetchVelogArchive';
 import { isRecentPost } from '@shared/utils/utilIsRecentPost';
 import { loadYaml } from '@shared/utils/utilLoadYaml';
 import { mapActivityToVelog } from '@shared/utils/utilMapActivityToVelog';
-import dayjs from 'dayjs';
-import { ArrowLeft, CalendarClock, ExternalLink, Rss } from 'lucide-react';
-import Link from 'next/link';
-import { type FC } from 'react';
-
-import BehindTheScenes from '@widgets/BehindTheScenes';
-
-import SkillMap from '@features/velog/ui/SkillMap';
-import TabTriggers, { type WritingsView } from '@features/velog/ui/TabTriggers';
-import TagCloud from '@features/velog/ui/TagCloud';
-import Timeline from '@features/velog/ui/Timeline';
 
 interface Props {
   locale: Locale;

@@ -1,8 +1,9 @@
 import 'server-only';
 
-import type { IVelogArchive } from '@shared/types/velog';
 import fs from 'fs';
 import path from 'path';
+
+import type { IVelogArchive } from '@shared/types/velog';
 
 const ARCHIVE_PATH = path.join(process.cwd(), 'src', 'data', 'velog-posts.json');
 
