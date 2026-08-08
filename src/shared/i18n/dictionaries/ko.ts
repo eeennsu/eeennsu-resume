@@ -1,6 +1,6 @@
 export const ko = {
   meta: {
-    title: '방은수 | 프론트엔드 개발자 이력서',
+    title: '방은수 이력서',
     titleTemplate: '%s | 방은수',
     description:
       'TypeScript, React.js, Next.js 기반 프론트엔드 개발자 방은수의 이력서입니다. 경력, 기술 스택, 프로젝트 포트폴리오를 확인하세요.',

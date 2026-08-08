@@ -102,9 +102,6 @@ export const generateMetadata = async ({
       ],
     },
     keywords: [...dict.meta.keywords],
-    icons: {
-      icon: '/favicon.ico',
-    },
     verification: {
       google: 'OaYKYfrRLPAqCUlI4N9byUHRsCKrHGoxyLq7yneX5-E',
     },
