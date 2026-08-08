@@ -1,6 +1,33 @@
 {
-  "fetchedAt": "2026-08-02T10:35:42.374Z",
+  "fetchedAt": "2026-08-08T01:06:03.044Z",
   "posts": [
+    {
+      "id": "cc13e121-b12a-4c8b-a707-dd8aa0d3a073",
+      "title": "ios에서 usb 연결하고 빌드 후 Metro 와의 연결이 끊길 때",
+      "description": "개요\n물리적 iOS 기기에서 앱이 실행된 직후 Metro 번들러와의 연결이 끊어지는 현상은 기기가 Mac에서 실행 중인 Metro 서버(기본 포트 8081)와 통신하지 못할 때 발생생한다.\n\n시뮬레이터와 달리 물리적 기기는 USB 연결만으로는 디버그 서버와 통신할 수 ",
+      "thumbnail": null,
+      "urlSlug": "ios에서-usb-연결하고-빌드-후-Metro-와의-연결이-끊길-때",
+      "releasedAt": "2026-08-05T12:00:14.602Z",
+      "tags": ["Debuging", "iOS", "react native"]
+    },
+    {
+      "id": "379a0a17-d713-431f-b4e6-630bc91b530b",
+      "title": "React Native 에서의 메모이제이션 (4.  React Compiler 적용시 지켜야할 필수 규칙들)",
+      "description": "1. eslint-plugin-react-hooks개요\n\n핵심 전제부터 짚는다. React Compiler는 위반을 만나면 빌드를 실패시키지 않고 해당 함수를 그대로 둔다. 즉 \"skip\"은 에러가 아니라 안전 후퇴(silent bailout)다. RC는 Rules o",
+      "thumbnail": null,
+      "urlSlug": "React-Native-에서의-메모이제이션-4.-React-Compiler-적용시-지켜야할-필수-규칙들",
+      "releasedAt": "2026-08-05T11:48:34.660Z",
+      "tags": ["memoization", "react native"]
+    },
+    {
+      "id": "aa3a6b41-72dd-41e9-b0b3-0e003cb9e96b",
+      "title": "React Native 에서의 메모이제이션 (3.  React Compiler 의 적용시 기존 메모이제이션들의 방향)",
+      "description": "개요\nRC를 도입했을 때 수동 메모이제이션이 불필요해지는 라이브러리·기능들을 정리해보자. 결론부터 말하자면 본질은 모두 같다. RC가 인라인 객체·함수·배열을 표현식 단위로 자동 캐시하므로, 그 위에 손으로 깔던 useMemo / useCallback / React.m",
+      "thumbnail": null,
+      "urlSlug": "React-Native-에서의-메모이제이션-3.-React-Compiler-의-적용시-기존-메모이제이션들의-방향",
+      "releasedAt": "2026-08-04T13:14:13.656Z",
+      "tags": ["memoization", "react native"]
+    },
     {
       "id": "18ba334e-d163-483e-a1b8-d583b53c71fd",
       "title": "React Native 에서의 메모이제이션 (2.  React Compiler 의 자동 메모이제이션)",
@@ -423,50 +450,27 @@
       "urlSlug": "ios-vs-android-앱-성능",
       "releasedAt": "2026-04-16T13:35:58.801Z",
       "tags": ["react native"]
-    },
-    {
-      "id": "7120d98e-744d-45b1-8391-ec87f9244022",
-      "title": "Flext Container 내의 텍스트가 컨테이너를 뚫는 이유",
-      "description": " Flexbox 환경에서 텍스트 말줄임(ellipsis) 처리를 할 때 minWidth={0} (CSS의 경우 min-width: 0)이 필요한 이유는 ??\n\n1. Flex 아이템의 숨겨진 기본값, min-width: auto\n일반적인 블록 요소의 min-width 기",
-      "thumbnail": null,
-      "urlSlug": "Flext-Container-내의-텍스트가-컨테이너를-뚫는-이유",
-      "releasedAt": "2026-04-15T23:07:50.409Z",
-      "tags": ["CSS"]
-    },
-    {
-      "id": "55ae159c-688a-435a-ac8b-58cad752e32d",
-      "title": "React Native 앱에서 비동기의 병렬 요청 + 홈 화면에서의 방법",
-      "description": "모바일 기기는 알다시피 데스크탑보다 용량이 매우 적다. 특히나 RN은 Hermes 엔진위에서 돌아가는데, 이 JS 엔진에 할당된 힙 메모리가 네이티브 앱 전체 메모리의 일부이다. 보통 저사양 Android 기기 기준으로 앱 전체가 쓸 수 있는 메모리가 앱당 50~200",
-      "thumbnail": null,
-      "urlSlug": "React-Native-앱에서-비동기의-병렬-요청-홈-화면에서의-방법",
-      "releasedAt": "2026-04-07T10:34:32.701Z",
-      "tags": ["react native"]
-    },
-    {
-      "id": "a12808c6-f99e-47a0-83d9-14098b204744",
-      "title": "React Native에서 FlashList + 네비게이션 전환 애니메이션 조합에서 발생하는 레아이웃 문제",
-      "description": "무슨 문제?\nFlashList로 렌더링되는 아이템들이, 평상시에는 잘 렌더링되다가 특정 화면에서 다른 화면으로 넘어올 때, 아이템들의 UI가 정상적이지 않고 찌그러져 보이는 문제이다. 평상시엔 잘 보이면서, 왜 다른 화면에서 넘어 올때만 이런 문제가 발생할까? 이유는 ",
-      "thumbnail": null,
-      "urlSlug": "React-Native에서-FlashList-네비게이션-전환-애니메이션-조합에서-발생하는-레아이웃-문제",
-      "releasedAt": "2026-04-06T09:55:34.743Z",
-      "tags": ["react native"]
     }
   ],
   "tagStats": [
     {
       "name": "react native",
-      "count": 47
+      "count": 48
     },
     {
       "name": "build-and-deploy",
       "count": 6
     },
     {
-      "name": "CSS",
+      "name": "memoization",
+      "count": 3
+    },
+    {
+      "name": "Debuging",
       "count": 1
     },
     {
-      "name": "memoization",
+      "name": "iOS",
       "count": 1
     },
     {

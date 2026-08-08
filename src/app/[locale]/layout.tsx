@@ -174,7 +174,7 @@ export default async function RootLayout({
           <TooltipProvider>
             <JdMatchProvider>
               <div className='flex min-h-screen flex-col'>
-                <div className='3xl:max-w-[1500px] mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
+                <div className='3xl:max-w-7xl mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
                   {children}
                 </div>
                 <Footer />

@@ -39,7 +39,7 @@ const Header: FC<Props> = ({ isHeaderVisible, isNewVelogPost }) => {
           : 'pointer-events-none bg-transparent',
       )}
     >
-      <div className='3xl:max-w-[1500px] mx-auto flex max-w-(--breakpoint-xl) items-center justify-between gap-3 px-3 py-4 xl:px-0'>
+      <div className='3xl:max-w-7xl mx-auto flex max-w-(--breakpoint-xl) items-center justify-between gap-3 px-3 py-4 xl:px-0'>
         <div
           className={cn(
             'flex items-end gap-2 transition-opacity duration-300',
