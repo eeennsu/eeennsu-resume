@@ -24,7 +24,7 @@
             - problem: When a push is tapped from a cold start, the navigation stack is not ready yet, so routing is sometimes dropped.
               solution: 'Stored the `pending payload` in a global `store` and consumed the queue once navigation is `ready`, applying an async-queue pattern for routing.'
             - problem: When the deep link target is a webview screen and the app is launched from a cold start, the navigation stack ends up containing only that single webview, so pressing back terminates the app instead of returning to the previous in-app screens.
-              solution: 'Instead of a plain `navigate` call, I composed the `navigation state` directly to `reset` it into a structure where `BottomTabs` is the base route and a `Stack` (related underlay screen + webview) is stacked on top. This guarantees a natural back flow: webview → related screen → `BottomTabs`.'
+              solution: 'Instead of a plain `navigate` call, I composed the `navigation state` directly to `reset` it into a structure where `Main Tab screen` is the base route and a `Stack` (related underlay screen + webview) is stacked on top. This guarantees a natural back flow: webview → related screen → `Main Tab screen`.'
             - Added a normalization layer for the notification list response to match the updated push-sending API schema on the backend.
             - 'Implemented a deep link handler that parses the push payload and branches across cold-start / background / foreground entry cases.'
         - subject: 'Introduced and standardized an optimistic-update pattern with `TanStack Query`'

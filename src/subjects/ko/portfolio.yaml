@@ -1,3 +1,15 @@
+- name: thinkit
+  descriptionList:
+    - 레포 하네스를 세팅하고 같은 기준으로 감사하는 Claude Code 플러그인
+  githubLink: https://github.com/eeennsu/thinkit
+  siteLink: https://thinkit.eunsu.pro
+  tools:
+    - Claude Code Plugin
+    - Node.js
+    - ESLint
+    - TypeScript
+    - Astro
+
 - name: Bread And Source
   descriptionList:
     - 실제 운영중인 베이커리의 사이트 & 백오피스 (beta)

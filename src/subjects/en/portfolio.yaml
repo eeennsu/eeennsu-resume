@@ -1,3 +1,15 @@
+- name: thinkit
+  descriptionList:
+    - Claude Code plugin that scaffolds a repo's harness and audits it against the same rules
+  githubLink: https://github.com/eeennsu/thinkit
+  siteLink: https://thinkit.eunsu.pro
+  tools:
+    - Claude Code Plugin
+    - Node.js
+    - ESLint
+    - TypeScript
+    - Astro
+
 - name: Bread And Source
   descriptionList:
     - Site & back-office for an actual operating bakery (beta)

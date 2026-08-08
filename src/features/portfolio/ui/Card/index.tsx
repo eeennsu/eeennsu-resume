@@ -25,6 +25,13 @@ const CTA_VARIANTS = {
     'border-gray-200 bg-white text-gray-600 hover:bg-gray-100 dark:border-gray-800 dark:bg-gray-900/60 dark:text-gray-400 dark:hover:bg-gray-800',
 } as const;
 
+const toPortfolioAnchor = (name: string) =>
+  `portfolio-${name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')}`;
+
 const PortfolioCard: FC<Props> = ({
   name,
   descriptionList,
@@ -35,7 +42,10 @@ const PortfolioCard: FC<Props> = ({
 }) => {
   const dict = getDictionary(locale);
   return (
-    <div className='flex flex-col gap-5 border-r border-b border-gray-100 p-7 transition-colors last:border-b-0 hover:border-blue-100 hover:bg-blue-50 max-md:border-r-0 md:gap-6 md:p-9 md:even:border-r-0 dark:border-gray-800 dark:hover:border-blue-500/20 dark:hover:bg-blue-500/10 md:[&:nth-last-child(-n+2)]:border-b-0 md:[&:nth-last-child(2):nth-child(odd)]:border-b-0'>
+    <div
+      id={toPortfolioAnchor(name)}
+      className='target:animate-target-flash flex scroll-mt-24 flex-col gap-5 border-r border-b border-gray-100 p-7 transition-colors last:border-b-0 hover:border-blue-100 hover:bg-blue-50 max-md:border-r-0 md:gap-6 md:p-9 md:even:border-r-0 dark:border-gray-800 dark:hover:border-blue-500/20 dark:hover:bg-blue-500/10 md:[&:nth-last-child(-n+2)]:border-b-0 md:[&:nth-last-child(2):nth-child(odd)]:border-b-0'
+    >
       <div className='flex flex-col gap-3'>
         <h3 className='text-lg font-semibold tracking-tight text-gray-900 md:text-xl dark:text-gray-100'>
           {name}
