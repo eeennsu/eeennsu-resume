@@ -4,6 +4,7 @@
     - id: wonder-rn-app-2026
       startDate: '2026.02.04'
       title: 'Role transition — Development and maintenance of an in-house React Native (CLI) mobile application'
+      shortTitle: 'In-house RN app'
       doneList:
         - subject: 'Introduced and operationalized a new OTA (over-the-air code delivery) infrastructure with `hot-updater`'
           details:
@@ -42,6 +43,7 @@
       startDate: '2025.07.03'
       endDate: '2025.10.16'
       title: Built the admin page for an in-house travel content reservation and payment platform
+      shortTitle: Travel platform admin
       doneList:
         - subject: 'Built the create / edit form pages for products and packages'
           details:
@@ -71,6 +73,7 @@
       startDate: '2025.04.14'
       endDate: '2025.07.02'
       title: Enhanced and maintained the in-house application admin page system
+      shortTitle: Admin system upgrade
       doneList:
         - subject: Renewed existing admin page features
           details:
@@ -113,6 +116,7 @@
       startDate: '2024.11.18'
       endDate: '2025.01.15'
       title: Built a course-taking site / admin & operator site for external companies
+      shortTitle: B2B course-taking site
       doneList:
         - subject: Built a real-time pop-quiz feature using WebSocket, enabling instant interaction between instructor and learners during live lectures
           details:
@@ -172,6 +176,7 @@
       startDate: '2024.03.11'
       endDate: '2024.05.24'
       title: Built the in-house platform for an online IT education site
+      shortTitle: IT education platform
       doneList:
         - subject: Customized a text editor using the Tiptap library
           details:

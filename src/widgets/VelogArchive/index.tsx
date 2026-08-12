@@ -136,6 +136,8 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
                   allLabel: t.tagCloud.all,
                   emptyLabel: t.tagCloud.empty,
                   recentBadge: t.recent.badge,
+                  loadMoreLabel: t.pagination.loadMore,
+                  showingLabel: t.pagination.showing,
                 }}
                 isRecent={isRecent}
                 renderCrossLink={post => renderActivityLink(post.id)}

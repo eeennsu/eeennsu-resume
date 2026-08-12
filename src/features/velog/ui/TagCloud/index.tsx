@@ -1,5 +1,6 @@
 import { type FC, type ReactNode } from 'react';
 
+import PaginatedList from '@features/velog/ui/PaginatedList';
 import VelogPostCard from '@features/velog/ui/VelogPostCard';
 
 import type { IVelogArchive, IVelogPost } from '@shared/types/velog';
@@ -13,6 +14,8 @@ interface Props {
     allLabel: string;
     emptyLabel: string;
     recentBadge: string;
+    loadMoreLabel: string;
+    showingLabel: string;
   };
   isRecent?: (releasedAt: string) => boolean;
   renderCrossLink?: (post: IVelogPost) => ReactNode;
@@ -41,9 +44,11 @@ const TagCloud: FC<Props> = ({ archive, activeTag, labels, isRecent, renderCross
           {labels.emptyLabel}
         </p>
       ) : (
-        <ul className='grid gap-4 md:grid-cols-2'>
-          {filtered.map(post => (
-            <li key={post.id}>
+        <PaginatedList
+          key={activeTag ?? 'all'}
+          items={filtered.map(post => ({
+            key: post.id,
+            node: (
               <VelogPostCard
                 post={post}
                 isRecent={isRecent?.(post.releasedAt)}
@@ -51,9 +56,11 @@ const TagCloud: FC<Props> = ({ archive, activeTag, labels, isRecent, renderCross
               >
                 {renderCrossLink?.(post)}
               </VelogPostCard>
-            </li>
-          ))}
-        </ul>
+            ),
+          }))}
+          loadMoreLabel={labels.loadMoreLabel}
+          showingLabel={labels.showingLabel}
+        />
       )}
     </section>
   );

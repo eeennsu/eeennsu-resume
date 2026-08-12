@@ -4,6 +4,7 @@
     - id: wonder-agent-harness-2026
       startDate: '2026.05.01'
       title: '클로드 코드(Claude Code) 기반 AI 에이전트 개발 하네스 설계'
+      shortTitle: 'Claude Code 하네스 설계'
       doneList:
         - subject: 규칙 소유권 정리 및 하네스 초기화 체계 설계
           details:
@@ -23,6 +24,7 @@
     - id: wonder-rn-app-2026
       startDate: '2026.02.04'
       title: '직무 전환 - React Native (CLI) 기반 자사 모바일 애플리케이션 개발 및 유지보수'
+      shortTitle: '자사 RN 앱 개발/유지보수'
       doneList:
         - subject: 'OTA(무선 코드 배포) 인프라 `hot-updater` 운영 체계 구축'
           details:
@@ -58,6 +60,7 @@
       startDate: '2025.07.03'
       endDate: '2025.10.16'
       title: 자사 여행 콘텐츠 예약 및 결제 플랫폼의 관리자 페이지 개발
+      shortTitle: 여행 플랫폼 관리자 페이지
       doneList:
         - subject: '상품 / 패키지의 생성 및 수정 폼 페이지 개발'
           details:
@@ -81,6 +84,7 @@
       startDate: '2025.04.14'
       endDate: '2025.07.02'
       title: 자사 애플리케이션 관리자 페이지 시스템 고도화 및 유지보수
+      shortTitle: 관리자 시스템 고도화
       doneList:
         - subject: 기존 관리자 페이지 기능 리뉴얼
           details:
@@ -123,6 +127,7 @@
       startDate: '2024.11.18'
       endDate: '2025.01.15'
       title: 외부 기업 전용 강의 수강 사이트 / 관리자 & 운영자 사이트 개발
+      shortTitle: B2B 강의 수강 사이트
       doneList:
         - subject: WebSocket을 활용하여 실시간 강의 중 강사와 수강생들의 즉각적인 상호작용이 가능한 돌발 퀴즈 기능 개발
           details:
@@ -182,6 +187,7 @@
       startDate: '2024.03.11'
       endDate: '2024.05.24'
       title: 온라인 IT 교육 사이트 자사 플랫폼 개발
+      shortTitle: IT 교육 자사 플랫폼
       doneList:
         - subject: Tiptap 라이브러리를 활용하여 텍스트 에디터 커스터마이징
           details:

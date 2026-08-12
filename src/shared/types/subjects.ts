@@ -10,6 +10,7 @@ export interface IActivity {
   startDate?: string;
   endDate?: string;
   title: string;
+  shortTitle?: string;
   doneList: IActivityDone[];
 }
 

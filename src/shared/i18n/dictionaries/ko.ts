@@ -186,6 +186,10 @@ export const ko = {
       all: '전체',
       empty: '이 태그의 정리 글이 아직 없습니다.',
     },
+    pagination: {
+      loadMore: '더 보기 ({{remaining}})',
+      showing: '{{shown}} / {{total}}',
+    },
     relatedPosts: {
       badgeLabel: '관련 정리 글 {{count}}개',
       empty: '관련 정리 글이 아직 없습니다.',

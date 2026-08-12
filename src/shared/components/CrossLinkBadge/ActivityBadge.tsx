@@ -14,12 +14,12 @@ interface Props {
 const ActivityBadge: FC<Props> = ({ activity, locale, label }) => (
   <Link
     href={`/${locale}#experience-${activity.id}`}
-    className='inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11.5px] font-medium text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200 dark:hover:bg-blue-500/20'
+    aria-label={`${label} · ${activity.title}`}
+    title={`${label} · ${activity.title}`}
+    className='inline-flex max-w-50 items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[11px] font-medium text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200 dark:hover:bg-blue-500/20'
   >
-    <Briefcase className='size-3.5' aria-hidden />
-    <span>
-      {label} · <span className='font-semibold'>{activity.title}</span>
-    </span>
+    <Briefcase className='size-3 shrink-0' aria-hidden />
+    <span className='truncate font-semibold'>{activity.shortTitle ?? activity.title}</span>
   </Link>
 );
 

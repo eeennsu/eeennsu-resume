@@ -186,6 +186,10 @@ export const en: Dictionary = {
       all: 'All',
       empty: 'No writings for this tag yet.',
     },
+    pagination: {
+      loadMore: 'Load more ({{remaining}})',
+      showing: '{{shown}} / {{total}}',
+    },
     relatedPosts: {
       badgeLabel: '{{count}} related writings',
       empty: 'No related writings yet.',

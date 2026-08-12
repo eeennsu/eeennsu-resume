@@ -75,12 +75,12 @@ const SkillMap: FC<Props> = ({ archive, emptyLabel, countLabel }) => {
       >
         Skill Map
       </h2>
-      <ul className='grid gap-3 md:grid-cols-2'>
+      <ul className='grid w-full grid-cols-1 gap-3 md:grid-cols-2'>
         {entries.map(({ skillId, posts }) => {
           const palette = getPaletteForSkill(skillId);
           return (
-            <li key={skillId} id={`skill-map-${skillId}`} className='min-w-0'>
-              <details className='group block w-full overflow-hidden rounded-xl border border-gray-200 bg-white transition-colors open:border-gray-300 dark:border-gray-800 dark:bg-gray-950/40 open:dark:border-gray-700'>
+            <li key={skillId} id={`skill-map-${skillId}`} className='w-full min-w-0'>
+              <details className='group block w-full min-w-full overflow-hidden rounded-xl border border-gray-200 bg-white transition-colors open:border-gray-300 dark:border-gray-800 dark:bg-gray-950/40 open:dark:border-gray-700'>
                 <summary
                   className={cn(
                     'flex w-full cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 select-none [&::-webkit-details-marker]:hidden [&::marker]:hidden',

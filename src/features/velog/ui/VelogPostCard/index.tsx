@@ -2,10 +2,8 @@ import dayjs from 'dayjs';
 import Link from 'next/link';
 import { type FC, type ReactNode } from 'react';
 
-import TagChip from '@shared/components/TagChip';
 import { VELOG_BASE_URL } from '@shared/consts/velog';
 import type { IVelogPost } from '@shared/types/velog';
-import { mapTagToSkillId } from '@shared/utils/utilMapTagToSkill';
 
 interface Props {
   post: IVelogPost;
@@ -39,18 +37,9 @@ const VelogPostCard: FC<Props> = ({ post, isRecent, recentLabel, children }) => 
         </time>
       </div>
       {post.description && (
-        <p className='line-clamp-2 text-[13.5px] leading-relaxed text-gray-600 dark:text-gray-400'>
+        <p className='line-clamp-1 text-[13.5px] leading-relaxed text-gray-500 dark:text-gray-400'>
           {post.description}
         </p>
-      )}
-      {post.tags.length > 0 && (
-        <ul className='flex flex-wrap gap-1.5 pt-1'>
-          {post.tags.map(tag => (
-            <li key={tag}>
-              <TagChip label={tag} skillId={mapTagToSkillId(tag)} size='sm' />
-            </li>
-          ))}
-        </ul>
       )}
     </Link>
     {children && <div className='pt-2'>{children}</div>}
