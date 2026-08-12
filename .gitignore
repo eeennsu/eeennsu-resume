@@ -47,3 +47,6 @@ next-env.d.ts
 
 # oh-my-claudecode (운영 아티팩트)
 /.omc
+
+# UI polish work artifacts (screenshots, audits, page diagnostics)
+/.polish
