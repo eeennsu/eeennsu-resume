@@ -10,11 +10,11 @@
 
 ## 요약
 
-| 등급 | 건수 | 성격                                  | 상태          |
-| ---- | ---- | ------------------------------------- | ------------- |
-| P1   | 4    | 화면에 보이거나 기능이 깨짐            | ✅ 전부 수정됨 |
-| P2   | 5    | 디자인 시스템 일관성                   | 미착수         |
-| P3   | 4    | 접근성 / 시맨틱                        | 미착수         |
+| 등급 | 건수 | 성격                        | 상태           |
+| ---- | ---- | --------------------------- | -------------- |
+| P1   | 4    | 화면에 보이거나 기능이 깨짐 | ✅ 전부 수정됨 |
+| P2   | 5    | 디자인 시스템 일관성        | 미착수         |
+| P3   | 4    | 접근성 / 시맨틱             | 미착수         |
 
 > **P1 수정 완료** (tsc / eslint / prettier 통과). 상세는 각 항목 하단 `✅ 수정` 참고.
 
@@ -72,13 +72,13 @@ className = 'leading-1.2 list-outside list-disc text-[15px] text-gray-800 ...';
 
 빌드된 CSS 검증:
 
-| 클래스            | CSS 생성 |
-| ----------------- | -------- |
-| `leading-relaxed` | ✅        |
-| `leading-snug`    | ✅        |
+| 클래스            | CSS 생성              |
+| ----------------- | --------------------- |
+| `leading-relaxed` | ✅                    |
+| `leading-snug`    | ✅                    |
 | `leading-[1.85]`  | ✅ `line-height:1.85` |
 | `leading-[1.75]`  | ✅ `line-height:1.75` |
-| **`leading-1.2`** | **❌ 0건** |
+| **`leading-1.2`** | **❌ 0건**            |
 
 의도한 행간이 **전혀 적용되지 않고 있다.** 경력 상세의 불릿 리스트 — 사이트에서 가장 많이 읽히는 텍스트다.
 
@@ -131,11 +131,11 @@ JD 분석 모달을 키보드로 쓰면 닫기 버튼에 포커스가 갔는지 
 
 대신 같은 역할의 칩이 세 군데에 제각각 인라인으로 있다:
 
-| 위치                                                              | radius         | 폰트            | 배경                        |
-| ----------------------------------------------------------------- | -------------- | --------------- | --------------------------- |
-| [SkillCard:15](../src/features/skill/ui/Card/index.tsx#L15)        | `rounded-md`   | `text-[13px]`   | `bg-white` + 보더           |
-| [PortfolioCard:76](../src/features/portfolio/ui/Card/index.tsx#L76)| `rounded-md`   | `text-[11.5px]` | `bg-gray-100` 보더 없음     |
-| [JdMatch:126](../src/widgets/JdMatch/index.tsx#L126)               | `rounded-full` | `text-xs`       | `bg-emerald-50` 등 톤별     |
+| 위치                                                                | radius         | 폰트            | 배경                    |
+| ------------------------------------------------------------------- | -------------- | --------------- | ----------------------- |
+| [SkillCard:15](../src/features/skill/ui/Card/index.tsx#L15)         | `rounded-md`   | `text-[13px]`   | `bg-white` + 보더       |
+| [PortfolioCard:76](../src/features/portfolio/ui/Card/index.tsx#L76) | `rounded-md`   | `text-[11.5px]` | `bg-gray-100` 보더 없음 |
+| [JdMatch:126](../src/widgets/JdMatch/index.tsx#L126)                | `rounded-full` | `text-xs`       | `bg-emerald-50` 등 톤별 |
 
 같은 "기술 태그"인데 스킬 섹션과 포트폴리오 섹션에서 크기·모양이 다르다.
 
@@ -145,10 +145,10 @@ JD 분석 모달을 키보드로 쓰면 닫기 버튼에 포커스가 갔는지 
 
 ### P2-2. 시맨틱 토큰 vs 원시 팔레트 — 신·구 코드 분열
 
-| 코드                                  | 방식        | 예시                                       |
-| ------------------------------------- | ----------- | ------------------------------------------ |
-| JdMatch, AiChat (최신)                | 시맨틱 토큰 | `border-border` `bg-muted/30` `bg-foreground` |
-| Profile, Skill, Portfolio, Experience, Education, Certification, Header, Footer | 원시 팔레트 | `border-gray-200` `bg-white` `text-gray-900` |
+| 코드                                                                            | 방식        | 예시                                          |
+| ------------------------------------------------------------------------------- | ----------- | --------------------------------------------- |
+| JdMatch, AiChat (최신)                                                          | 시맨틱 토큰 | `border-border` `bg-muted/30` `bg-foreground` |
+| Profile, Skill, Portfolio, Experience, Education, Certification, Header, Footer | 원시 팔레트 | `border-gray-200` `bg-white` `text-gray-900`  |
 
 같은 페이지에서 두 방식이 섞이면 **다크모드 미세 톤이 어긋난다.** 시맨틱 `--card`는 다크에서 `oklch(0.208 0.042 265.755)`(푸른기 도는 남색)인데, 원시 팔레트 `dark:bg-gray-950/40`은 중성 회색이다.
 
@@ -178,11 +178,11 @@ className = 'bg-slate-700 px-3 py-2 text-white shadow-md dark:bg-slate-200 dark:
 
 ### P2-4. 다크모드 반투명 관례가 두 갈래
 
-| 패턴        | 사용처                                        |
-| ----------- | --------------------------------------------- |
-| `-950/30`   | [PortfolioCard:60](../src/features/portfolio/ui/Card/index.tsx#L60) 외부 링크 |
-| `-500/10`   | [JdMatch:108-110](../src/widgets/JdMatch/index.tsx#L108-L110) 상태 칩 |
-| `-500/[0.04]` | [JdMatch:115-117](../src/widgets/JdMatch/index.tsx#L115-L117) 패널 |
+| 패턴          | 사용처                                                                        |
+| ------------- | ----------------------------------------------------------------------------- |
+| `-950/30`     | [PortfolioCard:60](../src/features/portfolio/ui/Card/index.tsx#L60) 외부 링크 |
+| `-500/10`     | [JdMatch:108-110](../src/widgets/JdMatch/index.tsx#L108-L110) 상태 칩         |
+| `-500/[0.04]` | [JdMatch:115-117](../src/widgets/JdMatch/index.tsx#L115-L117) 패널            |
 
 셋 다 "은은한 색 틴트"라는 같은 목적인데 계산식이 다르다. `-500/10`이 라이트의 `-50`과 밝기 대응이 가장 잘 맞는다.
 
@@ -237,8 +237,10 @@ WCAG 2.2 SC 2.4.13(Focus Appearance)는 최소 2px 두께와 3:1 대비를 요�
 [JdMatch:219](../src/widgets/JdMatch/index.tsx#L219)
 
 ```tsx
-{/* 제목 없이 콘텐츠만 우측 정렬(형제 섹션 콘텐츠 열과 라인 일치) */}
-<div aria-hidden className='hidden md:block md:min-w-[210px]' />
+{
+  /* 제목 없이 콘텐츠만 우측 정렬(형제 섹션 콘텐츠 열과 라인 일치) */
+}
+<div aria-hidden className='hidden md:block md:min-w-[210px]' />;
 ```
 
 `SectionTitle`(h2) 자리에 빈 스페이서를 넣었다. 시각적 정렬 목적은 이해되지만, 결과적으로 **이 섹션만 페이지 heading 구조에 존재하지 않는다.**
@@ -261,13 +263,13 @@ heading으로 페이지를 훑는 스크린리더 사용자는 AI 기능을 **�
 
 ### P3-4. 자격증 항목만 heading이 아님
 
-| 섹션        | 항목 태그                                          |
-| ----------- | -------------------------------------------------- |
-| 경력        | `h3`(회사) → `h3`(활동, Radix AccordionHeader) → `h4` |
-| 스킬        | `h3`(카테고리)                                      |
-| 포트폴리오  | `h3`(프로젝트명)                                    |
-| 학력        | `h3`(학교명)                                        |
-| **자격증**  | **`span`** ([Certification:34](../src/widgets/Certification/index.tsx#L34)) |
+| 섹션       | 항목 태그                                                                   |
+| ---------- | --------------------------------------------------------------------------- |
+| 경력       | `h3`(회사) → `h3`(활동, Radix AccordionHeader) → `h4`                       |
+| 스킬       | `h3`(카테고리)                                                              |
+| 포트폴리오 | `h3`(프로젝트명)                                                            |
+| 학력       | `h3`(학교명)                                                                |
+| **자격증** | **`span`** ([Certification:34](../src/widgets/Certification/index.tsx#L34)) |
 
 일관성만 놓고 보면 어긋나지만, 자격증은 단순 나열이라 `h3`가 과할 수도 있다. **정보 구조상 판단이 필요한 항목** — 반드시 고쳐야 하는 건 아니다.
 
@@ -287,15 +289,15 @@ heading으로 페이지를 훑는 스크린리더 사용자는 AI 기능을 **�
 
 ## 권장 처리 순서
 
-| 순서 | 항목                          | 난이도 | 효과                      |
-| ---- | ----------------------------- | ------ | ------------------------- |
-| 1    | P1-2 `leading-1.2`            | 1줄    | 본문 가독성 즉시 개선      |
-| 2    | P1-3 Dialog 포커스 링         | 1줄    | 키보드 접근성 복구         |
-| 3    | P3-1 툴팁 `aria-label`        | 1줄    | 스크린리더                 |
-| 4    | P1-1 Profile/Header 폭 정렬   | 2파일  | **시각적으로 가장 큰 변화** |
-| 5    | P3-3 JdMatch `sr-only` h2     | 1줄    | 아웃라인 복구              |
-| 6    | P2-3 Tooltip 중복 스타일 정리 | 1파일  | 죽은 코드 제거             |
-| 7    | P2-1 Badge 결정 (흡수/삭제)   | 3~4파일| 칩 통일                    |
-| 8    | P2-2 시맨틱 토큰 통일         | 전 위젯| 대공사, 마지막에           |
+| 순서 | 항목                          | 난이도  | 효과                        |
+| ---- | ----------------------------- | ------- | --------------------------- |
+| 1    | P1-2 `leading-1.2`            | 1줄     | 본문 가독성 즉시 개선       |
+| 2    | P1-3 Dialog 포커스 링         | 1줄     | 키보드 접근성 복구          |
+| 3    | P3-1 툴팁 `aria-label`        | 1줄     | 스크린리더                  |
+| 4    | P1-1 Profile/Header 폭 정렬   | 2파일   | **시각적으로 가장 큰 변화** |
+| 5    | P3-3 JdMatch `sr-only` h2     | 1줄     | 아웃라인 복구               |
+| 6    | P2-3 Tooltip 중복 스타일 정리 | 1파일   | 죽은 코드 제거              |
+| 7    | P2-1 Badge 결정 (흡수/삭제)   | 3~4파일 | 칩 통일                     |
+| 8    | P2-2 시맨틱 토큰 통일         | 전 위젯 | 대공사, 마지막에            |
 
 1~5번은 합쳐도 소규모다. 여기까지만 해도 눈에 띄는 문제는 정리된다.

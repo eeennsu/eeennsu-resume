@@ -9,16 +9,16 @@
 
 ## 1. 스택
 
-| 항목      | 선택                                                              |
-| --------- | ----------------------------------------------------------------- |
-| CSS       | Tailwind CSS v4 (`@theme` / `@theme inline` 디렉티브, CSS-first)   |
-| 컴포넌트  | shadcn/ui — `accordion`, `dialog`, `tooltip` 3개만 설치            |
-| 프리미티브| Radix UI (accordion, dialog, separator, tooltip)                  |
-| 아이콘    | `lucide-react`                                                    |
-| 애니메이션| `motion` (v12, `motion/react`) + `tw-animate-css`                 |
-| variant   | `class-variance-authority` (cva) + `tailwind-merge` (`cn`)         |
-| 다크모드  | `.dark` 클래스 기반 (`@custom-variant dark (&:is(.dark *))`)      |
-| 폰트      | Pretendard(기본) / Open Sans(영문 강조)                            |
+| 항목       | 선택                                                             |
+| ---------- | ---------------------------------------------------------------- |
+| CSS        | Tailwind CSS v4 (`@theme` / `@theme inline` 디렉티브, CSS-first) |
+| 컴포넌트   | shadcn/ui — `accordion`, `dialog`, `tooltip` 3개만 설치          |
+| 프리미티브 | Radix UI (accordion, dialog, separator, tooltip)                 |
+| 아이콘     | `lucide-react`                                                   |
+| 애니메이션 | `motion` (v12, `motion/react`) + `tw-animate-css`                |
+| variant    | `class-variance-authority` (cva) + `tailwind-merge` (`cn`)       |
+| 다크모드   | `.dark` 클래스 기반 (`@custom-variant dark (&:is(.dark *))`)     |
+| 폰트       | Pretendard(기본) / Open Sans(영문 강조)                          |
 
 포매팅은 `prettier-plugin-tailwindcss`가 클래스 순서를 자동 정렬한다. 클래스 순서는 손으로 맞추지 않는다.
 
@@ -85,14 +85,14 @@ className = 'bg-foreground text-background'; // primary CTA
 
 **B. 원시 팔레트** — Tailwind 기본 색상 직접 사용. 기존 위젯 대부분.
 
-| 계열      | 사용 횟수 | 용도                          |
-| --------- | --------- | ----------------------------- |
-| `gray-*`  | ~170      | 텍스트 / 보더 / 배경 / divide |
-| `blue-*`  | ~38       | 브랜드 액센트                 |
-| `emerald` | ~18       | 긍정 상태 (매칭됨, 성공)      |
-| `amber`   | ~15       | 주의 상태 (갭, 경고)          |
+| 계열      | 사용 횟수 | 용도                                  |
+| --------- | --------- | ------------------------------------- |
+| `gray-*`  | ~170      | 텍스트 / 보더 / 배경 / divide         |
+| `blue-*`  | ~38       | 브랜드 액센트                         |
+| `emerald` | ~18       | 긍정 상태 (매칭됨, 성공)              |
+| `amber`   | ~15       | 주의 상태 (갭, 경고)                  |
 | `rose`    | ~13       | 부정 상태 (Problem 라벨, 낮은 적합도) |
-| `slate`   | ~6        | Tooltip 배경, Badge gray variant |
+| `slate`   | ~6        | Tooltip 배경, Badge gray variant      |
 
 > **규칙**: 새로 만드는 컴포넌트는 **시맨틱 토큰(A)을 우선** 쓴다. 팔레트(B)는 상태색(emerald/amber)이나 기존 컴포넌트를 수정할 때만.
 
@@ -107,12 +107,12 @@ className = 'bg-foreground text-background'; // primary CTA
 
 ### 3-3. 상태색
 
-| 의미        | 라이트                                                  | 다크                                                |
-| ----------- | ------------------------------------------------------- | --------------------------------------------------- |
-| 긍정/매칭   | `text-emerald-600` `bg-emerald-50` `border-emerald-200`  | `dark:text-emerald-300` `dark:bg-emerald-500/10`    |
-| 주의/갭     | `text-amber-600` `bg-amber-50` `border-amber-200`        | `dark:text-amber-300` `dark:bg-amber-500/10`        |
-| 부정/문제   | `text-rose-500` `bg-rose-50` `border-rose-200/50`        | `dark:text-rose-400` `dark:bg-rose-500/10`          |
-| 링크/외부   | `text-blue-600` `bg-blue-50/60` `border-blue-200`        | `dark:text-blue-300` `dark:bg-blue-950/30`          |
+| 의미      | 라이트                                                  | 다크                                             |
+| --------- | ------------------------------------------------------- | ------------------------------------------------ |
+| 긍정/매칭 | `text-emerald-600` `bg-emerald-50` `border-emerald-200` | `dark:text-emerald-300` `dark:bg-emerald-500/10` |
+| 주의/갭   | `text-amber-600` `bg-amber-50` `border-amber-200`       | `dark:text-amber-300` `dark:bg-amber-500/10`     |
+| 부정/문제 | `text-rose-500` `bg-rose-50` `border-rose-200/50`       | `dark:text-rose-400` `dark:bg-rose-500/10`       |
+| 링크/외부 | `text-blue-600` `bg-blue-50/60` `border-blue-200`       | `dark:text-blue-300` `dark:bg-blue-950/30`       |
 
 다크모드 배경은 **반투명**을 쓴다. 불투명 다크 배경은 카드 위에 얹었을 때 뜬다. 현재 두 방식이 섞여 있다 — `-950/30`(PortfolioCard 외부 링크)과 `-500/10`(JdMatch 상태 칩). 새 코드는 `-500/10` 쪽을 쓴다.
 
@@ -120,21 +120,21 @@ className = 'bg-foreground text-background'; // primary CTA
 
 ### 3-4. 텍스트 위계
 
-| 역할        | 라이트          | 다크                  |
-| ----------- | --------------- | --------------------- |
-| 제목        | `text-gray-900` | `dark:text-gray-100`  |
-| 본문        | `text-gray-700` | `dark:text-gray-300`  |
-| 보조        | `text-gray-600` | `dark:text-gray-400`  |
-| 메타/캡션   | `text-gray-500` | `dark:text-gray-400`  |
-| 비활성      | `text-gray-400` | `dark:text-gray-500`  |
+| 역할      | 라이트          | 다크                 |
+| --------- | --------------- | -------------------- |
+| 제목      | `text-gray-900` | `dark:text-gray-100` |
+| 본문      | `text-gray-700` | `dark:text-gray-300` |
+| 보조      | `text-gray-600` | `dark:text-gray-400` |
+| 메타/캡션 | `text-gray-500` | `dark:text-gray-400` |
+| 비활성    | `text-gray-400` | `dark:text-gray-500` |
 
 ### 3-5. 보더 / 구분선
 
-| 역할          | 클래스                                          |
-| ------------- | ----------------------------------------------- |
-| 카드 외곽선   | `border-gray-200 dark:border-gray-800`           |
-| 내부 구분선   | `border-gray-100 dark:border-gray-800`           |
-| 리스트 divide | `divide-gray-100 dark:divide-gray-800`           |
+| 역할          | 클래스                                             |
+| ------------- | -------------------------------------------------- |
+| 카드 외곽선   | `border-gray-200 dark:border-gray-800`             |
+| 내부 구분선   | `border-gray-100 dark:border-gray-800`             |
+| 리스트 divide | `divide-gray-100 dark:divide-gray-800`             |
 | hover 강조    | `hover:border-gray-300 dark:hover:border-gray-700` |
 
 라이트는 200/100으로 구분하지만 **다크는 둘 다 800**이다. 다크에서 100↔200 차이가 보이지 않기 때문.
@@ -164,17 +164,17 @@ body        → font-pretendard  (한글 본문 전체)
 
 Tailwind 기본 스텝과 **임의값(`text-[Npx]`)이 혼용**된다. 임의값은 한글 가독성을 위해 기본 스텝 사이를 메우려고 도입됐다.
 
-| 용도                    | 모바일          | 데스크톱          |
-| ----------------------- | --------------- | ----------------- |
-| 이름 (h1)               | `text-3xl`      | `md:text-4xl`     |
-| 섹션 제목 (h2)          | `text-3xl`      | —                 |
-| 활동 제목 (h3)          | `text-lg`       | `md:text-xl`      |
-| 항목 제목 (h4)          | `text-[15px]`   | `md:text-[17px]`  |
-| 본문                    | `text-[14px]`   | `md:text-[15px]`  |
-| 보조 본문               | `text-sm`       | `md:text-[15px]`  |
-| 메타 / 캡션             | `text-xs`       | `md:text-[13px]`  |
-| 칩 / 태그               | `text-[11.5px]` | `md:text-xs`      |
-| 카테고리 라벨 (uppercase)| `text-[11px]`  | `md:text-xs`      |
+| 용도                      | 모바일          | 데스크톱         |
+| ------------------------- | --------------- | ---------------- |
+| 이름 (h1)                 | `text-3xl`      | `md:text-4xl`    |
+| 섹션 제목 (h2)            | `text-3xl`      | —                |
+| 활동 제목 (h3)            | `text-lg`       | `md:text-xl`     |
+| 항목 제목 (h4)            | `text-[15px]`   | `md:text-[17px]` |
+| 본문                      | `text-[14px]`   | `md:text-[15px]` |
+| 보조 본문                 | `text-sm`       | `md:text-[15px]` |
+| 메타 / 캡션               | `text-xs`       | `md:text-[13px]` |
+| 칩 / 태그                 | `text-[11.5px]` | `md:text-xs`     |
+| 카테고리 라벨 (uppercase) | `text-[11px]`   | `md:text-xs`     |
 
 가장 많이 쓰이는 임의값: `text-[15px]`(11회), `text-[13px]`(9회).
 
@@ -203,17 +203,17 @@ gap-3(17) gap-4(15) gap-2(15) gap-1.5(11) gap-6(6) gap-5(6) gap-8(3) gap-7(2) ga
 
 ### 권장 스케일 (⚠️ 현재 미준수 — §11 참조)
 
-| 토큰   | px | 용도                            |
-| ------ | -- | ------------------------------- |
-| `1.5`  | 6  | 아이콘 ↔ 라벨, 인라인 요소       |
-| `2`    | 8  | 칩/태그 사이                     |
-| `3`    | 12 | 리스트 항목, 소형 그룹           |
-| `4`    | 16 | 카드 내부 블록 간                |
-| `5`    | 20 | 카드 내부 큰 블록 간             |
-| `6`    | 24 | 카드 패딩(모바일), 그룹 간       |
-| `8`    | 32 | 카드 패딩(데스크톱)              |
-| `10`   | 40 | 섹션 내 대블록                   |
-| `16`   | 64 | 섹션 간 (데스크톱)               |
+| 토큰  | px  | 용도                       |
+| ----- | --- | -------------------------- |
+| `1.5` | 6   | 아이콘 ↔ 라벨, 인라인 요소 |
+| `2`   | 8   | 칩/태그 사이               |
+| `3`   | 12  | 리스트 항목, 소형 그룹     |
+| `4`   | 16  | 카드 내부 블록 간          |
+| `5`   | 20  | 카드 내부 큰 블록 간       |
+| `6`   | 24  | 카드 패딩(모바일), 그룹 간 |
+| `8`   | 32  | 카드 패딩(데스크톱)        |
+| `10`  | 40  | 섹션 내 대블록             |
+| `16`  | 64  | 섹션 간 (데스크톱)         |
 
 `gap-2.5` / `gap-7` / `gap-9` / `gap-3.5` 같은 중간값은 새로 도입하지 않는다.
 
@@ -234,13 +234,13 @@ py-7 md:py-9      // 큰 행
 
 기준값은 `--radius: 0.625rem` (10px). [globals.css:87](../src/app/globals.css#L87)
 
-| 클래스         | 값     | 용도                                      |
-| -------------- | ------ | ----------------------------------------- |
-| `rounded-sm`   | 6px    | Badge                                      |
-| `rounded-md`   | 8px    | 칩, 태그, 소형 링크 버튼                   |
-| `rounded-xl`   | 14px   | 아코디언 아이템, textarea, 아이콘 박스     |
-| `rounded-2xl`  | 16px   | 프로필 이미지, 큰 인터랙티브 카드          |
-| `rounded-full` | ∞      | pill 버튼, 진행 바, 스코어 칩 (16회 — 최다) |
+| 클래스         | 값   | 용도                                        |
+| -------------- | ---- | ------------------------------------------- |
+| `rounded-sm`   | 6px  | Badge                                       |
+| `rounded-md`   | 8px  | 칩, 태그, 소형 링크 버튼                    |
+| `rounded-xl`   | 14px | 아코디언 아이템, textarea, 아이콘 박스      |
+| `rounded-2xl`  | 16px | 프로필 이미지, 큰 인터랙티브 카드           |
+| `rounded-full` | ∞    | pill 버튼, 진행 바, 스코어 칩 (16회 — 최다) |
 
 `rounded-lg`는 3회만 등장(그중 1회는 shadcn `dialog.tsx` 원본). 새로 쓰지 않는다.
 
@@ -351,20 +351,20 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 
 ### easing
 
-| 커브                       | 용도                              |
-| -------------------------- | --------------------------------- |
-| `[0.16, 1, 0.3, 1]`        | 진입 애니메이션 (expo-out)         |
-| `cubic-bezier(0.32,0.72,0,1)` | 아코디언 열림/닫힘              |
+| 커브                          | 용도                       |
+| ----------------------------- | -------------------------- |
+| `[0.16, 1, 0.3, 1]`           | 진입 애니메이션 (expo-out) |
+| `cubic-bezier(0.32,0.72,0,1)` | 아코디언 열림/닫힘         |
 
 ### duration
 
-| 값     | 용도                    |
-| ------ | ----------------------- |
-| 200ms  | 즉각 피드백             |
-| 280ms  | 아코디언 닫힘           |
-| 300ms  | 일반 트랜지션           |
-| 360ms  | 아코디언 열림           |
-| 500ms  | 섹션 진입               |
+| 값    | 용도          |
+| ----- | ------------- |
+| 200ms | 즉각 피드백   |
+| 280ms | 아코디언 닫힘 |
+| 300ms | 일반 트랜지션 |
+| 360ms | 아코디언 열림 |
+| 500ms | 섹션 진입     |
 
 닫힘은 열림보다 짧게 (280 vs 360).
 
@@ -398,15 +398,15 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 
 이미 지켜지고 있는 것들 — 새 코드도 유지한다.
 
-| 항목            | 구현                                                                   |
-| --------------- | ---------------------------------------------------------------------- |
-| 포커스 링       | [globals.css:167-172](../src/app/globals.css#L167-L172) 전역 `focus-visible` |
-| reduced-motion  | 전역 CSS + `useReducedMotion()` 훅                                       |
-| 외부 링크       | `aria-label` + `sr-only` 새 탭 안내                                      |
-| 장식 아이콘     | `aria-hidden='true'`                                                     |
-| 시맨틱 태그     | `main` / `section` / `figure` / `h1~h4` / `ul` / `ol` 계층 준수           |
-| 이미지          | `alt`은 i18n dict 경유, 히어로는 `priority` + `sizes`                    |
-| 스크롤          | `scroll-smooth` (reduced-motion 시 `auto`)                              |
+| 항목           | 구현                                                                         |
+| -------------- | ---------------------------------------------------------------------------- |
+| 포커스 링      | [globals.css:167-172](../src/app/globals.css#L167-L172) 전역 `focus-visible` |
+| reduced-motion | 전역 CSS + `useReducedMotion()` 훅                                           |
+| 외부 링크      | `aria-label` + `sr-only` 새 탭 안내                                          |
+| 장식 아이콘    | `aria-hidden='true'`                                                         |
+| 시맨틱 태그    | `main` / `section` / `figure` / `h1~h4` / `ul` / `ol` 계층 준수              |
+| 이미지         | `alt`은 i18n dict 경유, 히어로는 `priority` + `sizes`                        |
+| 스크롤         | `scroll-smooth` (reduced-motion 시 `auto`)                                   |
 
 포커스 링은 전역에서 처리되므로 **컴포넌트마다 `focus:outline-none`을 붙이지 않는다.**
 
