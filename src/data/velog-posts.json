@@ -1,6 +1,33 @@
 {
-  "fetchedAt": "2026-08-08T01:06:03.044Z",
+  "fetchedAt": "2026-08-12T13:10:33.615Z",
   "posts": [
+    {
+      "id": "c60d7fad-4c0a-450b-860d-e7f4a521498d",
+      "title": "React Native에서 모달 등장 시 미세한 jank 원인을 추적한 기록",
+      "description": "개요\n\nReact Native + Tamagui Dialog로 만든 알림 모달이 등장할 때마다 미세한 jank가 발생했다. 처음엔 모달 컴포넌트 자체가 무겁다고 의심했지만, 진짜 범인은 모달이 뜨는 그 순간 같이 발사되는 5개의 네트워크 요청이었다. 이 글은 그 원인을",
+      "thumbnail": null,
+      "urlSlug": "React-Native에서-모달-등장-시-미세한-jank-원인을-추적한-기록",
+      "releasedAt": "2026-08-09T02:51:48.330Z",
+      "tags": ["react native", "trouble shooting"]
+    },
+    {
+      "id": "a8228b36-0de4-4093-9faf-4fc3e25c10d1",
+      "title": "React Native 가상화 리스트 컴포넌트의 성능 관련 props 모음",
+      "description": "React Native 가상화 리스트 성능 props 정리 — FlatList vs FlashList vs LegendList\n\n긴 리스트의 성능 문제는 결국 \"화면에 보이지 않는 아이템까지 다 그리느냐\"의 싸움이다. 세 라이브러리 모두 가상화(virtualizatio",
+      "thumbnail": null,
+      "urlSlug": "React-Native-가상화-리스트-컴포넌트의-성능-관련-props-모음",
+      "releasedAt": "2026-08-08T09:22:30.830Z",
+      "tags": ["optimization", "react native"]
+    },
+    {
+      "id": "5f61261f-6b10-4fb5-a784-5a78ad8fe68d",
+      "title": "React Native에서의 콜드 스타트 최적화 & UX 전략",
+      "description": "개요\n\n최적화는 어디서 시간이 쓰이는지 분해하는 데서 시작한다. 콜드 스타트는 크게 다음 구간으로 나뉜다.\n\n프로세스 생성 + 네이티브 초기화 — OS가 앱 프로세스를 띄우고 네이티브 런타임이 올라오는 구간이다. 앱이 직접 줄이기 가장 어렵다.\n\nJS 엔진 초기화 + ",
+      "thumbnail": null,
+      "urlSlug": "React-Native-콜드-스타트-최적화-UX-전략",
+      "releasedAt": "2026-08-08T08:57:15.258Z",
+      "tags": ["optimization", "react native"]
+    },
     {
       "id": "cc13e121-b12a-4c8b-a707-dd8aa0d3a073",
       "title": "ios에서 usb 연결하고 빌드 후 Metro 와의 연결이 끊길 때",
@@ -17,7 +44,7 @@
       "thumbnail": null,
       "urlSlug": "React-Native-에서의-메모이제이션-4.-React-Compiler-적용시-지켜야할-필수-규칙들",
       "releasedAt": "2026-08-05T11:48:34.660Z",
-      "tags": ["memoization", "react native"]
+      "tags": ["memoization", "optimization", "react native"]
     },
     {
       "id": "aa3a6b41-72dd-41e9-b0b3-0e003cb9e96b",
@@ -26,7 +53,7 @@
       "thumbnail": null,
       "urlSlug": "React-Native-에서의-메모이제이션-3.-React-Compiler-의-적용시-기존-메모이제이션들의-방향",
       "releasedAt": "2026-08-04T13:14:13.656Z",
-      "tags": ["memoization", "react native"]
+      "tags": ["memoization", "optimization", "react native"]
     },
     {
       "id": "18ba334e-d163-483e-a1b8-d583b53c71fd",
@@ -35,7 +62,7 @@
       "thumbnail": null,
       "urlSlug": "React-Native-에서의-메모이제이션-2.-React-Compiler-의-자동-메모이제이션",
       "releasedAt": "2026-08-02T10:27:39.857Z",
-      "tags": ["memoization", "react native"]
+      "tags": ["memoization", "optimization", "react native"]
     },
     {
       "id": "1593a00b-63ad-4caf-a93b-b7bf997508b6",
@@ -44,7 +71,7 @@
       "thumbnail": null,
       "urlSlug": "React-Native-에서의-메모이제이션-1.-React와-같은-이론이지만-더-낮은-손익분기점",
       "releasedAt": "2026-07-27T13:22:32.832Z",
-      "tags": ["react native"]
+      "tags": ["memoization", "optimization", "react native"]
     },
     {
       "id": "58d7a6bf-031c-42c6-8453-8140c0da04e8",
@@ -423,33 +450,6 @@
       "urlSlug": "React-Native에서의-이미지-파일-크기-관리-2x-3x",
       "releasedAt": "2026-05-04T13:30:25.533Z",
       "tags": ["react native"]
-    },
-    {
-      "id": "a5c7d679-2fb2-429e-a1fb-f6b70e9436f5",
-      "title": "React Native 의 Hot updater",
-      "description": "Hot updater란?\nReact Native 앱을 위한 셀프 호스팅 업데이트 솔루션이다. 앱스토어 심사 없이, 앱의 UI나 js로직을 실시간으로 유저들에게 업데이트해주는 도구이다. 이러한 기술을 OTA(Over-The-Air)라고 한다. 과거에는 마이크로소프트가 제",
-      "thumbnail": null,
-      "urlSlug": "React-Native-의-Hot-updater",
-      "releasedAt": "2026-05-04T12:56:14.361Z",
-      "tags": ["react native"]
-    },
-    {
-      "id": "8bb5fd33-adaa-4699-8f92-f00bac7d1c1c",
-      "title": "React Native의 데이터 목록 최적화 FlashList ",
-      "description": "FlashList는 Shopify에서 만든 React Native용 리스트 라이브러리다.\n기존의 FlatList가 가진 성능 한계(특히 저사양 안드로이드에서의 버벅임, 스크롤 시 흰 화면)를 극복하기 위해 만들어졌다. 현재 React Native 커뮤니티에서 가장 권장",
-      "thumbnail": null,
-      "urlSlug": "React-Native의-데이터-목록-최적화-FlashList",
-      "releasedAt": "2026-04-18T08:59:02.239Z",
-      "tags": ["react native"]
-    },
-    {
-      "id": "15a7fc7a-cf52-4df8-8d13-3003625d0801",
-      "title": "ios vs android 앱 성능",
-      "description": "동일한 기능의 릴리즈된 앱을 구동할 때, 일반적으로 iOS 환경이 Android 환경보다 구동 속도가 빠르고 메모리 점유율이 낮습니다. 이는 두 운영체제의 근본적인 아키텍처 및 메모리 관리 방식의 차이에서 기인하며, 주요 기술적 메커니즘은 다음과 같습니다.\n\n1. 메모",
-      "thumbnail": null,
-      "urlSlug": "ios-vs-android-앱-성능",
-      "releasedAt": "2026-04-16T13:35:58.801Z",
-      "tags": ["react native"]
     }
   ],
   "tagStats": [
@@ -462,8 +462,12 @@
       "count": 6
     },
     {
+      "name": "optimization",
+      "count": 6
+    },
+    {
       "name": "memoization",
-      "count": 3
+      "count": 4
     },
     {
       "name": "Debuging",
@@ -475,6 +479,10 @@
     },
     {
       "name": "tanstack-query",
+      "count": 1
+    },
+    {
+      "name": "trouble shooting",
       "count": 1
     }
   ]
