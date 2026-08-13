@@ -39,19 +39,17 @@ const BehindTheScenes: FC<Props> = ({ archive, labels }) => {
   return (
     <section
       aria-labelledby='writings-behind-heading'
-      className='mx-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:mx-auto md:max-w-6xl md:p-10 dark:border-gray-800 dark:bg-gray-900/40'
+      className='border-border mx-6 rounded-2xl border bg-gray-50 p-6 md:mx-auto md:max-w-6xl md:p-10 dark:bg-gray-900/40'
     >
       <FadeInWrapper className='flex flex-col gap-5'>
         <header className='flex flex-col gap-2'>
           <h2
             id='writings-behind-heading'
-            className='text-lg font-semibold tracking-tight text-gray-900 md:text-xl dark:text-gray-100'
+            className='text-foreground text-lg font-semibold tracking-tight md:text-xl'
           >
             {labels.title}
           </h2>
-          <p className='text-[14px] leading-relaxed text-gray-600 dark:text-gray-400'>
-            {labels.description}
-          </p>
+          <p className='text-muted-foreground text-[14px] leading-relaxed'>{labels.description}</p>
         </header>
 
         <Diagram
@@ -61,25 +59,25 @@ const BehindTheScenes: FC<Props> = ({ archive, labels }) => {
           }}
         />
 
-        <dl className='grid grid-cols-2 gap-3 text-[13px] text-gray-700 md:grid-cols-3 dark:text-gray-300'>
-          <div className='rounded-lg border border-gray-200 bg-white/80 px-3 py-2 dark:border-gray-800 dark:bg-gray-950/40'>
-            <dt className='text-[11px] font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400'>
+        <dl className='text-body-s grid grid-cols-2 gap-3 text-gray-700 md:grid-cols-3 dark:text-gray-300'>
+          <div className='border-border rounded-lg border bg-white/80 px-3 py-2 dark:bg-gray-950/40'>
+            <dt className='text-caption text-muted-foreground font-semibold tracking-wider uppercase'>
               posts
             </dt>
             <dd className='mt-0.5 tabular-nums'>
               {labels.stats.posts.replace('{{count}}', String(archive.posts.length))}
             </dd>
           </div>
-          <div className='rounded-lg border border-gray-200 bg-white/80 px-3 py-2 dark:border-gray-800 dark:bg-gray-950/40'>
-            <dt className='text-[11px] font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400'>
+          <div className='border-border rounded-lg border bg-white/80 px-3 py-2 dark:bg-gray-950/40'>
+            <dt className='text-caption text-muted-foreground font-semibold tracking-wider uppercase'>
               tags
             </dt>
             <dd className='mt-0.5 tabular-nums'>
               {labels.stats.tags.replace('{{count}}', String(archive.tagStats.length))}
             </dd>
           </div>
-          <div className='rounded-lg border border-gray-200 bg-white/80 px-3 py-2 dark:border-gray-800 dark:bg-gray-950/40'>
-            <dt className='text-[11px] font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400'>
+          <div className='border-border rounded-lg border bg-white/80 px-3 py-2 dark:bg-gray-950/40'>
+            <dt className='text-caption text-muted-foreground font-semibold tracking-wider uppercase'>
               fetched
             </dt>
             <dd className='mt-0.5 tabular-nums'>
@@ -92,7 +90,7 @@ const BehindTheScenes: FC<Props> = ({ archive, labels }) => {
           {labels.stack.map(item => (
             <li
               key={item}
-              className='inline-flex items-center rounded-full border border-gray-200 bg-white px-2.5 py-1 text-[11.5px] font-medium text-gray-700 dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-300'
+              className='border-border text-caption inline-flex items-center rounded-full border bg-white px-2.5 py-1 font-medium text-gray-700 dark:bg-gray-950/40 dark:text-gray-300'
             >
               {item}
             </li>

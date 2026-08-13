@@ -24,14 +24,12 @@ const ErrorPage: FC<Props> = ({ error, reset }) => {
 
   return (
     <main className='flex min-h-[60vh] flex-col items-center justify-center px-6 py-16 text-center'>
-      <h2 className='mb-2 text-2xl font-bold text-gray-900 md:text-3xl dark:text-gray-100'>
-        {dict.error.heading}
-      </h2>
-      <p className='mb-6 max-w-md text-sm leading-relaxed text-gray-500 md:text-base dark:text-gray-400'>
+      <h2 className='text-foreground mb-2 text-2xl font-bold md:text-3xl'>{dict.error.heading}</h2>
+      <p className='text-muted-foreground mb-6 max-w-md text-sm leading-relaxed md:text-base'>
         {dict.error.description}
       </p>
       {process.env.NODE_ENV !== 'production' && error?.message && (
-        <pre className='mb-6 max-w-xl overflow-auto rounded-md bg-gray-100 px-3 py-2 text-left text-xs text-gray-700 dark:bg-gray-900 dark:text-gray-300'>
+        <pre className='bg-muted mb-6 max-w-xl overflow-auto rounded-md px-3 py-2 text-left text-xs text-gray-700 dark:text-gray-300'>
           {error.message}
           {error.digest ? `\n\ndigest: ${error.digest}` : ''}
         </pre>

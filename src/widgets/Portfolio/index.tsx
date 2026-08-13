@@ -28,7 +28,7 @@ const PortfolioWidget: FC<Props> = ({ locale }) => {
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.portfolio}</SectionTitle>
 
-      <div className='grow overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950/40'>
+      <div className='border-border grow overflow-hidden rounded-xl border bg-white dark:bg-gray-950/40'>
         <div className='grid w-full md:grid-cols-2'>
           {portfolios.map(portfolio => (
             <PortfolioCard

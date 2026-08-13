@@ -26,16 +26,16 @@ const EducationWidget: FC<Props> = ({ locale }) => {
     <AnimatedSection className='flex w-full max-md:flex-col max-md:gap-4'>
       <SectionTitle>{dict.sections.education}</SectionTitle>
       <div className='flex grow flex-col gap-6 md:gap-7'>
-        <header className='flex flex-col gap-2 border-b border-gray-200 pb-5 max-md:items-center md:flex-row md:items-end md:justify-between md:gap-6 dark:border-gray-800'>
+        <header className='border-border flex flex-col gap-2 border-b pb-5 max-md:items-center md:flex-row md:items-end md:justify-between md:gap-6'>
           <div className='flex flex-col gap-1 max-md:items-center md:flex-row md:items-baseline md:gap-3'>
-            <h3 className='text-[22px] font-semibold tracking-tight text-gray-900 md:text-[26px] dark:text-gray-100'>
+            <h3 className='text-foreground text-[22px] font-semibold tracking-tight md:text-[26px]'>
               {education?.schoolName}
             </h3>
-            <span className='text-sm font-medium text-gray-600 md:text-[15px] dark:text-gray-400'>
+            <span className='text-muted-foreground md:text-body-m text-sm font-medium'>
               {education?.department}
             </span>
           </div>
-          <p className='text-[13px] font-medium tracking-tight text-gray-700 tabular-nums md:text-sm dark:text-gray-300'>
+          <p className='text-body-s font-medium tracking-tight text-gray-700 tabular-nums md:text-sm dark:text-gray-300'>
             {education?.startDate} ~ {education?.endDate}
           </p>
         </header>
@@ -44,7 +44,7 @@ const EducationWidget: FC<Props> = ({ locale }) => {
           {education?.activities.map((activity, index) => (
             <li
               key={index}
-              className='flex gap-3 text-[15px] leading-relaxed break-keep text-gray-800 dark:text-gray-200'
+              className='text-body-m flex gap-3 leading-relaxed break-keep text-gray-800 dark:text-gray-200'
             >
               <span className='mt-2.5 size-1 shrink-0 rounded-full bg-blue-500/60 dark:bg-blue-400/70' />
               <span className='flex-1'>{activity}</span>

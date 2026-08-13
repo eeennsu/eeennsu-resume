@@ -20,7 +20,7 @@ const WritingsLoading: FC = () => (
         {Array.from({ length: CARD_COUNT }).map((_, index) => (
           <li
             key={index}
-            className='h-28 animate-pulse rounded-xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/5'
+            className='border-border h-28 animate-pulse rounded-xl border bg-gray-100 dark:bg-white/5'
           />
         ))}
       </ul>

@@ -35,10 +35,10 @@ const TagCloudFilter: FC<Props> = ({ tagStats, activeTag, allLabel }) => {
           scroll={false}
           aria-current={activeTag === null ? 'true' : undefined}
           className={cn(
-            'inline-flex items-center rounded-full border px-2.5 py-1 text-[12px] font-medium transition-colors',
+            'inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium transition-colors',
             activeTag === null
               ? 'border-gray-900 bg-gray-900 text-white dark:border-gray-100 dark:bg-gray-100 dark:text-gray-900'
-              : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-300 dark:hover:border-gray-700',
+              : 'border-border bg-white text-gray-700 hover:border-gray-300 dark:bg-gray-950/40 dark:text-gray-300 dark:hover:border-gray-700',
           )}
         >
           {allLabel}
@@ -54,7 +54,7 @@ const TagCloudFilter: FC<Props> = ({ tagStats, activeTag, allLabel }) => {
               scroll={false}
               aria-current={isActive ? 'true' : undefined}
               className={cn(
-                'inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[12px] font-medium transition-colors',
+                'inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors',
                 isActive
                   ? 'border-gray-900 bg-gray-900 text-white dark:border-gray-100 dark:bg-gray-100 dark:text-gray-900'
                   : `${palette.chip} ${palette.border} hover:brightness-95`,

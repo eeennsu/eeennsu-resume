@@ -36,15 +36,15 @@ const Footer: FC = () => {
           aria-hidden='true'
           className='mb-1 h-px w-10 rounded-full bg-blue-400/40 dark:bg-blue-300/30'
         />
-        <p className='text-[13px] tracking-tight text-gray-500 md:text-sm dark:text-gray-400'>
+        <p className='text-body-s text-muted-foreground tracking-tight md:text-sm'>
           {dict.footer.thanks}
         </p>
-        <p className='font-pretendard text-[11.5px] tracking-[0.02em] text-gray-400 md:text-xs dark:text-gray-500'>
+        <p className='font-pretendard text-caption tracking-[0.02em] text-gray-400 md:text-xs dark:text-gray-500'>
           © {new Date().getFullYear()} · Bang Eunsu
         </p>
         <div className='mt-0.5 flex h-4 items-center justify-center'>
           {version ? (
-            <p className='text-[11px] font-medium tracking-[0.14em] text-gray-400 uppercase tabular-nums dark:text-gray-500'>
+            <p className='text-caption tracking-eyebrow font-medium text-gray-400 uppercase tabular-nums dark:text-gray-500'>
               {version}
             </p>
           ) : (

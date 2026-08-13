@@ -29,7 +29,7 @@ const LanguageToggle: FC = () => {
     <div
       role='group'
       aria-label={dict.languageToggle.label}
-      className='flex rounded-lg border border-gray-200 bg-gray-100/60 p-0.5 dark:border-gray-800 dark:bg-gray-900/60'
+      className='border-border flex rounded-lg border bg-gray-100/60 p-0.5 dark:bg-gray-900/60'
     >
       {LOCALES.map(target => {
         const isActive = target === currentLocale;
@@ -43,8 +43,8 @@ const LanguageToggle: FC = () => {
               'flex-1 rounded-md px-3 py-1.5 text-center text-xs font-semibold tracking-wide uppercase transition-colors',
               'focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-blue-400/60',
               isActive
-                ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-800 dark:text-gray-100'
-                : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100',
+                ? 'text-foreground bg-white shadow-sm dark:bg-gray-800'
+                : 'text-muted-foreground hover:text-gray-900 dark:hover:text-gray-100',
             )}
           >
             {LOCALE_SHORT[target]}

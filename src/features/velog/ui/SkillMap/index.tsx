@@ -54,7 +54,7 @@ const SkillMap: FC<Props> = ({ archive, emptyLabel, countLabel }) => {
     return (
       <section
         aria-labelledby='writings-skillmap-heading'
-        className='mx-6 rounded-2xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm text-gray-500 md:mx-auto md:max-w-6xl dark:border-gray-700 dark:bg-gray-950/40 dark:text-gray-400'
+        className='text-muted-foreground mx-6 rounded-2xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm md:mx-auto md:max-w-6xl dark:border-gray-700 dark:bg-gray-950/40'
       >
         <h2 id='writings-skillmap-heading' className='sr-only'>
           Skill Map
@@ -80,7 +80,7 @@ const SkillMap: FC<Props> = ({ archive, emptyLabel, countLabel }) => {
           const palette = getPaletteForSkill(skillId);
           return (
             <li key={skillId} id={`skill-map-${skillId}`} className='w-full min-w-0'>
-              <details className='group block w-full min-w-full overflow-hidden rounded-xl border border-gray-200 bg-white transition-colors open:border-gray-300 dark:border-gray-800 dark:bg-gray-950/40 open:dark:border-gray-700'>
+              <details className='group border-border block w-full min-w-full overflow-hidden rounded-xl border bg-white transition-colors open:border-gray-300 dark:bg-gray-950/40 open:dark:border-gray-700'>
                 <summary
                   className={cn(
                     'flex w-full cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 select-none [&::-webkit-details-marker]:hidden [&::marker]:hidden',
@@ -89,7 +89,7 @@ const SkillMap: FC<Props> = ({ archive, emptyLabel, countLabel }) => {
                 >
                   <span className='flex items-baseline gap-2 text-[14px] font-semibold tracking-tight'>
                     {SKILL_LABELS[skillId]}
-                    <span className='text-[11px] tabular-nums opacity-70'>
+                    <span className='text-caption tabular-nums opacity-70'>
                       {countLabel.replace('{{count}}', String(posts.length))}
                     </span>
                   </span>
@@ -105,7 +105,7 @@ const SkillMap: FC<Props> = ({ archive, emptyLabel, countLabel }) => {
                         href={`${VELOG_BASE_URL}/${post.urlSlug}`}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='block px-4 py-3 text-[13px] text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-900/40'
+                        className='text-body-s block px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-900/40'
                       >
                         {post.title}
                       </Link>

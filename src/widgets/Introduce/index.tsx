@@ -30,14 +30,14 @@ const IntroduceWidget: FC<Props> = ({ locale }) => {
           index === 0 ? (
             <p
               key={index}
-              className='mb-2 text-xl leading-[1.65] font-semibold tracking-tight text-balance text-gray-900 md:text-[22px] md:leading-[1.55] dark:text-gray-100'
+              className='text-foreground mb-2 text-xl leading-[1.65] font-semibold tracking-tight text-balance md:text-[22px] md:leading-[1.55]'
             >
               {intro}
             </p>
           ) : (
             <p
               key={index}
-              className='text-[15px] leading-[1.85] text-pretty text-gray-600 md:text-base dark:text-gray-400'
+              className='text-body-m text-muted-foreground leading-[1.85] text-pretty md:text-base'
             >
               {intro}
             </p>

@@ -16,13 +16,13 @@ interface Props {
 }
 
 const CTA_BASE =
-  'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[12px] font-medium transition-colors md:text-[13px]';
+  'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors md:text-body-s';
 
 const CTA_VARIANTS = {
   primary:
     'border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200 dark:hover:bg-blue-500/20',
   secondary:
-    'border-gray-200 bg-white text-gray-600 hover:bg-gray-100 dark:border-gray-800 dark:bg-gray-900/60 dark:text-gray-400 dark:hover:bg-gray-800',
+    'border-border bg-white text-muted-foreground hover:bg-gray-100 dark:bg-gray-900/60 dark:hover:bg-gray-800',
 } as const;
 
 const toPortfolioAnchor = (name: string) =>
@@ -47,14 +47,12 @@ const PortfolioCard: FC<Props> = ({
       className='target:animate-target-flash flex scroll-mt-24 flex-col gap-5 border-r border-b border-gray-100 p-7 transition-colors last:border-b-0 hover:border-blue-100 hover:bg-blue-50 max-md:border-r-0 md:gap-6 md:p-9 md:even:border-r-0 dark:border-gray-800 dark:hover:border-blue-500/20 dark:hover:bg-blue-500/10 md:[&:nth-last-child(-n+2)]:border-b-0 md:[&:nth-last-child(2):nth-child(odd)]:border-b-0'
     >
       <div className='flex flex-col gap-3'>
-        <h3 className='text-lg font-semibold tracking-tight text-gray-900 md:text-xl dark:text-gray-100'>
-          {name}
-        </h3>
+        <h3 className='text-foreground text-lg font-semibold tracking-tight md:text-xl'>{name}</h3>
         <ul className='flex flex-col gap-1.5'>
           {descriptionList.map(description => (
             <li
               key={description}
-              className='text-[14px] leading-relaxed text-gray-700 md:text-[15px] dark:text-gray-300'
+              className='md:text-body-m text-[14px] leading-relaxed text-gray-700 dark:text-gray-300'
             >
               {description}
             </li>
@@ -66,7 +64,7 @@ const PortfolioCard: FC<Props> = ({
         {tools.map((tool, index) => (
           <span
             key={index}
-            className='rounded-md bg-gray-100 px-2 py-0.5 text-[11.5px] font-medium text-gray-600 md:text-xs dark:bg-gray-800 dark:text-gray-300'
+            className='text-caption rounded-md bg-gray-100 px-2 py-0.5 font-medium text-gray-600 md:text-xs dark:bg-gray-800 dark:text-gray-300'
           >
             {tool}
           </span>

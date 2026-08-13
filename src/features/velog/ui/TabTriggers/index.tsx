@@ -39,7 +39,7 @@ const TabTriggers: FC<Props> = ({ currentView, labels }) => {
       aria-label='writings view tabs'
       className='flex flex-wrap gap-2 px-6 md:mx-auto md:max-w-6xl md:px-12'
     >
-      <ul className='flex gap-1 rounded-full border border-gray-200 bg-white p-1 text-[13px] dark:border-gray-800 dark:bg-gray-950/40'>
+      <ul className='border-border text-body-s flex gap-1 rounded-full border bg-white p-1 dark:bg-gray-950/40'>
         {tabs.map(({ view, label }) => {
           const isActive = view === currentView;
           return (
@@ -52,7 +52,7 @@ const TabTriggers: FC<Props> = ({ currentView, labels }) => {
                   'inline-flex items-center rounded-full px-3 py-1.5 font-medium transition-colors',
                   isActive
                     ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                    : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-900/60',
+                    : 'text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-900/60',
                 )}
               >
                 {label}

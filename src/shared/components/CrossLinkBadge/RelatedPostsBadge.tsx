@@ -15,14 +15,14 @@ const MAX_PREVIEW = 3;
 const RelatedPostsBadge: FC<Props> = ({ posts, label, emptyLabel }) => {
   if (posts.length === 0) {
     if (!emptyLabel) return null;
-    return <p className='text-[12px] text-gray-500 dark:text-gray-500'>{emptyLabel}</p>;
+    return <p className='text-xs text-gray-500 dark:text-gray-500'>{emptyLabel}</p>;
   }
 
   const preview = posts.slice(0, MAX_PREVIEW);
 
   return (
     <div className='flex flex-col gap-2'>
-      <p className='inline-flex items-center gap-1.5 text-[12px] font-semibold text-blue-600 dark:text-blue-300'>
+      <p className='inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-300'>
         <NotebookText className='size-3.5' aria-hidden />
         {label.replace('{{count}}', String(posts.length))}
       </p>

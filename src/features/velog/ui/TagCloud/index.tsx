@@ -40,7 +40,7 @@ const TagCloud: FC<Props> = ({ archive, activeTag, labels, isRecent, renderCross
         allLabel={labels.allLabel}
       />
       {filtered.length === 0 ? (
-        <p className='rounded-xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-950/40 dark:text-gray-400'>
+        <p className='text-muted-foreground rounded-xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm dark:border-gray-700 dark:bg-gray-950/40'>
           {labels.emptyLabel}
         </p>
       ) : (

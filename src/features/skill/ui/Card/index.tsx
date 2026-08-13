@@ -23,7 +23,7 @@ interface Props {
 const SkillCard: FC<Props> = ({ name, detailList, labelSkills, locale, inlineAria }) => {
   return (
     <div className='grid grid-cols-1 gap-3 py-5 md:grid-cols-7 md:gap-x-10 md:py-6'>
-      <h3 className='flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] text-blue-600 uppercase md:col-span-2 md:mt-1 md:text-xs dark:text-blue-300'>
+      <h3 className='text-caption flex items-center gap-2 font-semibold tracking-[0.18em] text-blue-600 uppercase md:col-span-2 md:mt-1 md:text-xs dark:text-blue-300'>
         <span
           aria-hidden='true'
           className='h-3 w-0.5 shrink-0 rounded-full bg-blue-500/60 dark:bg-blue-400/70'

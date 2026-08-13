@@ -69,20 +69,20 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
       <header className='flex flex-col gap-5 px-6 md:mx-auto md:max-w-6xl md:px-12'>
         <Link
           href={`/${locale}`}
-          className='inline-flex w-fit items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
+          className='text-muted-foreground inline-flex w-fit items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium transition-colors hover:bg-gray-200/60 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
         >
           <ArrowLeft className='size-4' aria-hidden />
           {t.nav.back}
         </Link>
         <div className='flex flex-wrap items-center gap-3'>
-          <h1 className='font-pretendard text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl dark:text-gray-100'>
+          <h1 className='font-pretendard text-foreground text-3xl font-semibold tracking-tight md:text-4xl'>
             {t.pageTitle}
           </h1>
           <Link
             href={VELOG_BASE_URL}
             target='_blank'
             rel='noopener noreferrer'
-            className='inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11.5px] font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-500/25 dark:bg-emerald-500/10 dark:text-emerald-200 dark:hover:bg-emerald-500/20'
+            className='text-caption inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-500/25 dark:bg-emerald-500/10 dark:text-emerald-200 dark:hover:bg-emerald-500/20'
           >
             <ExternalLink className='size-3.5' aria-hidden />
             velog.io/@diso592
@@ -91,16 +91,16 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
             href={VELOG_RSS_URL}
             target='_blank'
             rel='noopener noreferrer'
-            className='inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-1 text-[11.5px] font-semibold text-orange-700 transition-colors hover:bg-orange-100 dark:border-orange-500/25 dark:bg-orange-500/10 dark:text-orange-200 dark:hover:bg-orange-500/20'
+            className='text-caption inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-1 font-semibold text-orange-700 transition-colors hover:bg-orange-100 dark:border-orange-500/25 dark:bg-orange-500/10 dark:text-orange-200 dark:hover:bg-orange-500/20'
           >
             <Rss className='size-3.5' aria-hidden />
             RSS
           </Link>
         </div>
-        <p className='max-w-3xl text-[15px] leading-relaxed text-gray-600 md:text-base dark:text-gray-400'>
+        <p className='text-body-m text-muted-foreground max-w-3xl leading-relaxed md:text-base'>
           {t.pageDescription}
         </p>
-        <dl className='flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-gray-500 dark:text-gray-400'>
+        <dl className='text-body-s text-muted-foreground flex flex-wrap gap-x-6 gap-y-2'>
           <div className='flex items-center gap-1.5'>
             <CalendarClock className='size-4' aria-hidden />
             <dd>{t.lastFetched.replace('{{when}}', fetchedLabel)}</dd>
@@ -115,7 +115,7 @@ const VelogArchiveWidget: FC<Props> = ({ locale, currentView, activeTag }) => {
       </header>
 
       {archive.posts.length === 0 ? (
-        <section className='mx-6 rounded-2xl border border-gray-200 bg-gray-50 px-6 py-12 text-center text-sm text-gray-500 md:mx-auto md:max-w-6xl dark:border-gray-800 dark:bg-gray-900/40 dark:text-gray-400'>
+        <section className='border-border text-muted-foreground mx-6 rounded-2xl border bg-gray-50 px-6 py-12 text-center text-sm md:mx-auto md:max-w-6xl dark:bg-gray-900/40'>
           {t.empty}
         </section>
       ) : (

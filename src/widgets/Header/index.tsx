@@ -80,13 +80,13 @@ const Header: FC<Props> = ({ isHeaderVisible, isNewVelogPost }) => {
             <PopoverContent align='end' className='w-64'>
               <div className='flex flex-col gap-3 p-1'>
                 <div className='flex flex-col gap-1.5'>
-                  <span className='px-1 text-[11px] font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400'>
+                  <span className='text-caption text-muted-foreground px-1 font-medium tracking-wide uppercase'>
                     {dict.header.settingsLanguage}
                   </span>
                   <LanguageToggle />
                 </div>
                 <div className='flex flex-col gap-1.5'>
-                  <span className='px-1 text-[11px] font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400'>
+                  <span className='text-caption text-muted-foreground px-1 font-medium tracking-wide uppercase'>
                     {dict.header.settingsTheme}
                   </span>
                   <ThemeToggle />

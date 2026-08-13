@@ -36,7 +36,7 @@ const groupByYearMonth = (
 const Timeline: FC<Props> = ({ archive, labels, isRecent, renderCrossLink }) => {
   if (archive.posts.length === 0) {
     return (
-      <p className='mx-6 rounded-xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm text-gray-500 md:mx-auto md:max-w-6xl dark:border-gray-700 dark:bg-gray-950/40 dark:text-gray-400'>
+      <p className='text-muted-foreground mx-6 rounded-xl border border-dashed border-gray-300 bg-white/50 px-6 py-10 text-center text-sm md:mx-auto md:max-w-6xl dark:border-gray-700 dark:bg-gray-950/40'>
         {labels.emptyLabel}
       </p>
     );
@@ -52,14 +52,14 @@ const Timeline: FC<Props> = ({ archive, labels, isRecent, renderCrossLink }) => 
       <h2 id='writings-timeline-heading' className='sr-only'>
         Timeline
       </h2>
-      <ol className='flex flex-col gap-10 border-l border-gray-200 pl-6 dark:border-gray-800'>
+      <ol className='border-border flex flex-col gap-10 border-l pl-6'>
         {groups.map(group => (
           <li key={group.key} className='relative flex flex-col gap-4'>
             <span
               aria-hidden
               className='absolute top-1.5 -left-[29px] flex size-3 items-center justify-center rounded-full border-2 border-white bg-blue-500 dark:border-gray-950 dark:bg-blue-400'
             />
-            <h3 className='text-[13px] font-semibold tracking-wider text-gray-500 uppercase tabular-nums dark:text-gray-400'>
+            <h3 className='text-body-s text-muted-foreground font-semibold tracking-wider uppercase tabular-nums'>
               {group.label}
             </h3>
             <ul className='flex flex-col gap-3'>

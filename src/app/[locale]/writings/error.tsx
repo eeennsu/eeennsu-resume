@@ -24,10 +24,8 @@ const WritingsError: FC<Props> = ({ error, reset }) => {
 
   return (
     <main className='flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 py-16 text-center'>
-      <h1 className='text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100'>
-        {t.heading}
-      </h1>
-      <p className='max-w-md text-sm text-gray-600 dark:text-gray-400'>{t.description}</p>
+      <h1 className='text-foreground text-2xl font-semibold tracking-tight'>{t.heading}</h1>
+      <p className='text-muted-foreground max-w-md text-sm'>{t.description}</p>
       <div className='mt-2 flex gap-3'>
         <button
           type='button'

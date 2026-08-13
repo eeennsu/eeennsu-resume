@@ -20,12 +20,12 @@ const VelogPostMiniCard: FC<Props> = ({ post, isRecent, recentLabel }) => (
     href={`${VELOG_BASE_URL}/${post.urlSlug}`}
     target='_blank'
     rel='noopener noreferrer'
-    className='flex h-full flex-col gap-2 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-blue-500/40 hover:bg-gray-50/70 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none md:p-5 dark:border-gray-800 dark:bg-gray-950/40 dark:hover:border-blue-400/40 dark:hover:bg-gray-900/60 dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
+    className='border-border flex h-full flex-col gap-2 rounded-xl border bg-white p-4 transition-colors hover:border-blue-500/40 hover:bg-gray-50/70 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none md:p-5 dark:bg-gray-950/40 dark:hover:border-blue-400/40 dark:hover:bg-gray-900/60 dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
   >
     <div className='flex items-baseline justify-between gap-3'>
       <time
         dateTime={post.releasedAt}
-        className='text-[11.5px] text-gray-500 tabular-nums dark:text-gray-500'
+        className='text-caption text-gray-500 tabular-nums dark:text-gray-500'
       >
         {dayjs(post.releasedAt).format('YYYY.MM.DD')}
       </time>
@@ -36,7 +36,7 @@ const VelogPostMiniCard: FC<Props> = ({ post, isRecent, recentLabel }) => (
         </span>
       )}
     </div>
-    <h3 className='line-clamp-2 text-[14.5px] leading-snug font-semibold text-pretty break-keep text-gray-900 dark:text-gray-100'>
+    <h3 className='text-foreground line-clamp-2 text-[14.5px] leading-snug font-semibold text-pretty break-keep'>
       {post.title}
     </h3>
     {post.tags.length > 0 && (

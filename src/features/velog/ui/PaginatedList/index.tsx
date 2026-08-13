@@ -44,7 +44,7 @@ const PaginatedList: FC<Props> = ({
         <div className='flex flex-col items-center gap-2'>
           <span
             aria-live='polite'
-            className='text-[12px] text-gray-500 tabular-nums dark:text-gray-500'
+            className='text-xs text-gray-500 tabular-nums dark:text-gray-500'
           >
             {showingLabel.replace('{{shown}}', String(shown)).replace('{{total}}', String(total))}
           </span>
@@ -52,7 +52,7 @@ const PaginatedList: FC<Props> = ({
             <button
               type='button'
               onClick={() => setCount(c => c + step)}
-              className='inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-white px-4 py-2 text-[13px] font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:border-gray-700 dark:bg-gray-950/60 dark:text-gray-200 dark:hover:bg-gray-900 dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
+              className='text-body-s inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-white px-4 py-2 font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:border-gray-700 dark:bg-gray-950/60 dark:text-gray-200 dark:hover:bg-gray-900 dark:focus-visible:ring-blue-400/60 dark:focus-visible:ring-offset-gray-950'
             >
               {loadMoreLabel.replace('{{remaining}}', String(remaining))}
               <ChevronDown className='size-4' aria-hidden />

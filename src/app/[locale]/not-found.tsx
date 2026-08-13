@@ -15,10 +15,8 @@ export const metadata: Metadata = {
 const NotFound: FC = () => {
   return (
     <div className='flex flex-col items-center justify-center pt-10 text-center'>
-      <h2 className='mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100'>
-        {dict.notFound.heading}
-      </h2>
-      <p className='mb-4 text-gray-500 dark:text-gray-400'>{dict.notFound.description}</p>
+      <h2 className='text-foreground mb-2 text-3xl font-bold'>{dict.notFound.heading}</h2>
+      <p className='text-muted-foreground mb-4'>{dict.notFound.description}</p>
       <Link
         href={`/${DEFAULT_LOCALE}`}
         className='text-blue-500 hover:underline dark:text-blue-400'

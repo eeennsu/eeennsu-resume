@@ -55,17 +55,17 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
           <div className='flex w-full flex-col items-center gap-8 md:items-start md:gap-10'>
             <div className='flex w-full flex-col items-center gap-2 md:flex-row md:items-end md:justify-between md:gap-6'>
               <div className='text-center md:text-left'>
-                <h1 className='font-pretendard text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl dark:text-gray-100'>
+                <h1 className='font-pretendard text-foreground text-3xl font-semibold tracking-tight md:text-4xl'>
                   {profile?.name}
                 </h1>
-                <p className='mt-2 flex items-baseline justify-center gap-2 text-gray-600 md:justify-start dark:text-gray-400'>
+                <p className='text-muted-foreground mt-2 flex items-baseline justify-center gap-2 md:justify-start'>
                   <span className='text-base font-medium tracking-tight text-gray-700 tabular-nums md:text-lg dark:text-gray-300'>
                     {profile?.birthDay}
                   </span>
                   <span aria-hidden='true' className='text-gray-300 dark:text-gray-600'>
                     ·
                   </span>
-                  <span className='text-[13px] text-gray-500 md:text-sm dark:text-gray-500'>
+                  <span className='text-body-s text-gray-500 md:text-sm dark:text-gray-500'>
                     {ageLabel}
                   </span>
                 </p>
@@ -75,7 +75,7 @@ const ProfileWidget: FC<Props> = ({ locale }) => {
               </div>
             </div>
 
-            <div className='w-full gap-x-10 gap-y-3.5 text-sm text-gray-700 max-md:flex max-md:flex-col max-md:gap-3 md:grid md:grid-cols-2 md:text-[15px] dark:text-gray-300'>
+            <div className='md:text-body-m w-full gap-x-10 gap-y-3.5 text-sm text-gray-700 max-md:flex max-md:flex-col max-md:gap-3 md:grid md:grid-cols-2 dark:text-gray-300'>
               {profile?.descriptions.map((description, index) => (
                 <ProfileItem
                   key={index}

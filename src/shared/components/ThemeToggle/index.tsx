@@ -35,7 +35,7 @@ const ThemeToggle: FC = () => {
     <div
       role='group'
       aria-label={dict.theme.ariaLabel}
-      className='flex rounded-lg border border-gray-200 bg-gray-100/60 p-0.5 dark:border-gray-800 dark:bg-gray-900/60'
+      className='border-border flex rounded-lg border bg-gray-100/60 p-0.5 dark:bg-gray-900/60'
     >
       {OPTIONS.map(({ value, Icon }) => {
         const isActive = value === currentTheme;
@@ -50,8 +50,8 @@ const ThemeToggle: FC = () => {
               'flex flex-1 items-center justify-center gap-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors',
               'focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-blue-400/60',
               isActive
-                ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-800 dark:text-gray-100'
-                : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100',
+                ? 'text-foreground bg-white shadow-sm dark:bg-gray-800'
+                : 'text-muted-foreground hover:text-gray-900 dark:hover:text-gray-100',
             )}
           >
             <Icon className='size-3.5' aria-hidden />

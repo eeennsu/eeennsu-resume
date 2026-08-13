@@ -29,13 +29,11 @@ const Diagram: FC<Props> = ({ labels }) => (
     <div className='flex flex-col items-stretch gap-3 md:flex-row md:items-stretch md:gap-2'>
       {nodes.map((node, index) => (
         <Fragment key={node.key}>
-          <div className='flex flex-1 flex-col items-center justify-center gap-1 rounded-xl border border-gray-300 bg-white px-3 py-4 text-center dark:border-gray-700 dark:bg-gray-950'>
-            <p className='text-[14px] leading-tight font-semibold text-gray-900 md:text-[15px] dark:text-gray-100'>
+          <div className='bg-background flex flex-1 flex-col items-center justify-center gap-1 rounded-xl border border-gray-300 px-3 py-4 text-center dark:border-gray-700'>
+            <p className='text-foreground md:text-body-m text-[14px] leading-tight font-semibold'>
               {node.title}
             </p>
-            <p className='text-[12px] leading-tight text-gray-500 md:text-[13px] dark:text-gray-400'>
-              {node.sub}
-            </p>
+            <p className='text-muted-foreground md:text-body-s text-xs leading-tight'>{node.sub}</p>
           </div>
           {index < nodes.length - 1 && (
             <div className='flex items-center justify-center md:px-0.5'>
@@ -49,12 +47,12 @@ const Diagram: FC<Props> = ({ labels }) => (
         </Fragment>
       ))}
     </div>
-    <p className='mt-4 text-[13px] text-gray-500 dark:text-gray-400'>{labels.cronNote}</p>
-    <figcaption className='mt-4 grid grid-cols-2 gap-3 text-[13px] text-gray-600 md:grid-cols-5 dark:text-gray-400'>
+    <p className='text-body-s text-muted-foreground mt-4'>{labels.cronNote}</p>
+    <figcaption className='text-body-s text-muted-foreground mt-4 grid grid-cols-2 gap-3 md:grid-cols-5'>
       {(Object.keys(labels.steps) as Array<keyof DiagramLabels['steps']>).map(step => (
         <div
           key={step}
-          className='rounded-lg border border-gray-200 bg-white/60 px-3 py-2 dark:border-gray-800 dark:bg-gray-950/40'
+          className='border-border rounded-lg border bg-white/60 px-3 py-2 dark:bg-gray-950/40'
         >
           <p className='font-semibold text-gray-800 dark:text-gray-200'>{step.toUpperCase()}</p>
           <p className='mt-0.5 leading-snug'>{labels.steps[step]}</p>

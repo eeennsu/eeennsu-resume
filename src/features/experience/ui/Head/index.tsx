@@ -35,9 +35,9 @@ const ExperienceHead: FC<Props> = ({ experience, locale }) => {
     : dict.experience.daysWorking.replace('{{days}}', String(daysWorking));
 
   return (
-    <header className='flex flex-col gap-3 border-b border-gray-200 pb-5 max-md:items-center md:flex-row md:items-end md:justify-between md:gap-6 dark:border-gray-800'>
+    <header className='border-border flex flex-col gap-3 border-b pb-5 max-md:items-center md:flex-row md:items-end md:justify-between md:gap-6'>
       <div className='flex items-center gap-2'>
-        <h3 className='text-[22px] font-semibold tracking-tight text-gray-900 md:text-[26px] dark:text-gray-100'>
+        <h3 className='text-foreground text-[22px] font-semibold tracking-tight md:text-[26px]'>
           {experience.companyName}
         </h3>
         {showNote && (
@@ -50,11 +50,11 @@ const ExperienceHead: FC<Props> = ({ experience, locale }) => {
       </div>
 
       <div className='flex flex-col items-center gap-0.5 md:items-end'>
-        <p className='text-[13px] font-medium text-gray-700 tabular-nums md:text-sm dark:text-gray-300'>
+        <p className='text-body-s font-medium text-gray-700 tabular-nums md:text-sm dark:text-gray-300'>
           {toYearMonth(experience.startDate)} ~{' '}
           {experience.endDate ? toYearMonth(experience.endDate) : dict.experience.present}
         </p>
-        <span className='text-[13px] text-gray-500 tabular-nums md:text-sm dark:text-gray-400'>
+        <span className='text-body-s text-muted-foreground tabular-nums md:text-sm'>
           {summaryLabel}
         </span>
       </div>

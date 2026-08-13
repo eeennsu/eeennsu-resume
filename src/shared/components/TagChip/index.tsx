@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SIZE_CLASSES = {
-  sm: 'px-2 py-0.5 text-[11px]',
+  sm: 'px-2 py-0.5 text-caption',
   md: 'px-2.5 py-1 text-xs',
 } as const;
 
