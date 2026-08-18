@@ -70,8 +70,9 @@ src/subjects/
 
 ### SEO 최적화 & 배포
 
-- **next-sitemap**을 통한 자동 사이트맵 생성
-- GitHub Pages를 활용한 정적 배포 파이프라인
+- Next.js App Router 네이티브 `sitemap.ts` / `robots.ts`로 사이트맵·크롤 규칙 관리
+- 루트/비로케일 요청은 `middleware.ts`가 기본 로케일(`/ko`)로 308 리다이렉트
+- Vercel Git 통합을 통한 자동 배포 (`main` → 프로덕션, PR → 프리뷰)
 
 ---
 

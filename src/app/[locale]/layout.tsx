@@ -153,6 +153,19 @@ export default async function RootLayout({
     'knowsAbout': ['TypeScript', 'React.js', 'Next.js', 'React Native', 'JavaScript'],
   };
 
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': dict.meta.siteName,
+    'url': SITE_URL,
+    'inLanguage': HTML_LANG[locale],
+    'author': {
+      '@type': 'Person',
+      'name': dict.jsonLd.name,
+      'url': url,
+    },
+  };
+
   return (
     <html
       lang={HTML_LANG[locale]}
@@ -166,6 +179,10 @@ export default async function RootLayout({
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <ThemeProvider>
           <TooltipProvider>
