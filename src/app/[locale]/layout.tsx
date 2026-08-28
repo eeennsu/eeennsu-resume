@@ -146,6 +146,7 @@ export default async function RootLayout({
     'image': `${SITE_URL}/images/profile.jpg`,
     'email': 'mailto:xxx9901@naver.com',
     'sameAs': [
+      'https://eunsu.pro',
       'https://github.com/eeennsu',
       'https://velog.io/@diso592/posts',
       'https://eunstory.eunsu.pro',
