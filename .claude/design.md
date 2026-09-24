@@ -4,6 +4,8 @@
 새 UI를 만들거나 기존 UI를 고칠 때 여기 정의된 값을 먼저 찾고, 없을 때만 새로 만든다.
 
 > 스캔 기준: `src/widgets`, `src/features`, `src/shared/components`, `src/app/globals.css`
+>
+> 값·사용 횟수·줄 번호는 스캔 시점의 스냅샷이다. 토큰은 `src/app/globals.css` 의 `@theme` 가 기준이고, 이 문서와 코드가 다르면 코드를 따른다.
 
 ---
 
@@ -28,17 +30,16 @@
 
 ### 컨테이너
 
-[layout.tsx](../src/app/%5Blocale%5D/layout.tsx)에서 단 한 곳만 정의된다.
+[layout.tsx](../src/app/%5Blocale%5D/layout.tsx)에서 정의된다.
 
 ```tsx
-<div className='3xl:max-w-[1500px] mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
+<div className='3xl:max-w-7xl mx-auto max-w-(--breakpoint-xl) grow px-3 xl:px-0'>
 ```
 
-- 기본 최대 폭: `--breakpoint-xl` (1280px)
-- 초광폭(`3xl` = 120rem / 1920px 이상): 1500px
+- 최대 폭: `--breakpoint-xl` (1280px). `globals.css` 에 `--breakpoint-3xl` 이 없어서 `3xl:` 클래스는 CSS 를 만들지 않는다
 - 좌우 패딩: 모바일 `px-3`, `xl` 이상에서 0 (컨테이너가 이미 여백을 가짐)
 
-**위젯은 자체 컨테이너를 만들지 않는다.** 예외는 [Profile](../src/widgets/Profile/index.tsx)의 `md:max-w-6xl md:px-12` — 히어로 영역이라 의도적으로 다른 폭을 쓴다.
+**위젯은 자체 컨테이너를 만들지 않는다.** 예외는 fixed 인 [Header](../src/widgets/Header/index.tsx) — 페이지 컨테이너 밖에 있어서 같은 폭 클래스(`max-w-(--breakpoint-xl) px-3 xl:px-0`)를 그대로 반복한다.
 
 ### 섹션 배치
 
@@ -74,7 +75,7 @@
 
 **A. 시맨틱 토큰** — shadcn 기본 slate 계열 oklch. [globals.css:86-153](../src/app/globals.css#L86-L153)
 
-`background` `foreground` `card` `popover` `primary` `secondary` `muted` `accent` `destructive` `border` `input` `ring` `chart-1~5` `sidebar-*`
+`background` `foreground` `card` `popover` `primary` `secondary` `muted` `accent` `destructive` `border` `input` `ring` `chart-1~5`
 
 사용 예 (최신 코드 — [JdMatch](../src/widgets/JdMatch/index.tsx)):
 
@@ -112,9 +113,9 @@ className = 'bg-foreground text-background'; // primary CTA
 | 긍정/매칭 | `text-emerald-600` `bg-emerald-50` `border-emerald-200` | `dark:text-emerald-300` `dark:bg-emerald-500/10` |
 | 주의/갭   | `text-amber-600` `bg-amber-50` `border-amber-200`       | `dark:text-amber-300` `dark:bg-amber-500/10`     |
 | 부정/문제 | `text-rose-500` `bg-rose-50` `border-rose-200/50`       | `dark:text-rose-400` `dark:bg-rose-500/10`       |
-| 링크/외부 | `text-blue-600` `bg-blue-50/60` `border-blue-200`       | `dark:text-blue-300` `dark:bg-blue-950/30`       |
+| 링크/외부 | `text-blue-600` `bg-blue-50/60` `border-blue-200`       | `dark:text-blue-300` `dark:bg-blue-500/10`       |
 
-다크모드 배경은 **반투명**을 쓴다. 불투명 다크 배경은 카드 위에 얹었을 때 뜬다. 현재 두 방식이 섞여 있다 — `-950/30`(PortfolioCard 외부 링크)과 `-500/10`(JdMatch 상태 칩). 새 코드는 `-500/10` 쪽을 쓴다.
+다크모드 배경은 **반투명** `-500/10` 을 쓴다. 불투명 다크 배경은 카드 위에 얹었을 때 뜬다.
 
 `rose`는 [ActivityCard](../src/features/experience/ui/ActivityCard/index.tsx)의 Problem 라벨과 [JdMatch](../src/widgets/JdMatch/index.tsx)의 낮은 적합도 밴드에 쓰인다. `destructive` 시맨틱 토큰과 역할이 겹치므로 혼용하지 않는다 — 에러는 `text-destructive`, 콘텐츠상의 "문제/약점"은 `rose`.
 
@@ -162,21 +163,19 @@ body        → font-pretendard  (한글 본문 전체)
 
 ### 스케일
 
-Tailwind 기본 스텝과 **임의값(`text-[Npx]`)이 혼용**된다. 임의값은 한글 가독성을 위해 기본 스텝 사이를 메우려고 도입됐다.
+한글 가독성을 위해 기본 스텝 사이를 메우는 크기는 `@theme` 의 시맨틱 사이즈 토큰으로 쓴다 — `text-caption`(11px) / `text-body-s`(13px) / `text-body-m`(15px). 줄높이가 토큰에 들어 있다. 임의값 `text-[Npx]` 는 토큰에 없는 크기(`14px`, `17px`, `22px` 등)에만 쓴다. 자간 토큰 `tracking-eyebrow`(0.14em) 도 있다.
 
-| 용도                      | 모바일          | 데스크톱         |
-| ------------------------- | --------------- | ---------------- |
-| 이름 (h1)                 | `text-3xl`      | `md:text-4xl`    |
-| 섹션 제목 (h2)            | `text-3xl`      | —                |
-| 활동 제목 (h3)            | `text-lg`       | `md:text-xl`     |
-| 항목 제목 (h4)            | `text-[15px]`   | `md:text-[17px]` |
-| 본문                      | `text-[14px]`   | `md:text-[15px]` |
-| 보조 본문                 | `text-sm`       | `md:text-[15px]` |
-| 메타 / 캡션               | `text-xs`       | `md:text-[13px]` |
-| 칩 / 태그                 | `text-[11.5px]` | `md:text-xs`     |
-| 카테고리 라벨 (uppercase) | `text-[11px]`   | `md:text-xs`     |
-
-가장 많이 쓰이는 임의값: `text-[15px]`(11회), `text-[13px]`(9회).
+| 용도                      | 모바일         | 데스크톱         |
+| ------------------------- | -------------- | ---------------- |
+| 이름 (h1)                 | `text-3xl`     | `md:text-4xl`    |
+| 섹션 제목 (h2)            | `text-3xl`     | —                |
+| 활동 제목 (h3)            | `text-lg`      | `md:text-xl`     |
+| 항목 제목 (h4)            | `text-body-m`  | `md:text-[17px]` |
+| 본문                      | `text-[14px]`  | `md:text-body-m` |
+| 보조 본문                 | `text-sm`      | `md:text-body-m` |
+| 메타 / 캡션               | `text-xs`      | `md:text-body-s` |
+| 칩 / 태그                 | `text-caption` | `md:text-xs`     |
+| 카테고리 라벨 (uppercase) | `text-caption` | `md:text-xs`     |
 
 ### 자간 / 행간 / 한글 처리
 
@@ -387,10 +386,10 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 
 ### 체크리스트
 
-- [ ] 모든 `text-` / `bg-` / `border-` 에 `dark:` 짝이 있는가 (현재 코드에 146개)
+- [ ] 원시 팔레트(`gray-*`, 상태색)의 `text-` / `bg-` / `border-` 에 `dark:` 짝이 있는가 (시맨틱 토큰은 다크에서 자동 전환되므로 짝을 붙이지 않는다)
 - [ ] 다크 배경은 반투명(`/30`, `/40`, `/60`)을 썼는가
-- [ ] 다크 보더는 `gray-800`으로 통일했는가
-- [ ] 상태색 다크는 `-300`(전경) / `-950/30`(배경) 조합인가
+- [ ] 원시 팔레트의 다크 보더는 `gray-800`으로 통일했는가
+- [ ] 상태색 다크는 `-300`(전경) / `-500/10`(배경) 조합인가
 
 ---
 
@@ -416,21 +415,6 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 
 현재 코드 상태를 있는 그대로 기록. **이 문서는 코드를 바꾸지 않았다.**
 
-### 11-1. 죽은 토큰 — 삭제 대상
-
-[globals.css:78-83](../src/app/globals.css#L78-L83)
-
-```css
---color-ivory: #fffff0;
---color-wood: #a0522d;
---color-ivory-secondary: #f8f3e6;
---color-wood-secondary: #8b4513;
---color-ivory-tertiary: #f8f3e6;
---color-wood-tertiary: #8b5e3c;
-```
-
-`.tsx` 전체에서 **사용 0회**. `ivory-secondary`와 `ivory-tertiary`는 값도 동일(`#f8f3e6`)해서 애초에 오타로 보인다.
-
 ### 11-2. 시맨틱 토큰 vs 원시 팔레트 분열
 
 - 신규 코드([JdMatch](../src/widgets/JdMatch/index.tsx)): `border-border`, `bg-muted`, `bg-foreground` — 시맨틱
@@ -442,11 +426,11 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 
 `gap-` 값이 0.5 / 1 / 1.5 / 2 / 2.5 / 3 / 4 / 5 / 6 / 7 / 8 / 10 전부 등장. 그중 §5 권장 스케일에 없는 중간값: `gap-2.5`(6회), `gap-7`(2회), `gap-9`(1회). 축별 유틸에도 `gap-y-3.5` 같은 값이 섞여 있다.
 
-### 11-4. 폰트 사이즈 임의값 과다
+### 11-4. 토큰 밖 폰트 사이즈 임의값
 
-`text-[Npx]` 형태가 11종. `10px` `10.5px` `11px` `11.5px` `12px` `13px` `14px` `15px` `17px` `22px` `26px`.
+`text-caption` / `text-body-s` / `text-body-m` 에 없는 `text-[Npx]` 가 10종 남아 있다. `9.5px` `10px` `10.5px` `12.5px` `13.5px` `14px` `14.5px` `17px` `22px` `26px`.
 
-`10px`↔`10.5px`, `11px`↔`11.5px`는 시각적으로 구분되지 않는다. `@theme`에 커스텀 스텝으로 등록하면 임의값 없이 쓸 수 있다.
+`9.5px`↔`10px`↔`10.5px`, `13.5px`↔`14px`↔`14.5px`는 시각적으로 구분되지 않는다. 자주 쓰는 크기는 `@theme`에 스텝으로 등록하면 임의값 없이 쓸 수 있다.
 
 ### 11-5. Radius 사용처 기준 부재
 
@@ -475,4 +459,4 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 5. 모션은 `AnimatedSection`으로 감싸거나 `useReducedMotion()` 가드
 6. 다크모드 **§9 체크리스트** 통과
 7. 외부 링크면 `rel` + `aria-label` + `sr-only` 3종 세트
-8. `pnpm lint` (`--max-warnings 0`)
+8. `bun run lint`
