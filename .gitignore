@@ -50,3 +50,6 @@ next-env.d.ts
 
 # UI polish work artifacts (screenshots, audits, page diagnostics)
 /.polish
+
+# resume-sync 기기별 기록 (비공개 레포 이름 포함)
+/docs/resume-sync.md
