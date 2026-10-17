@@ -448,6 +448,21 @@ transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
 
 선택지: (a) 인라인 칩들을 Badge로 흡수, (b) Badge 삭제하고 §7 레시피만 유지.
 
+### 11-8. Tooltip 기본 스타일이 매번 덮여 있음
+
+[SharedTooltip](../src/shared/components/Tooltip/index.tsx)이 shadcn [tooltip](../src/shared/shadcn-ui/ui/tooltip.tsx) 기본값(`bg-primary text-primary-foreground py-1.5`)을 `bg-slate-700 py-2 dark:bg-slate-200 dark:text-slate-900`로 덮는다. `bg-primary`가 이미 다크모드 반전을 처리하므로 수동 `dark:` 클래스는 같은 일을 두 번 하는 셈이다.
+
+### 11-9. 다크모드 틴트 계산식이 갈림
+
+은은한 색 틴트는 대부분 `dark:bg-*-500/10`인데, [JdMatch](../src/widgets/JdMatch/index.tsx) 점수 패널만 `-500/[0.04]`다. `-500/10`이 라이트의 `-50`과 밝기 대응이 가장 잘 맞으니 이쪽으로 모은다.
+
+### 11-10. 접근성 미해결
+
+- [ExperienceHead](../src/features/experience/ui/Head/index.tsx) note 툴팁: `TooltipTrigger`가 렌더하는 `<button>` 안에 `aria-hidden` 아이콘뿐이라 스크린리더가 "버튼"으로만 읽는다. 다른 아이콘 버튼처럼 `aria-label`을 단다
+- [JdMatch](../src/widgets/JdMatch/index.tsx)·[AiChat](../src/widgets/AiChat/index.tsx) 입력 필드: `focus:ring-1`(1px, 흰 배경 대비 약 2.8:1)이라 WCAG 2.2 SC 2.4.13(2px·3:1)에 못 미친다. 버튼·링크는 `globals.css`의 `:focus-visible` 규칙(`outline-2 outline-blue-500`)을 받는다
+- [JdMatch](../src/widgets/JdMatch/index.tsx) 섹션에 heading이 없어 페이지 아웃라인에서 빠진다. `sr-only` h2 하나면 시각 레이아웃은 그대로 둔 채 해결된다
+- [Certification](../src/widgets/Certification/index.tsx) 항목만 `span`이다(다른 섹션 항목은 `h3`). 단순 나열이라 그대로 둘지는 판단이 필요하다
+
 ---
 
 ## 12. 새 UI 만들 때 순서
