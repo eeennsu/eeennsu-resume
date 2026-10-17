@@ -1,25 +1,77 @@
 - companyName: Wonder Round Inc.
   startDate: '2025.04.14'
   activities:
+    - id: wonder-design-system-2026
+      startDate: '2026.09.20'
+      title: 'Built a React Native design system and a Claude Code–based prototyping environment'
+      shortTitle: 'Design system'
+      doneList:
+        - subject: Designed a design system that manages design values and components in one place
+          details:
+            - problem: 'Designers, planners, and developers handed work to each other in turn — idea → planning → mockup → Figma → development — and bottlenecks at each stage meant a single task took 4–6 weeks on average.'
+              solution: 'Designed and built a design system and a `react-native-web`–based preview environment where real app screens can be made right away with the same design rules and components, and checked from a single browser link without a development setup. Introduced together with the Claude Code workspace, it cut the time per task to about 1–2 weeks on average.'
+            - 'Managed design values such as colors, type, and corner rounding in a single token file, and used a `Style Dictionary` build to convert them automatically into the form the app (`Tamagui` theme) and the web (CSS variables) each need. App screens use only the components the design system package provides, so even if the styling approach changes later, only the package internals need to change while the screens stay as they are.'
+
+        - subject: Designed a Claude Code workspace where designers and planners build screens themselves while rules and permissions are enforced automatically
+          details:
+            - 'Organized the workflow into skills so that drafting screens, changing design rules, and exchanging screens with Figma can all be done just by talking to Claude Code. Let Figma changes reach screens only after they are first reflected in the design standard documents, so the result is the same no matter who builds it.'
+            - 'Instead of relying on people to remember, set up custom `ESLint` rules and type checks that automatically block colors or sizes written outside the design system, other UI libraries, and calls to a real server.'
+            - problem: 'On the GitHub free plan, basic safeguards such as branch protection and CODEOWNERS are unavailable for private repositories, so a worker unfamiliar with development could accidentally push to `main` or run a deploy.'
+              solution: 'Used a Claude Code `hook` to check the worker role right before a command runs and block `main` pushes, PR merges, and deploy commands for anyone who is not a developer. Arranged the flow so every change goes through a PR and CI (lint / typecheck) and is applied only after developer review.'
+
+        - subject: Designed the handoff and rollout structure that carries finished screens into the real app
+          details:
+            - 'For every finished screen draft, generated a handoff spec that AI agents in the app and API repositories can read and implement directly. Split it into app and API versions and listed what is out of scope, what was assumed, and an acceptance checklist, so the same screen can be rebuilt in another repository.'
+            - 'Moved existing app screens into the design system while keeping their current look, and bundled designer improvements separately through pinned package versions and change records (`changesets`) so problems introduced during the move never mix with intended changes. Libraries tied to native behavior — toasts, bottom sheets, and images — stay in the app while the design system provides only the visual parts, keeping changes to existing call sites to a minimum.'
+            - problem: 'Webview screens opened inside the app were drawn in a different style from the app, so two designs were mixed within one app.'
+              solution: 'Instead of building separate webview components, had webviews use the same design system as the app via `react-native-web`, so native and webview screens share a single design standard.'
+
+    - id: wonder-agent-harness-2026
+      startDate: '2026.05.01'
+      title: 'Designed a Claude Code–based AI agent development harness'
+      shortTitle: 'Claude Code harness'
+      doneList:
+        - subject: Organized rule ownership and designed the harness bootstrap system
+          details:
+            - 'When the previous RN app developer left, the project had effectively no AI agent harness in place and RN domain knowledge handover was cut off. To reduce the learning cost and keep context always at hand, I designed and introduced a Claude Code–based development assist harness from scratch.'
+            - 'After the initial design, I used my own plugin [`thinkit`](#portfolio-thinkit) to repeatedly audit and improve the harness from the perspectives of rule ownership, prose/tool separation, and safety boundaries — applying the principles I set to my own output and keeping the harness itself under continuous review.'
+
+        - subject: Automated domain knowledge and repeated patterns as skills
+          details:
+            - 'Modularized per-domain rules and architecture decisions (UI ecosystem / performance / animation & gestures / server state / navigation / global state / i18n / error boundaries / new feature flow) into skills and rules, organizing them into a reference structure that loads as context when needed instead of re-explaining conventions and background on every task.'
+            - 'Automated repeated implementation patterns as skill commands — the flow of adding a new API (response type definitions · TanStack Query hook generation · cache key registration) runs in one command, and recurring work such as optimistic-update mutations / screen entry optimization / i18n updates / Android build and native troubleshooting yields consistent results.'
+
+        - subject: 'Built a final-diff review pipeline based on a separate code review skill'
+          details:
+            - 'Once a feature is complete, a separate code review skill is invoked to split the final diff between the working branch and the target version branch into two independent lanes (items that can be judged within the diff / items that need repository-wide exploration), and subagents review them in parallel. To keep perspectives from overlapping, each lane reaches its conclusion independently without sharing results with the other.'
+            - 'Passed the parallel review results to a refutation step that weakens or drops overreaching findings, while marking data loss · auth/permissions/payments · immediate crashes · hard-to-roll-back migrations as categories that cannot be weakened, so critical findings are never buried. Gated the flow so that if even one CRITICAL / HIGH finding survives, the merge command is not printed at all — so whether a review passes is decided by the numbers alone.'
+
     - id: wonder-rn-app-2026
       startDate: '2026.02.04'
       title: 'Role transition — Development and maintenance of an in-house React Native (CLI) mobile application'
       shortTitle: 'In-house RN app'
       doneList:
-        - subject: 'Introduced and operationalized a new OTA (over-the-air code delivery) infrastructure with `hot-updater`'
+        - subject: 'Built the operating framework for the OTA (over-the-air code delivery) infrastructure `hot-updater`'
           details:
-            - 'To resolve the structure where urgent bug fixes and QA changes were delayed by the store review cycle, I newly introduced an OTA pipeline with `hot-updater` that delivers JS bundles over the air without review. Designed and built the whole flow — bundle store integration, a system that manages iOS / Android and `dev` / `beta` / `pro` per environment, and the deploy/rollback operations flow.'
+            - 'To resolve the structure where urgent bug fixes and QA changes were delayed by the store review cycle, I newly introduced an OTA pipeline with `hot-updater` that delivers JS bundles over the air without review. Designed and built the whole flow — bundle store integration, per-environment management for iOS / Android and `dev` / `beta` / `pro`, and the deploy/rollback operations flow.'
             - problem: 'Initially all environments shared channels and settings, so a higher-environment bundle could overwrite a lower-environment native build, or a missed settings swap before deploy left the bundle and native mismatched. Wrong key settings repeatedly crashed social login.'
-              solution: 'Isolated deploy destinations by an `appVersion` + channel (`dev` / `beta` / `production`) combination, and automated injecting channel/environment settings at build time. Standardized the `set-<env>` → deploy → restore `dev` procedure to establish a partition so bundles always reach only the intended environment.'
+              solution: 'Separated deploy destinations by an `appVersion` + channel (`dev` / `beta` / `production`) combination, and automated injecting channel/environment settings at build time. Made the `set-<env>` → deploy → restore `dev` procedure a shared rule so bundles always reach only the intended environment, preventing environments from mixing.'
             - problem: 'In certain situations the app fell into a force-update (`force update`) infinite loop, making normal entry itself impossible — a critical failure.'
-              solution: 'Added rollback instrumentation that makes the boot-failure loop observable (current bundle id === minimum bundle id → confirmed boot failure), and secured a manual kill switch recoverable immediately via console/DB to establish a failure-response path.'
+              solution: 'Added rollback instrumentation that detects the boot-failure loop (current bundle id === minimum bundle id → confirmed boot failure), and secured a manual kill switch that can be reverted immediately via console/DB, establishing a failure-response procedure.'
 
         - subject: Introduced a staged-mount pattern to optimize entry performance on key screens
           details:
             - problem: 'On heavy screens that accumulate many `hooks` and API calls (lists / map / detail), every widget mounts at the same time on entry, which makes the navigation animation stutter and delays the appearance of the `skeleton`.'
               solution: 'Split the screen into entry point and body in two stages — show the `skeleton` immediately right after the navigation transition, and detect the end of the transition with `setImmediate` so the body only mounts after the animation finishes. Shortened perceived entry lag from ~700–800ms to ~200–300ms.'
-            - 'Pre-warmed data shown at the top of the screen with a separate `prefetch` hook so that it is already cache-hit by the time the body mounts.'
-            - Introduced a shared hook that handles scroll event handlers in a JS-thread non-blocking way, so other interactions are not delayed during scrolling.
+            - 'Loaded data shown at the top of the screen in advance with a separate `prefetch` hook, so it is a cache hit by the time the body mounts.'
+            - 'Preloaded key images before screen entry to minimize images appearing late or flickering on first render.'
+
+        - subject: Consolidated recurring app-wide performance and data-handling issues into shared rules
+          details:
+            - 'Moved animations that heavily loaded the JS thread to run directly on the UI thread with Reanimated, keeping them smooth without frame drops during scrolling and transitions.'
+            - 'Organized a `cancel → snapshot → cache update → rollback` flow for toggle-like `mutation`s (bookmark / like) as a shared rule, so immediate UI reflection before the server responds and consistent rollback on failure became a common pattern. Direct cache patching with `setQueryData` also removed unnecessary `invalidate` round-trips.'
+            - 'Recognized that OS-level HTTP caches such as iOS `NSURLCache` / Android `OkHttp` exist separately beneath the TanStack Query cache, and handled cases where invalidating the JS cache alone did not surface fresh data. Defined a policy that covers both layers by combining response header (`Cache-Control`) rules, request options, and cache bypass when needed.'
+
         - subject: Built push notification and deep link entry flows
           details:
             - problem: When a push is tapped from a cold start, the navigation stack is not ready yet, so routing is sometimes dropped.
@@ -27,17 +79,7 @@
             - problem: When the deep link target is a webview screen and the app is launched from a cold start, the navigation stack ends up containing only that single webview, so pressing back terminates the app instead of returning to the previous in-app screens.
               solution: 'Instead of a plain `navigate` call, I composed the `navigation state` directly to `reset` it into a structure where `Main Tab screen` is the base route and a `Stack` (related underlay screen + webview) is stacked on top. This guarantees a natural back flow: webview → related screen → `Main Tab screen`.'
             - Added a normalization layer for the notification list response to match the updated push-sending API schema on the backend.
-            - 'Implemented a deep link handler that parses the push payload and branches across cold-start / background / foreground entry cases.'
-        - subject: 'Introduced and standardized an optimistic-update pattern with `TanStack Query`'
-          details:
-            - 'Standardized a `cancel → snapshot → cache update → rollback` flow for toggle-like `mutations` (bookmark / like) to establish immediate optimistic UI reflection and consistent rollback across the team. Direct `setQueryData` cache patching also removes unnecessary `invalidate` round-trips.'
-        - subject: Built a Claude Code–based development productivity infrastructure
-          details:
-            - With the prior RN app developer leaving and domain knowledge handover broken, I had to maintain the app and ship new features alone with limited RN experience. To cut the learning cost and keep domain context always accessible, I designed and built a Claude Code–based assist infrastructure myself.
-            - 'Split project rules per domain (UI ecosystem / performance / animation / server state / navigation / global state / i18n / new feature flow), so only the rules relevant to the current task are loaded based on keywords.'
-            - 'Role-separated multi-agent pipeline — on top of the `planner → generator → evaluator` implementation loop, composed a self-verification lane where a separate `critic` agent objectively refutes and verifies the analysis, mitigating the bias of single-context self-verification.'
-            - 'Turned repeated implementation patterns into skills — codified standardized tasks (adding an API / optimistic-update mutation / screen entry optimization / i18n application) into reusable commands, so I get consistent output without re-explaining conventions every time.'
-            - 'Routed models by task complexity (lightweight lookups → architecture/deep analysis), and tuned prompt caching and reasoning effort to optimize response latency and token cost.'
+            - 'Implemented a deep link handler that parses the push payload and handles cold-start / background / foreground entry cases separately.'
 
     - id: wonder-admin-travel-2025
       startDate: '2025.07.03'
@@ -62,12 +104,6 @@
               solution: 'Improved this with lazy loading via `resourcesToBackend`, dynamically importing only the languages and namespaces we need.'
             - problem: Custom error messages built with zod `refine` and similar were frozen at React init time, so the error message language did not change when the user switched locale.
               solution: Stored only the translation key in the validation logic and applied translation at render time, so existing error messages also update in real time on locale change.
-    - id: wonder-wix-migration-2025
-      startDate: '2025.09.24'
-      endDate: '2025.10.02'
-      title: Migrated a Wix-built travel platform website to a Next.js environment
-      doneList:
-        - subject: 'Implemented responsive design (desktop / tablet / mobile) and built a CI/CD pipeline with Docker / ECR / GitHub Actions'
 
     - id: wonder-admin-enhance-2025
       startDate: '2025.04.14'
@@ -181,7 +217,7 @@
         - subject: Customized a text editor using the Tiptap library
           details:
             - problem: The Framer Motion library introduced for comment-area animation caused unintended layout changes when the animated element overlapped with other UI elements.
-              solution: 'Resolved by injecting the animation state into the component `key` or wrapping the component with `AnimatePresence` so layout changes are detected.'
+              solution: 'Resolved by injecting the animation state into the component `key` and wrapping the component with `AnimatePresence` so layout changes are detected.'
   note:
     reasonForLeaving: 'Left due to commute difficulties after a workplace relocation (Incheon ↔ Gasan Digital Complex changed to Incheon ↔ Gangnam)'
     description: Formerly Coding Hub, acquired and merged into Korea Global Knowledge
